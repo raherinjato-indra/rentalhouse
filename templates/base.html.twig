@@ -1,17 +1,2311 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        {% block stylesheets %}
-        {% endblock %}
-
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		{% block additionnalMeta %}
+		<meta name="description" content="Trouvez un appartement ou une maison en vente ou en location. Une offre de plus de 1 208 631 annonces immobilières actualisée en temps réel de logements à Madagascar.">
+		<meta name="google" content="nositelinkssearchbox">
+		<meta property="og:title" content="Petites annonces immobilières | 1er site immobilier français | Portail immo">
+		<meta property="og:description" content="Trouvez un appartement ou une maison en vente ou en location. Une offre de plus de 1 208 631 annonces immobilières actualisée en temps réel de logements à Madagascar.">
+		<meta property="og:image" content="/icon_100x100.png">
+		<meta property="og:locale" content="fr_FR">
+		<meta property="og:url" content="">
+		<meta property="og:type" content=":ad">
+		<meta name="page_name" content="HP">
+		<meta name="channel" content="SL-A" />
+		<meta name="server" content="me.com" />
+		<meta name="site" content="SL" />
+		<meta name="langue" content="FR" />
+		{% endblock %}
+		<link rel="shortcut icon" href="favicon.ico"/>
+            <title>{% block title %}Annonces immobili&#xE8;res | site immobilier Madagascar | Portail immo{% endblock %}</title>
+            {% block stylesheets %}
+                <!--link rel="stylesheet" href="{{ asset('css/materialdesignicons.min.css') }}" type="text/css">
+                <link rel="stylesheet" href="{{ asset('css/vendor.bundle.base.css') }}" type="text/css">
+                <link rel="stylesheet" href="{{ asset('css/vendor.bundle.addons.css') }}" type="text/css"-->
+                <link rel="stylesheet" href="{{ asset('css/main.css') }}" type="text/css">
+                <!--link rel="stylesheet" href="{{ asset('css/responsive.css') }}" type="text/css"-->
+            {% endblock %}
+			{% block additionnalStylesheets %}
+			{% endblock %}
     </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+	
+    <body {% if header_type == 'search' %}style="background-color: white;" {% endif %}>
+	
+    <div id="bruce-banner"></div>
+    <header class="headersl" id="i-head">
+      <input class="c-menu-icon-checkbox" type="checkbox" id="i-header-opener" />
+      <label class="c-header-opener" for="i-header-opener">
+        <div class="c-icon-open-menu">
+          <div class="c-icon-menu">
+            <div class="c-header-hamburger-wrapper">
+              <svg viewBox="0 0 512 512" x="0px" y="0px" width="15px" height="15px" class="c-header-hamburger-icon">
+                <path d="M498.8,66.2H13.2C5.9,66.2,0,72.1,0,79.4c0,7.3,5.9,13.2,13.2,13.2h485.5c7.3,0,13.2-5.9,13.2-13.2v0
+ C512,72.1,506.1,66.2,498.8,66.2z"></path>
+                <path d="M13.2,269.2h485.5c7.3,0,13.2-5.9,13.2-13.2s-5.9-13.2-13.2-13.2H13.2C5.9,242.8,0,248.7,0,256v0
+ C0,263.3,5.9,269.2,13.2,269.2z"></path>
+                <path d="M13.2,445.8h485.5c7.3,0,13.2-5.9,13.2-13.2c0-7.3-5.9-13.2-13.2-13.2H13.2c-7.3,0-13.2,5.9-13.2,13.2v0
+ C0,439.9,5.9,445.8,13.2,445.8z"></path>
+              </svg>
+            </div>
+            <div class="c-header-hamburger-text">Menu</div>
+          </div>
+        </div>
+        <div class="c-icon-close-menu">
+          <div class="c-icon-menu">
+            <svg x="0px" y="0px" width="15px" height="15px" viewBox="0 0 512 512" style="fill: #262626;">
+              <path d="M409,75L263,221L117,75c-9.7-9.7-25.4-9.7-35,0c-9.7,9.7-9.7,25.4,0,35l146,146L82,402c-9.7,9.7-9.7,25.4,0,35
+ c9.7,9.7,25.4,9.7,35,0l146-146l146,146c9.7,9.7,25.4,9.7,35,0c9.7-9.7,9.7-25.4,0-35L298,256l146-146c9.7-9.7,9.7-25.4,0-35
+ C434.3,65.3,418.7,65.3,409,75z"></path>
+            </svg>
+          </div>
+        </div>
+      </label>
+      <div class="c-header-list-container">
+        <ul class="c-header-list">
+          <li class="c-main-list">
+            <div class="c-main-link-block">
+              <a class="c-main-link" href="/vente.htm" target="_self">Acheter</a>
+            </div>
+            <label for="i-head-BUY" class="c-menu-icon-open">
+              <svg x="0px" y="0px" width="7px" height="12px" viewBox="0 0 33 60">
+                <path transform="translate(-14)" d="M14.75375,59.247 C15.25575,59.749 15.91175,60 16.57175,60 C17.23175,60 17.88775,59.749 18.38975,59.247 L45.81775,31.818 C46.82275,30.813 46.82275,29.186 45.81775,28.182 L18.38975,0.753 C17.38575,-0.251 15.75775,-0.251 14.75375,0.753 C13.74875,1.758 13.74875,3.385 14.75375,4.39 L40.36375,30 L14.75375,55.61 C13.74875,56.615 13.74875,58.242 14.75375,59.247"></path>
+              </svg>
+            </label>
+            <input type="radio" id="i-head-BUY" name="menu-list" class="c-menu-radio-list" />
+            <section class="c-flap-menu">
+              <div class="c-flap-content-wrapper">
+                <label for="i-head-BUY-open" class="c-close-flap-icon">
+                  <svg x="0px" y="0px" width="15px" height="15px" viewBox="0 0 512 512" style="fill: #262626;">
+                    <path d="M123.5,240.5c-4.3,4.3-6.4,9.9-6.4,15.5c0,5.6,2.1,11.2,6.4,15.5l234.1,234.1c4.3,4.3,9.9,6.4,15.5,6.4c5.6,0,11.2-2.1,15.5-6.4c8.6-8.6,8.6-22.5,0-31L170,256L388.5,37.5c8.6-8.6,8.6-22.5,0-31C384.3,2.1,378.6,0,373,0c-5.6,0-11.2,2.1-15.5,6.4L123.5,240.5z"></path>
+                  </svg>
+                  <span>Retour</span>
+                </label>
+                <a class="c-flap-category-title-mobile c-flap-title" href="/vente.htm">Acheter</a>
+                <div class="c-flap-list">
+                  <ul>
+                    <li>
+                      <a class href="/vente.htm" target="_self">Appartement ou Maison</a>
+                    </li>
+                    <li>
+                      <a class href="//www.selogerneuf.com/#?CMP=INT-HeadSL-AC9" target="_blank" rel="noreferrer noopener">Immobilier neuf</a>
+                    </li>
+                    <li>
+                      <a class href="https://www.bellesdemeures.com/#?CMP=INT_SL_Header" target="_blank" rel="noreferrer noopener">Bien d&apos;exception</a>
+                    </li>
+                    <li>
+                      <a class href="https://www.seloger-construire.com/projet-construction/terrain/pays/madagascar/#?CMP=INT_AC_CMI_1" target="_blank" rel="noreferrer noopener">Terrain</a>
+                    </li>
+                    <li>
+                      <a class href="/viagers.htm#?BD=Head_AC_Viager_6" target="_self">Viager</a>
+                    </li>
+                    <li>
+                      <a class href="https://seloger-bureaux-commerces.com/#?CMP=INT_Head_AC_Bureau_7" target="_self">Bureaux &amp; Commerces</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="c-flap-list">
+                  <div class="c-flap-title">Prix de l&apos;immobilier</div>
+                  <ul>
+                    <li>
+                      <a class href="/estimation-immobiliere.html#?m=header-acheter-estimation_immo" target="_self">Estimation immobilière</a>
+                    </li>
+                    <li>
+                      <a class href="/prix-de-l-immo/vente/pays/madagascar.htm#?BD=Head_AC_PrixImm_8" target="_self">Prix au m²</a>
+                    </li>
+                    <li>
+                      <a class="c-red-button-wrapper" href="/credit-immobilier/simulateur-capacite-demprunt/#?m=header-acheter-capacite_emprunt" target="_self">Calculette : capacité d&apos;emprunt </a>
+                    </li>
+                    <li>
+                      <a class="c-red-button-wrapper" href="https://seloger-simulateur.hellio.com/?utm_campaign=RI-Particuliers-SeLoger&amp;utm_source=seloger.com&amp;utm_medium=menu" target="_self">Rénovation : simulation &amp; aides</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="c-flap-list">
+                  <div class="c-flap-title">Investir</div>
+                  <ul>
+                    <li>
+                      <a class href="/proprietaire/vendre#?m=header_buy_landlord_services_owner_page_sell" target="_self">Services propriétaire</a>
+                    </li>
+                    <li>
+                      <a class href="https://edito.seloger.com/conseils-d-experts/acheter/les-check-lists-avant-d-acheter-votre-appartement-sommaire.html#?BD=Head_AC_Ed_11" target="_self">Checklist de l&apos;acheteur</a>
+                    </li>
+                    <li>
+                      <a class href="https://edito.seloger.com/rubrique/mesures-fiscales" target="_self">Défiscalisation</a>
+                    </li>
+                    <li>
+                      <a class href="/annuaire/#?BD=Head_AC_Annuaire_13" target="_self">Choisir un agent</a>
+                    </li>
+                    <li>
+                      <a class="c-red-button-wrapper" href="/credit-immobilier/mon-financement/#?m=header-acheter-credit" target="_self">Votre crédit : comparez les offres</a>
+                    </li>
+                  </ul>
+                </div>
+                <input class="c-close-flap-element" type="radio" id="i-head-BUY-open" name="menu-list" />
+              </div>
+            </section>
+          </li>
+          <li class="c-main-list">
+            <div class="c-main-link-block">
+              <a class="c-main-link" href="/location.htm" target="_self">Louer</a>
+            </div>
+            <label for="i-head-RENT" class="c-menu-icon-open">
+              <svg x="0px" y="0px" width="7px" height="12px" viewBox="0 0 33 60">
+                <path transform="translate(-14)" d="M14.75375,59.247 C15.25575,59.749 15.91175,60 16.57175,60 C17.23175,60 17.88775,59.749 18.38975,59.247 L45.81775,31.818 C46.82275,30.813 46.82275,29.186 45.81775,28.182 L18.38975,0.753 C17.38575,-0.251 15.75775,-0.251 14.75375,0.753 C13.74875,1.758 13.74875,3.385 14.75375,4.39 L40.36375,30 L14.75375,55.61 C13.74875,56.615 13.74875,58.242 14.75375,59.247"></path>
+              </svg>
+            </label>
+            <input type="radio" id="i-head-RENT" name="menu-list" class="c-menu-radio-list" />
+            <section class="c-flap-menu">
+              <div class="c-flap-content-wrapper">
+                <label for="i-head-RENT-open" class="c-close-flap-icon">
+                  <svg x="0px" y="0px" width="15px" height="15px" viewBox="0 0 512 512" style="fill: #262626;">
+                    <path d="M123.5,240.5c-4.3,4.3-6.4,9.9-6.4,15.5c0,5.6,2.1,11.2,6.4,15.5l234.1,234.1c4.3,4.3,9.9,6.4,15.5,6.4c5.6,0,11.2-2.1,15.5-6.4c8.6-8.6,8.6-22.5,0-31L170,256L388.5,37.5c8.6-8.6,8.6-22.5,0-31C384.3,2.1,378.6,0,373,0c-5.6,0-11.2,2.1-15.5,6.4L123.5,240.5z"></path>
+                  </svg>
+                  <span>Retour</span>
+                </label>
+                <a class="c-flap-category-title-mobile c-flap-title" href="/location.htm">Louer</a>
+                <div class="c-flap-list">
+                  <ul>
+                    <li>
+                      <a class href="/location.htm" target="_self">Appartement ou Maison</a>
+                    </li>
+                    <li>
+                      <a class href="https://www.bellesdemeures.com/#?CMP=INT_SL_Header" target="_blank" rel="noreferrer noopener">Bien d&apos;exception</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="c-flap-list">
+                  <ul>
+                    <li>
+                      <a class href="/locations-temporaires.htm#?BD=Head_LO_Temp_5" target="_self">Location temporaire</a>
+                    </li>
+                    <li>
+                      <a class href="https://seloger-bureaux-commerces.com/#?CMP=INT_Head_LO_7" target="_self">Bureaux &amp; Commerces</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="c-flap-list">
+                  <div class="c-flap-title">Outils</div>
+                  <ul>
+                    <li>
+                      <a class href="/proprietaire/louer/#?m=header_rent_landlord_services_owner_page_rent" target="_self">Services propriétaire</a>
+                    </li>
+                    <li>
+                      <a class href="/prix-de-l-immo/location/pays/madagascar.htm#?m=header-louer-estimation_prix_loyers" target="_self">Estimation prix des loyers</a>
+                    </li>
+                    <li>
+                      <a class href="https://edito.seloger.com/conseils-d-experts/louer/check-lists-de-louer-un-appartement-sommaire.html" target="_self">Check-lists location</a>
+                    </li>
+                    <li>
+                      <a class href="https://edito.seloger.com/preparer-dossier-de-location-book-4215.html" target="_self">Dossier de location</a>
+                    </li>
+                    <li>
+                      <a class="c-red-button-wrapper" href="https:/mettre-en-location.htm#?BD=Head_LO_Part_10" target="_self">Déposez votre annonce</a>
+                    </li>
+                  </ul>
+                </div>
+                <input class="c-close-flap-element" type="radio" id="i-head-RENT-open" name="menu-list" />
+              </div>
+            </section>
+          </li>
+        
+          <li class="c-main-list">
+            <div class="c-main-link-block">
+              <a class="c-main-link" href=" https://seloger-bureaux-commerces.com/#?CMP=INT_SLBC_1" target="_self">Bureaux &amp; Commerces</a>
+            </div>
+            <label for="i-head-OFFICE_SHOP" class="c-menu-icon-open">
+              <svg x="0px" y="0px" width="7px" height="12px" viewBox="0 0 33 60">
+                <path transform="translate(-14)" d="M14.75375,59.247 C15.25575,59.749 15.91175,60 16.57175,60 C17.23175,60 17.88775,59.749 18.38975,59.247 L45.81775,31.818 C46.82275,30.813 46.82275,29.186 45.81775,28.182 L18.38975,0.753 C17.38575,-0.251 15.75775,-0.251 14.75375,0.753 C13.74875,1.758 13.74875,3.385 14.75375,4.39 L40.36375,30 L14.75375,55.61 C13.74875,56.615 13.74875,58.242 14.75375,59.247"></path>
+              </svg>
+            </label>
+            <input type="radio" id="i-head-OFFICE_SHOP" name="menu-list" class="c-menu-radio-list" />
+            <section class="c-flap-menu">
+              <div class="c-flap-content-wrapper">
+                <label for="i-head-OFFICE_SHOP-open" class="c-close-flap-icon">
+                  <svg x="0px" y="0px" width="15px" height="15px" viewBox="0 0 512 512" style="fill: #262626;">
+                    <path d="M123.5,240.5c-4.3,4.3-6.4,9.9-6.4,15.5c0,5.6,2.1,11.2,6.4,15.5l234.1,234.1c4.3,4.3,9.9,6.4,15.5,6.4c5.6,0,11.2-2.1,15.5-6.4c8.6-8.6,8.6-22.5,0-31L170,256L388.5,37.5c8.6-8.6,8.6-22.5,0-31C384.3,2.1,378.6,0,373,0c-5.6,0-11.2,2.1-15.5,6.4L123.5,240.5z"></path>
+                  </svg>
+                  <span>Retour</span>
+                </label>
+                <a class="c-flap-category-title-mobile c-flap-title" href=" https://seloger-bureaux-commerces.com/#?CMP=INT_SLBC_1">Bureaux &amp; Commerces</a>
+                <div class="c-flap-list">
+                  <div class="c-flap-title">Acheter</div>
+                  <ul>
+                    <li>
+                      <a class href=" https://seloger-bureaux-commerces.com/achat/bureau#?CMP=INT_SLBC_2" target="_blank" rel="noreferrer noopener">Bureau</a>
+                    </li>
+                    <li>
+                      <a class href="https://seloger-bureaux-commerces.com/achat/fonds-de-commerce#?CMP=INT_SLBC_3" target="_blank" rel="noreferrer noopener">Fonds de commerce</a>
+                    </li>
+                    <li>
+                      <a class href="https://seloger-bureaux-commerces.com/achat/boutique#?CMP=INT_SLBC_4" target="_blank" rel="noreferrer noopener">Boutique</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="c-flap-list">
+                  <div class="c-flap-title">Louer</div>
+                  <ul>
+                    <li>
+                      <a class href=" https://seloger-bureaux-commerces.com/location/bureau#?CMP=INT_SLBC_5" target="_blank" rel="noreferrer noopener">Bureau</a>
+                    </li>
+                    <li>
+                      <a class href="https://seloger-bureaux-commerces.com/location/coworking#?CMP=INT_SLBC_6" target="_blank" rel="noreferrer noopener">Espace de coworking</a>
+                    </li>
+                    <li>
+                      <a class href="https://seloger-bureaux-commerces.com/location/local-d-activites-entrepot#?CMP=INT_SLBC_7" target="_blank" rel="noreferrer noopener">Entrepôt </a>
+                    </li>
+                  </ul>
+                </div>
+                <input class="c-close-flap-element" type="radio" id="i-head-OFFICE_SHOP-open" name="menu-list" />
+              </div>
+            </section>
+          </li>
+
+          <li class="c-main-list">
+            <div class="c-main-link-block">
+              <a class="c-main-link" href="#" target="_self">Emménager</a>
+            </div>
+            <label for="i-head-MOVE_IN" class="c-menu-icon-open">
+              <svg x="0px" y="0px" width="7px" height="12px" viewBox="0 0 33 60">
+                <path transform="translate(-14)" d="M14.75375,59.247 C15.25575,59.749 15.91175,60 16.57175,60 C17.23175,60 17.88775,59.749 18.38975,59.247 L45.81775,31.818 C46.82275,30.813 46.82275,29.186 45.81775,28.182 L18.38975,0.753 C17.38575,-0.251 15.75775,-0.251 14.75375,0.753 C13.74875,1.758 13.74875,3.385 14.75375,4.39 L40.36375,30 L14.75375,55.61 C13.74875,56.615 13.74875,58.242 14.75375,59.247"></path>
+              </svg>
+            </label>
+            <input type="radio" id="i-head-MOVE_IN" name="menu-list" class="c-menu-radio-list" />
+            <section class="c-flap-menu">
+              <div class="c-flap-content-wrapper">
+                <label for="i-head-MOVE_IN-open" class="c-close-flap-icon">
+                  <svg x="0px" y="0px" width="15px" height="15px" viewBox="0 0 512 512" style="fill: #262626;">
+                    <path d="M123.5,240.5c-4.3,4.3-6.4,9.9-6.4,15.5c0,5.6,2.1,11.2,6.4,15.5l234.1,234.1c4.3,4.3,9.9,6.4,15.5,6.4c5.6,0,11.2-2.1,15.5-6.4c8.6-8.6,8.6-22.5,0-31L170,256L388.5,37.5c8.6-8.6,8.6-22.5,0-31C384.3,2.1,378.6,0,373,0c-5.6,0-11.2,2.1-15.5,6.4L123.5,240.5z"></path>
+                  </svg>
+                  <span>Retour</span>
+                </label>
+                <a class="c-flap-category-title-mobile c-flap-title" href="#">Emménager</a>
+                <div class="c-flap-list">
+                  <ul>
+                    <li>
+                      <a class href="https://www.nextories.com/partner/landing/seloger" target="_blank" rel="noreferrer noopener">Organisez votre déménagement</a>
+                    </li>
+                    <li>
+                      <a class href="/demenagement_formulaire?utm_medium=rubrique-emmenager" target="_self">Votre check-list déménagement</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="c-flap-list">
+                  <ul>
+                    <li>
+                      <span class="c-red-button-wrapper" id="demenagez-engie" target="_blank">Déménagez facile avec ENGIE</span>
+                    </li>
+                  </ul>
+                </div>
+                <input class="c-close-flap-element" type="radio" id="i-head-MOVE_IN-open" name="menu-list" />
+              </div>
+            </section>
+          </li>
+          <li class="c-main-list">
+            <div class="c-main-link-block">
+              <a class="c-main-link" href="/vendre.htm#?m=header-vendre" target="_self">Vendre</a>
+            </div>
+            <label for="i-head-SELL" class="c-menu-icon-open">
+              <svg x="0px" y="0px" width="7px" height="12px" viewBox="0 0 33 60">
+                <path transform="translate(-14)" d="M14.75375,59.247 C15.25575,59.749 15.91175,60 16.57175,60 C17.23175,60 17.88775,59.749 18.38975,59.247 L45.81775,31.818 C46.82275,30.813 46.82275,29.186 45.81775,28.182 L18.38975,0.753 C17.38575,-0.251 15.75775,-0.251 14.75375,0.753 C13.74875,1.758 13.74875,3.385 14.75375,4.39 L40.36375,30 L14.75375,55.61 C13.74875,56.615 13.74875,58.242 14.75375,59.247"></path>
+              </svg>
+            </label>
+            <input type="radio" id="i-head-SELL" name="menu-list" class="c-menu-radio-list" />
+            <section class="c-flap-menu">
+              <div class="c-flap-content-wrapper">
+                <label for="i-head-SELL-open" class="c-close-flap-icon">
+                  <svg x="0px" y="0px" width="15px" height="15px" viewBox="0 0 512 512" style="fill: #262626;">
+                    <path d="M123.5,240.5c-4.3,4.3-6.4,9.9-6.4,15.5c0,5.6,2.1,11.2,6.4,15.5l234.1,234.1c4.3,4.3,9.9,6.4,15.5,6.4c5.6,0,11.2-2.1,15.5-6.4c8.6-8.6,8.6-22.5,0-31L170,256L388.5,37.5c8.6-8.6,8.6-22.5,0-31C384.3,2.1,378.6,0,373,0c-5.6,0-11.2,2.1-15.5,6.4L123.5,240.5z"></path>
+                  </svg>
+                  <span>Retour</span>
+                </label>
+                <a class="c-flap-category-title-mobile c-flap-title" href="/vendre.htm#?m=header-vendre">Vendre</a>
+                <div class="c-flap-list">
+                  <div class="c-flap-title">Vente d&apos;un bien</div>
+                  <ul>
+                    <li>
+                      <a class href="https://edito.seloger.com/preparer-book-13835.html" target="_blank" rel="noreferrer noopener">Préparer la vente</a>
+                    </li>
+                    <li>
+                      <a class href="https://edito.seloger.com/je-me-fais-une-idee-des-prix-book-13865.html" target="_blank" rel="noreferrer noopener">Définir le prix de vente</a>
+                    </li>
+                    <li>
+                      <a class href="https://edito.seloger.com/organiser-book-13841.html" target="_blank" rel="noreferrer noopener">Mettre en vente</a>
+                    </li>
+                    <li>
+                      <a class href="https://edito.seloger.com/finaliser-book-13844.html" target="_blank" rel="noreferrer noopener">Trouver le bon acheteur</a>
+                    </li>
+                    <li>
+                      <a class href="https://edito.seloger.com/vendre-book-13838.html" target="_blank" rel="noreferrer noopener">Conclure la vente</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="c-flap-list">
+                  <div class="c-flap-title">Propriétaire</div>
+                  <ul>
+                    <li>
+                      <a class href="/proprietaire/vendre#?m=header_sell_landlord_services_owner_page_sell" target="_self">Voir tous les services</a>
+                    </li>
+                    <li>
+                      <a class href="/estimation-immobiliere.html#?m=header-vendre-estimation_immobiliere" target="_self">Estimation immobilière</a>
+                    </li>
+                    <li>
+                      <a class href="/prix-de-l-immo/vente/pays/madagascar.htm#?m=header-vendre-prix_immo" target="_self">Carte des prix de l&apos;immobilier</a>
+                    </li>
+                    <li>
+                      <a class="c-red-button-wrapper" href=" https://www.seloger.com/depot-annonce/vente-particulier#?m=sell_mega_menu_deposit_ads_fsbo-introduction" target="_self">Déposez votre annonce</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="c-flap-list">
+                  <div class="c-flap-title">Accompagnement par une agence</div>
+                  <ul>
+                    <li>
+                      <a class href="/annuaire/?#m=header-vendre-annuaire" target="_self">Annuaire des professionnels</a>
+                    </li>
+                  </ul>
+                </div>
+                <input class="c-close-flap-element" type="radio" id="i-head-SELL-open" name="menu-list" />
+              </div>
+            </section>
+          </li>
+          <li class="c-deposit-wrapper">
+            <a href="/depot-annonce/" class="c-deposit-button">
+              <span>
+                <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="18" height="18" viewBox="0 0 18 18">
+                  <path id="a" d="M9.022.9c.483 0 .874.39.874.872v6.356h6.33a.873.873 0 1 1 0 1.744l-6.33-.001v6.357a.873.873 0 0 1-.874.872.873.873 0 0 1-.874-.872l-.001-6.357H1.774a.873.873 0 1 1 0-1.743h6.373V1.772c0-.482.392-.872.875-.872z"></path>
+                </svg>Je dépose une annonce </span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="c-header-container">
+        <div class="c-head">
+          <div class="c-head-logo">
+            <a href="/" aria-label="Logo">Logo</a>
+          </div>
+          <div class="c-deposit-wrapper-tablet">
+            <a href="/depot-annonce/" class="c-deposit-button">
+              <span>
+                <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="18" height="18" viewBox="0 0 18 18">
+                  <path id="a" d="M9.022.9c.483 0 .874.39.874.872v6.356h6.33a.873.873 0 1 1 0 1.744l-6.33-.001v6.357a.873.873 0 0 1-.874.872.873.873 0 0 1-.874-.872l-.001-6.357H1.774a.873.873 0 1 1 0-1.743h6.373V1.772c0-.482.392-.872.875-.872z"></path>
+                </svg>Je dépose une annonce </span>
+            </a>
+          </div>
+        </div>
+        <div class="kit-modules-wrapper">
+          <div id="huggy"></div>
+          <div id="espacePerso"></div>
+        </div>
+      </div>
+      <div id="ep-modal-container"></div>
+      <div id="ep-corona-container"></div>
+    </header>
+    
+    
+    <div id="root"> {% block contentRoot%}
+      <style data-styled="bArLic   hhrdVH dHyGsK WgEYE kMBzNi btSMcs bGznpc hIJamd bNyfAI hCkRUj fPrhdq lmmOQN hMMDba kNyYrV bQvcUT bltVrv gQPIvP hVmBtK fUsmzP gXioET kWIcoK dukcTe gdDxhh gMMXyT jGdxeq bPBqZP cjRjHK gnbpgr jMmMnW jtrfkq hAPtLq QNHOA llAvWA" data-styled-version="4.4.1">
+        /* sc-component-id: sc-global-420583267 */
+        @font-face {
+          font-family: 'Cera SL';
+          font-style: normal;
+          font-weight: 400;
+          src: url('https://website-assets.seloger.com/commons/fonts/cera-sl/CeraSLsys-Regular.woff2') format('woff2');
+          font-display: swap;
+        }
+
+        @font-face {
+          font-family: 'Cera SL';
+          font-style: normal;
+          font-weight: 800;
+          src: url('https://website-assets.seloger.com/commons/fonts/cera-sl/CeraSLsys-Bold.woff2') format('woff2');
+          font-display: swap;
+        }
+
+        body {
+          margin: 0;
+        }
+
+        body,
+        input,
+        button,
+        select,
+        textarea {
+          font-family: Cera SL, Helvetica, Arial, sans-serif;
+          font-size: 14px;
+        }
+
+        * {
+          box-sizing: border-box;
+        }
+
+        /* sc-component-id: SeoLinksstyled__SeoLinksContainer-n3mtu0-0 */
+        .gnbpgr {
+          background-color: #fff;
+          width: 100%;
+          height: 100%;
+        }
+
+        /* sc-component-id: SeoLinksstyled__SeoLinksWrapper-n3mtu0-1 */
+        .jMmMnW {
+          margin: 0 auto;
+          -webkit-flex-direction: row;
+          -ms-flex-direction: row;
+          flex-direction: row;
+          padding-bottom: 36px;
+        }
+
+        /* sc-component-id: SeoLinksstyled__SeoBlocks-n3mtu0-2 */
+        .jtrfkq {
+          display: -webkit-box;
+          display: -webkit-flex;
+          display: -ms-flexbox;
+          display: flex;
+          line-height: 170%;
+          white-space: nowrap;
+          -webkit-flex-direction: row;
+          -ms-flex-direction: row;
+          flex-direction: row;
+          -webkit-box-pack: justify;
+          -webkit-justify-content: space-between;
+          -ms-flex-pack: justify;
+          justify-content: space-between;
+          font-size: 14px;
+        }
+
+        .jtrfkq a {
+          display: block;
+          color: #000000;
+        }
+
+        @media screen and (max-width:886px) {
+          .jtrfkq {
+            -webkit-flex-direction: column;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            margin-left: 24px;
+          }
+
+          .jtrfkq div {
+            margin-top: 18px;
+          }
+
+          .jtrfkq a {
+            padding: 5px 0;
+          }
+        }
+
+        @media screen and (max-width:768px) {
+          .jtrfkq {
+            white-space: nowrap;
+          }
+        }
+
+        /* sc-component-id: SeoLinksstyled__SeoBlockToolsWrapper-n3mtu0-3 */
+        .llAvWA {
+          background: #f5f7fa;
+          box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
+          font-size: 14px;
+          font-weight: 400;
+          padding: 8px 12px;
+          line-height: 1.71;
+          border-radius: 2px;
+          position: relative;
+          white-space: normal;
+          width: 25%;
+          margin-right: 10px;
+        }
+
+        @media screen and (max-width:886px) {
+          .llAvWA {
+            display: none;
+          }
+        }
+
+        .llAvWA div {
+          font-weight: 800;
+          margin-top: 6px;
+        }
+
+        .llAvWA span {
+          margin-bottom: 4px;
+          line-height: 16px;
+          display: block;
+          text-transform: uppercase;
+          font-weight: 800;
+          color: #e30513;
+        }
+
+        .llAvWA::before {
+          z-index: 0;
+          position: absolute;
+          display: block;
+          background-color: inherit;
+          left: -7px;
+          top: 45%;
+          width: 16px !important;
+          height: 16px !important;
+          margin-top: -5px;
+          -webkit-transform: rotate(45deg);
+          -ms-transform: rotate(45deg);
+          transform: rotate(45deg);
+          content: '';
+        }
+
+        /* sc-component-id: SeoLinksstyled__SeoLinkTitle-n3mtu0-4 */
+        .QNHOA {
+          margin: 0 0 12px;
+        }
+
+        /* sc-component-id: SeoLinksstyled__SeoBlockLineWrapper-n3mtu0-5 */
+        .hAPtLq {
+          font-size: 14px;
+          padding-right: 5px;
+        }
+
+        /* sc-component-id: Sectionstyled__StyledSection-sc-1g95cvj-0 */
+        .bQvcUT {
+          height: auto;
+          background: none;
+          max-width: 1024px;
+          margin: 0 auto;
+          padding: 48px 0px;
+        }
+
+        .bQvcUT #button {
+          -webkit-box-pack: center;
+          -webkit-justify-content: center;
+          -ms-flex-pack: center;
+          justify-content: center;
+        }
+
+        .bltVrv {
+          height: auto;
+          background: white;
+          max-width: 1024px;
+          margin: 0 auto;
+          padding: 48px 0px;
+        }
+
+        .bltVrv #button {
+          -webkit-box-pack: center;
+          -webkit-justify-content: center;
+          -ms-flex-pack: center;
+          justify-content: center;
+        }
+
+        /* sc-component-id: Sectionstyled__StyledHead-sc-1g95cvj-1 */
+        .gQPIvP {
+          padding-bottom: 12px;
+          text-align: left;
+          font-weight: 400;
+          position: relative;
+          margin: 0px 0px 24px 0px;
+        }
+
+        .gQPIvP::after {
+          content: '';
+          border-radius: 4px;
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          width: 24px;
+          height: 4px;
+          background-color: #E30513;
+        }
+
+        @media screen and (max-width:1025px) {
+          .gQPIvP {
+            margin: 0px 0px 24px 24px;
+          }
+        }
+
+        /* sc-component-id: Sectionstyled__StyledSectionWrapper-sc-1g95cvj-2 */
+        .hVmBtK {
+          max-width: 1024px;
+          text-align: left;
+          display: -webkit-box;
+          display: -webkit-flex;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-flex-direction: row;
+          -ms-flex-direction: row;
+          flex-direction: row;
+          -webkit-flex-wrap: wrap;
+          -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+          -webkit-box-pack: justify;
+          -webkit-box-pack: justify;
+          -webkit-justify-content: space-between;
+          -ms-flex-pack: justify;
+          justify-content: space-between;
+          -webkit-box-align: center;
+          -webkit-align-items: center;
+          -webkit-box-align: center;
+          -ms-flex-align: center;
+          align-items: center;
+          margin: 0px auto;
+        }
+
+        @media (max-width:1024px) {
+          .hVmBtK {
+            -webkit-box-pack: center;
+            -webkit-justify-content: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-flex-direction: column;
+            -ms-flex-direction: column;
+            flex-direction: column;
+          }
+        }
+
+        /* sc-component-id: SearchEnginestyled__MainContainer-ff40l9-0 */
+        .WgEYE {
+          height: auto;
+          margin: 0 auto 12px;
+          padding: 0 12px;
+          position: relative;
+          width: 100%;
+          color: #fff;
+          text-align: center;
+          box-sizing: border-box;
+          z-index: 1;
+          display: inline-block;
+        }
+
+        @media screen and (max-width:555px) {
+          .WgEYE {
+            padding-bottom: 30px;
+          }
+        }
+
+        /* sc-component-id: SearchEnginestyled__Quest-ff40l9-1 */
+        .btSMcs {
+          display: -webkit-box;
+          display: -webkit-flex;
+          display: -ms-flexbox;
+          display: flex;
+        }
+
+        /* sc-component-id: SearchEnginestyled__QuestContainer-ff40l9-2 */
+        .bGznpc {
+          -webkit-border-bottom-right-radius: 4px;
+          -webkit-border-bottom-left-radius: 4px;
+          -moz-border-radius-bottomright: 4px;
+          -moz-border-radius-bottomleft: 4px;
+          border-bottom-right-radius: 4px;
+          border-bottom-left-radius: 4px;
+          position: relative;
+          visibility: visible;
+          left: 0;
+          min-height: 261px;
+          max-width: 510px;
+          width: 100%;
+          background: #fff;
+          padding: 0 24px;
+          text-align: left;
+          opacity: 1;
+          margin: auto;
+          margin-top: 40px;
+          box-shadow: 0 10px 14px rgba(0, 0, 0, 0.1);
+          z-index: 1;
+        }
+
+        .bGznpc.tab-3 {
+          min-height: 228px;
+        }
+
+        .bGznpc .active,
+        .bGznpc .visible {
+          display: block;
+        }
+
+        .bGznpc .inactive,
+        .bGznpc .invisible {
+          display: none;
+        }
+
+        .bGznpc .c-quest-tabs {
+          margin: 0 -24px;
+          position: relative;
+          top: -40px;
+          text-align: center;
+        }
+
+        .bGznpc .c-quest-tabs input {
+          display: none;
+        }
+
+        .bGznpc .c-quest-tabs ul {
+          margin: 0;
+          padding: 0;
+        }
+
+        .bGznpc .c-quest-tabs ul li {
+          display: inline-block;
+          margin: 0 0 0 -4px;
+          padding: 0;
+          list-style-type: none;
+          font-weight: 800;
+          vertical-align: bottom;
+        }
+
+        .bGznpc .c-quest-tabs ul li a {
+          display: block;
+          width: 140px;
+          line-height: 42px;
+          padding: 0 10px;
+          background: #494949;
+          -webkit-text-decoration: none;
+          text-decoration: none;
+          color: #fff;
+          border-left: 1px solid rgba(0, 0, 0, 0.15);
+        }
+
+        .bGznpc .c-quest-tabs .containerList {
+          display: -webkit-box;
+          display: -webkit-flex;
+          display: -ms-flexbox;
+          display: flex;
+        }
+
+        .bGznpc .c-quest-tabs .itemList {
+          display: inline-block;
+          padding: 0;
+          list-style-type: none;
+          font-size: 18px;
+          vertical-align: bottom;
+          width: 50%;
+        }
+
+        .bGznpc .c-quest-tabs .itemList label {
+          cursor: pointer;
+          display: block;
+          line-height: 40px;
+          background-color: rgba(38, 38, 38, 0.7);
+          -webkit-text-decoration: none;
+          text-decoration: none;
+          color: #fff;
+          border-radius: 4px 4px 0 0;
+          height: 40px;
+        }
+
+        .bGznpc .c-quest-tabs .itemList input:checked+label {
+          background: #fff;
+          color: #262626;
+          border-radius: 4px 4px 0 0;
+          border-left: none;
+          z-index: 1;
+          position: relative;
+          border-bottom: 1px solid #fff;
+        }
+
+        .bGznpc .c-quest-tabs .itemList:first-child {
+          padding: 0 1px 0 0;
+        }
+
+        .bGznpc .c-quest-tabs .itemList:last-child {
+          padding: 0 0 0 1px;
+        }
+
+        .bGznpc .c-quest-tabs label {
+          cursor: pointer;
+          display: block;
+          line-height: 40px;
+          background-color: rgba(38, 38, 38, 0.7);
+          -webkit-text-decoration: none;
+          text-decoration: none;
+          color: #fff;
+          border-radius: 4px 4px 0 0;
+          height: 40px;
+        }
+
+        .bGznpc #agatha_estimer.visible,
+        .bGznpc #agatha_budget.visible,
+        .bGznpc #agatha_autocomplete.visible {
+          position: relative;
+        }
+
+        .bGznpc #agatha_estimer_autocompleteUI,
+        .bGznpc #agatha_autocomplete_autocompleteUI {
+          padding: 6px 6px;
+          border: 1px solid #ccd1d9;
+          border-radius: 4px;
+          color: #262626;
+        }
+
+        .bGznpc .CriterionAutocompleteView {
+          margin-right: 6px;
+        }
+
+        .bGznpc .CriterionAutocompleteView.visible {
+          display: inline-block;
+        }
+
+        .bGznpc .CriterionAutocompleteView.visible input {
+          height: 32px;
+          line-height: 32px;
+          width: 100%;
+          background: 0 0;
+          border: 0;
+          display: inline-block;
+          font-size: 16px;
+          color: #262626;
+        }
+
+        .bGznpc #agatha_budget.visible {
+          width: 191px;
+          display: inline-block;
+          vertical-align: top;
+          text-align: left;
+          line-height: 24px;
+          padding: 6px 6px;
+          border: 1px solid #ccd1d9;
+          border-radius: 4px;
+          min-height: 46px;
+          color: #262626;
+        }
+
+        .bGznpc #agatha_budget.visible input {
+          display: inline-block;
+          height: 32px;
+          line-height: 32px;
+          width: 100%;
+          background: 0 0;
+          border: 0;
+          font-size: 16px;
+          padding-right: 20px;
+        }
+
+        .bGznpc #agatha_budget.visible .unit {
+          position: absolute;
+          right: 13px;
+          top: 9px;
+          color: #262626;
+          font-size: 22px;
+        }
+
+        .bGznpc .slam-aui.autocompleteUI.has-tags>.slam-aui-input-fake>#agatha_autocomplete_autocompleteUI__input,
+        .bGznpc .slam-aui.autocompleteUI.has-tags>.slam-aui-input-fake>#agatha_autocomplete_autocompleteUI__input {
+          width: 100px !important;
+        }
+
+        .bGznpc #agatha_estimer.visible input:-ms-input-placeholder,
+        .bGznpc #agatha_autocomplete.visible input:-ms-input-placeholder,
+        .bGznpc #agatha_budget.visible input:-ms-input-placeholder {
+          color: #9198a2 !important;
+        }
+
+        .bGznpc .slam-aui.autocompleteUI.has-tags .slam-aui-tags {
+          display: inline-block;
+        }
+
+        .bGznpc #agatha_autocomplete_autocompleteUI {
+          width: 460px;
+        }
+
+        .bGznpc #agatha_estimer_autocompleteUI {
+          max-height: 46px;
+          overflow: hidden;
+          margin: 0 auto;
+          width: 280px;
+        }
+
+        .bGznpc #agatha_biens,
+        .bGznpc #fakeMetarefiner .c-quest-field-autoc {
+          height: auto;
+          -webkit-transition: all 0.5s;
+          transition: all 0.5s;
+          border: 0;
+        }
+
+        .bGznpc #agatha_biens.visible {
+          display: block;
+          margin-top: 16px;
+        }
+
+        .bGznpc #agatha_biens.visible i.fi-plus:before,
+        .bGznpc #agatha_biens.visible i.fi-chevron-up:before,
+        .bGznpc #agatha_biens.visible #agatha_biens .itemList input:checked+label i:before {
+          visibility: visible;
+        }
+
+        .bGznpc #agatha_biens.visible input {
+          display: none;
+        }
+
+        .bGznpc #agatha_biens.visible .description {
+          position: absolute;
+          bottom: 30px;
+          color: red;
+        }
+
+        .bGznpc #agatha_biens.visible .containerList {
+          font-size: 0;
+        }
+
+        .bGznpc #agatha_biens.visible .containerList .itemList:last-child input+label,
+        .bGznpc #agatha_biens.visible .containerList .itemList:nth-child(3) input+label {
+          width: 32px;
+          height: 32px;
+          cursor: pointer;
+          border: 1px dashed #ccd1d9;
+          background-color: #fff;
+          padding: 0;
+        }
+
+        .bGznpc #agatha_biens.visible .itemList {
+          color: #262626;
+          display: inline-block;
+          margin-right: 6px;
+          margin-bottom: 6px;
+          font-size: 12px;
+          position: relative;
+        }
+
+        .bGznpc #agatha_biens.visible .itemList input:checked+label {
+          border: 1px solid #1a6fda;
+        }
+
+        .bGznpc #agatha_biens.visible .itemList input:checked+label .fi-check {
+          border: 1px solid #1a6fda;
+          background-color: #1a6fda;
+          color: #fff;
+          font-size: 8px;
+        }
+
+        .bGznpc #agatha_biens.visible .itemList input:checked+label i:before {
+          visibility: visible;
+        }
+
+        .bGznpc #agatha_biens.visible .itemList .fi-check:before {
+          position: relative;
+          left: 3px;
+          top: 1px;
+        }
+
+        .bGznpc #agatha_biens.visible .itemList label {
+          display: inline-block;
+          padding-right: 14px;
+          padding-left: 11px;
+          text-align: left;
+          vertical-align: top;
+          cursor: pointer;
+          white-space: nowrap;
+          line-height: 25px;
+          height: 32px;
+          word-wrap: break-word;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          border: 1px dashed #ccd1d9;
+          border-radius: 4px;
+          padding-top: 2px;
+        }
+
+        .bGznpc #agatha_biens.visible .itemList label i.fi-plus,
+        .bGznpc #agatha_biens.visible .itemList label i.fi-chevron-up {
+          border: 0;
+          font-size: 18px;
+          margin: 3px 0 0 0;
+          left: 7px;
+          top: 3px;
+          color: #262626;
+        }
+
+        .bGznpc #agatha_biens.visible .itemList label i {
+          display: inline-block;
+          width: 16px;
+          height: 16px;
+          content: ' ';
+          line-height: 10px;
+          font-size: 13px;
+          border-radius: 4px;
+          border: 1px solid #aab2bd;
+          cursor: pointer;
+          vertical-align: top;
+          position: relative;
+          top: 5px;
+          margin-right: 5px;
+        }
+
+        .bGznpc #agatha_biens.visible .itemList label i:before {
+          visibility: hidden;
+        }
+
+        .bGznpc #agatha_biens.visible .itemList label i.fi-plus:before,
+        .bGznpc #agatha_biens.visible .itemList label i.fi-chevron-up:before {
+          visibility: visible;
+        }
+
+        .bGznpc #agatha_biens.visible .itemList.inactive {
+          display: none;
+        }
+
+        .bGznpc .c-quest-links input,
+        .bGznpc .c-quest-links-types-search input {
+          display: none;
+        }
+
+        .bGznpc .c-quest-links a,
+        .bGznpc .c-quest-links-types-search a {
+          color: #1a6fda;
+          font-size: 12px;
+        }
+
+        .bGznpc .c-quest-links .fi,
+        .bGznpc .c-quest-links-types-search .fi {
+          font-size: 14px;
+        }
+
+        .bGznpc .c-quest-links a {
+          margin-top: -30px;
+          float: right;
+        }
+
+        .bGznpc .c-quest-links-types-search {
+          margin-top: 5px;
+        }
+
+        .bGznpc .c-quest-links-types-search a {
+          -webkit-text-decoration: none;
+          text-decoration: none;
+        }
+
+        .bGznpc .c-quest-links-types-search .link-text {
+          -webkit-text-decoration: underline;
+          text-decoration: underline;
+          margin-left: 4px;
+        }
+
+        .bGznpc .c-quest-links-types-search .itemList {
+          display: inline-block;
+        }
+
+        .bGznpc .c-quest-links-types-search .search-draw {
+          margin-left: 18px;
+        }
+
+        .bGznpc .c-quest-actions .containerList {
+          text-align: center;
+        }
+
+        .bGznpc .c-quest-actions input {
+          display: none;
+        }
+
+        .bGznpc .c-quest-actions .c-quest-actions-search {
+          margin: 24px 0;
+          background-color: #e30513;
+          border-color: #e30513;
+          position: relative;
+          display: -webkit-inline-box;
+          display: -webkit-inline-flex;
+          display: -ms-inline-flexbox;
+          display: inline-flex;
+          -webkit-box-align: center;
+          -webkit-align-items: center;
+          -webkit-box-align: center;
+          -ms-flex-align: center;
+          align-items: center;
+          -webkit-box-pack: center;
+          -webkit-box-pack: center;
+          -webkit-justify-content: center;
+          -ms-flex-pack: center;
+          justify-content: center;
+          box-sizing: border-box;
+          outline: none;
+          border: 1px solid rgb(224, 0, 52);
+          -webkit-transition-duration: 0.2s;
+          transition-duration: 0.2s;
+          cursor: pointer;
+          -webkit-text-decoration: none;
+          text-decoration: none;
+          background-color: rgb(224, 0, 52);
+          color: rgb(255, 255, 255);
+          height: 50px;
+          border-radius: 32px;
+          font-size: 16px;
+          min-width: 125px;
+          padding: 0px 24px;
+        }
+
+        .bGznpc .c-quest-actions .c-quest-actions-search:hover {
+          border-color: rgb(177, 0, 41);
+          color: rgb(255, 255, 255);
+          background-color: rgb(255, 60, 84);
+        }
+
+        .bGznpc .c-quest-actions .itemList:not(:last-child) {
+          text-align: center;
+          margin-top: 24px;
+        }
+
+        @media screen and (max-width:1280px) {
+          .bGznpc .c-quest-actions .itemList:not(:last-child) {
+            margin-top: 6px;
+          }
+        }
+
+        .bGznpc .c-quest-actions .itemList:not(:last-child) a {
+          color: #e30513;
+          font-size: 14px;
+        }
+
+        .bGznpc #agatha_estimer.visible {
+          margin: auto;
+          display: block;
+          width: 280px;
+        }
+
+        .bGznpc #agatha_estimer.visible .title {
+          display: block;
+          font-size: 18px;
+          margin-bottom: 24px;
+          text-align: center;
+          font-weight: 800;
+          color: #262626;
+        }
+
+        .bGznpc .slam-aui-results {
+          background: #fff;
+          border: 1px solid #e6e9ed;
+          position: absolute;
+          z-index: 100;
+          color: #262626;
+          left: 0;
+          width: 100%;
+          text-align: left;
+        }
+
+        .bGznpc .slam-aui-results-line {
+          display: block;
+          padding: 10px;
+          cursor: pointer;
+          font-size: 14px;
+          border-bottom: 1px solid #e6e9ed;
+          color: #262626;
+        }
+
+        .bGznpc .slam-aui-results-line.focus,
+        .bGznpc .slam-aui-results-line:hover {
+          background: #f5f7fa;
+          color: #262626;
+          text-shadow: 1px 0 0 #262626;
+        }
+
+        .bGznpc .slam-aui-tags-line {
+          margin: 0 4px 4px 0;
+          padding: 4px 1px 4px 5px;
+          font-size: 14px;
+          background-color: #1a6fda;
+          color: #ffffff;
+          display: inline-block;
+          border-radius: 7px;
+          -webkit-text-decoration: none;
+          text-decoration: none;
+          text-align: left;
+          vertical-align: middle;
+          cursor: pointer;
+          -webkit-transition: all 0.3s ease-in-out;
+          transition: all 0.3s ease-in-out;
+        }
+
+        .bGznpc .slam-aui-tags-close .fi-close:before {
+          margin-right: 4px;
+          position: relative;
+          top: -1px;
+        }
+
+        @media screen and (max-width:555px) {
+          .bGznpc {
+            min-height: 354px;
+          }
+
+          .bGznpc.tab-3 {
+            min-height: 230px;
+          }
+
+          .bGznpc #agatha_autocomplete_autocompleteUI {
+            width: 100%;
+            margin-right: 0;
+          }
+
+          .bGznpc .c-quest-actions .itemList:first-child a {
+            font-size: 12px;
+          }
+
+          .bGznpc #agatha_autocomplete.visible {
+            width: 100%;
+            margin-bottom: 12px;
+            margin-right: 0;
+          }
+
+          .bGznpc #agatha_budget.visible {
+            margin-bottom: 7px;
+            margin-top: 26px;
+            width: 100%;
+          }
+
+          .bGznpc #moteur-engine input {
+            font-size: 14px;
+          }
+
+          .bGznpc .c-quest-links a {
+            float: none;
+          }
+
+          .bGznpc #agatha_biens.visible {
+            margin-top: 0;
+          }
+
+          .bGznpc #agatha_estimer.visible,
+          .bGznpc #agatha_estimer_autocompleteUI,
+          .bGznpc .location-field,
+          .bGznpc .budget {
+            width: 100%;
+          }
+
+          .bGznpc .c-quest-links-types-search {
+            position: relative;
+            top: -95px;
+          }
+        }
+
+        /* sc-component-id: SearchEnginestyled__WelcomeTitle-ff40l9-6 */
+        .kMBzNi {
+          padding: 32px 0px;
+          max-width: 510px;
+          text-align: left;
+          margin: 0 auto;
+          font-size: 32px;
+          font-weight: 800;
+          color: #2b2b2b;
+        }
+
+        @media screen and (max-width:769px) {
+          .kMBzNi {
+            padding: 16px 0px;
+            font-size: 28px;
+            text-align: center;
+          }
+        }
+
+        @media screen and (max-width:555px) {
+          .kMBzNi {
+            color: #fff;
+          }
+        }
+
+        /* sc-component-id: EngineSectionstyled__EngineSectionContainer-uuddou-0 */
+        .hhrdVH {
+          color: hsla(0, 0%, 100%, 0.6);
+          position: relative;
+          background-position: right bottom;
+          background-size: cover;
+          background-repeat: no-repeat;
+          min-height: 480px;
+        }
+
+        @media screen and (max-width:555px) {
+          .hhrdVH {
+            background-image: url('{{ asset('images/antananarivo.jpg') }}');
+          }
+        }
+
+        @media screen and (min-width:556px) and (max-width:1280px) {
+          .hhrdVH {
+            background-image: url('{{ asset('images/antananarivo.jpg') }}');
+          }
+		  .bGznpc #agatha_autocomplete_autocompleteUI{ margin-bottom:26px}
+        }
+
+        @media screen and (min-width:1281px) and (max-width:1400px) {
+          .hhrdVH {
+            background-image: url('{{ asset('images/antananarivo.jpg') }}');
+			.bGznpc #agatha_autocomplete_autocompleteUI{ margin-bottom:26px}
+          }
+		  .bGznpc #agatha_autocomplete_autocompleteUI{ margin-bottom:26px}
+        }
+
+        @media screen and (min-width:1401px) {
+          .hhrdVH {
+            background-image: url('{{ asset('images/antananarivo.jpg') }}');
+          }
+		  .bGznpc #agatha_autocomplete_autocompleteUI{ margin-bottom:26px}
+        }
+
+        @media screen and (min-width:2600px) {
+          .hhrdVH {
+            background-size: cover;
+          }
+		  .bGznpc #agatha_autocomplete_autocompleteUI{ margin-bottom:26px}
+        }
+
+        /* sc-component-id: EngineSectionstyled__AgathaForm-uuddou-1 */
+        .dHyGsK {
+          position: relative;
+          height: 100%;
+          color: #fff;
+          text-align: center;
+          box-sizing: border-box;
+        }
+
+        @media screen and (max-width:555px) {
+          .dHyGsK {
+            padding-top: 0px;
+          }
+        }
+
+        /* sc-component-id: sc-bdVaJa */
+        .hCkRUj {
+          display: inline-block;
+          width: 16px;
+          height: 16px;
+        }
+
+        .hCkRUj svg {
+          display: block;
+          width: 100%;
+          height: 100%;
+        }
+
+        .fPrhdq {
+          display: inline-block;
+          width: 12px;
+          height: 12px;
+          color: #656d78;
+        }
+
+        .fPrhdq svg {
+          display: block;
+          width: 100%;
+          height: 100%;
+        }
+
+        .lmmOQN {
+          display: inline-block;
+          width: 22px;
+          height: 22px;
+          cursor: pointer;
+        }
+
+        .lmmOQN svg {
+          display: block;
+          width: 100%;
+          height: 100%;
+        }
+
+        /* sc-component-id: CircularButtonstyled__ChevronIcon-sc-1635n8v-0 */
+        .bNyfAI {
+          -webkit-animation: 2s linear k-hwobble-inf 3s;
+          animation: 2s linear k-hwobble-inf 3s;
+          -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+          -webkit-animation: 2s linear k-hwobble-inf 3s;
+          -webkit-animation-iteration-count: infinite;
+          position: relative;
+          bottom: 0;
+          display: block;
+          width: 100%;
+        }
+
+        @media screen and (max-width:849px) {
+          .bNyfAI {
+            display: none;
+          }
+        }
+
+        /* sc-component-id: CircularButtonstyled__CloseButton-sc-1635n8v-2 */
+        .hMMDba {
+          border: none;
+          background: none;
+          position: absolute;
+          right: 0;
+          top: 0;
+          padding: 0;
+          width: 30px;
+          color: white;
+          height: 30px;
+          font-size: 14px;
+          line-height: 9px;
+          z-index: 50;
+          height: 30px;
+          width: 40px;
+          cursor: pointer;
+        }
+
+        @media screen and (max-width:468px) {
+          .hMMDba {
+            background-color: #d6ebef;
+            color: #000000;
+          }
+        }
+
+        /* sc-component-id: CircularButtonstyled__CircularButtonWrapper-sc-1635n8v-3 */
+        .hIJamd {
+          background: #E30513;
+          position: absolute;
+          left: 50%;
+          margin-left: -440px;
+          width: 140px;
+          height: 140px;
+          border-radius: 50%;
+          text-align: center;
+          color: #fff;
+          font-size: 16px;
+          z-index: 2;
+        }
+
+        @media screen and (min-width:850px) {
+          .hIJamd {
+            top: 160px;
+          }
+
+          .hIJamd button {
+            display: none;
+          }
+        }
+
+        .hIJamd span.tagText {
+          display: block;
+          font-weight: 800;
+        }
+
+        .hIJamd a {
+          color: #000000;
+          font-weight: bold;
+          font-size: 16px;
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          display: block;
+          padding: 30px 15px 0 15px;
+          color: #fff;
+          font-size: 16px;
+          z-index: 1;
+          -webkit-text-decoration: none;
+          text-decoration: none;
+        }
+
+        @media screen and (max-width:1023px) {
+          .hIJamd {
+            margin-right: -400px;
+          }
+        }
+
+        @media screen and (max-width:849px) {
+          .hIJamd {
+            -webkit-animation: none;
+            animation: none;
+            background-color: #d6ebef;
+            border-radius: 14px 14px 0px 0px;
+            display: block;
+            position: fixed;
+            top: auto;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            margin: 0;
+            text-align: left;
+            height: auto;
+            line-height: 9px;
+          }
+
+          .hIJamd .CircularButtonstyled__ChevronIcon-sc-1635n8v-0 {
+            display: none;
+          }
+
+          .hIJamd .CircularButtonstyled__CloseButton-sc-1635n8v-2 {
+            display: inline-block;
+          }
+
+          .hIJamd span.tagText {
+            margin-top: -13px;
+            top: 20px;
+            right: 2px;
+          }
+
+          .hIJamd a {
+            color: #000000;
+            font-weight: bold;
+            padding: 28px 15px;
+          }
+
+          @media screen and (max-width:555px) {
+            .hIJamd a {
+              position: relative;
+              height: auto;
+            }
+          }
+        }
+
+        @media screen and (max-width:555px) {
+          .hIJamd {
+            background-color: #d6ebef;
+          }
+
+          .hIJamd span.tagText {
+            color: #000000;
+          }
+        }
+
+        @-webkit-keyframes k-hwobble-inf {
+          10% {
+            -webkit-transform: translateY(6px);
+            -ms-transform: translateY(6px);
+            transform: translateY(6px);
+          }
+
+          20% {
+            -webkit-transform: translateY(-5px);
+            -ms-transform: translateY(-5px);
+            transform: translateY(-5px);
+          }
+
+          30% {
+            -webkit-transform: translateY(4px);
+            -ms-transform: translateY(4px);
+            transform: translateY(4px);
+          }
+
+          40% {
+            -webkit-transform: translateY(-2px);
+            -ms-transform: translateY(-2px);
+            transform: translateY(-2px);
+          }
+
+          50% {
+            -webkit-transform: translateY(0px);
+            -ms-transform: translateY(0px);
+            transform: translateY(0px);
+          }
+
+          100% {
+            -webkit-transform: translateY(0px);
+            -ms-transform: translateY(0px);
+            transform: translateY(0px);
+          }
+        }
+
+        @keyframes k-hwobble-inf {
+          10% {
+            -webkit-transform: translateY(6px);
+            -ms-transform: translateY(6px);
+            transform: translateY(6px);
+          }
+
+          20% {
+            -webkit-transform: translateY(-5px);
+            -ms-transform: translateY(-5px);
+            transform: translateY(-5px);
+          }
+
+          30% {
+            -webkit-transform: translateY(4px);
+            -ms-transform: translateY(4px);
+            transform: translateY(4px);
+          }
+
+          40% {
+            -webkit-transform: translateY(-2px);
+            -ms-transform: translateY(-2px);
+            transform: translateY(-2px);
+          }
+
+          50% {
+            -webkit-transform: translateY(0px);
+            -ms-transform: translateY(0px);
+            transform: translateY(0px);
+          }
+
+          100% {
+            -webkit-transform: translateY(0px);
+            -ms-transform: translateY(0px);
+            transform: translateY(0px);
+          }
+        }
+
+        /* sc-component-id: ServicesBlocksstyled__ServicesBlocksContainer-sc-1k4pe39-0 */
+        .gMMXyT {
+          width: 100%;
+          position: relative;
+          max-width: 1024px;
+          margin: 0 auto;
+        }
+
+        /* sc-component-id: ServicesBlocksstyled__ServicesBlocksWrapper-sc-1k4pe39-1 */
+        .jGdxeq {
+          width: 100%;
+          display: inline-block;
+          display: -webkit-box;
+          display: -webkit-flex;
+          display: -ms-flexbox;
+          display: flex;
+        }
+
+        .jGdxeq .block-ctr {
+          width: 33%;
+          height: 502px;
+        }
+
+        @media screen and (min-width:1025px) {
+          .jGdxeq .block-ctr:nth-child(2) {
+            margin: 0 50px;
+          }
+        }
+
+        @media screen and (max-width:1024px) {
+          .jGdxeq {
+            -webkit-flex-direction: column;
+            -ms-flex-direction: column;
+            flex-direction: column;
+          }
+
+          .jGdxeq .block-ctr {
+            width: 100%;
+            min-height: 0;
+            height: auto;
+            padding: 0 15px;
+            box-sizing: border-box;
+            margin-bottom: 24px;
+          }
+        }
+
+        /* sc-component-id: ServicesBlocksstyled__Block-sc-1k4pe39-2 */
+        .bPBqZP {
+          background-color: #ffffff;
+          color: #000;
+          display: block;
+          border-radius: 3px;
+          padding: 20px 0;
+          height: 100%;
+          -webkit-transition: all 0.2s ease-in-out;
+          transition: all 0.2s ease-in-out;
+          width: 100%;
+          box-shadow: 0 0 6px 0 #d8d8d8;
+        }
+
+        .bPBqZP .c-title-600 {
+          font-size: 22px;
+          padding: 0 0 30px 0;
+          font-weight: 400;
+        }
+
+        .bPBqZP .c-title-chevron {
+          position: relative;
+          padding-bottom: 15px;
+          margin-bottom: 15px;
+        }
+
+        .bPBqZP .c-title-chevron:before {
+          content: '';
+          display: block;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          border-bottom: 1px solid #c8c8c8;
+        }
+
+        .bPBqZP .c-title {
+          text-align: center;
+          color: #E30513;
+          margin: 0 10px 15px 10px;
+          display: block;
+          font-size: 20px !important;
+        }
+
+        .bPBqZP a {
+          position: relative;
+          display: block;
+          font-size: 18px;
+          font-weight: 400;
+          padding: 15px 25px 15px 80px;
+          -webkit-text-decoration: none;
+          text-decoration: none;
+          color: #494949;
+          text-align: left;
+        }
+
+        .bPBqZP a:hover {
+          background: #494949;
+          color: #ffffff;
+        }
+
+        .bPBqZP a::before {
+          position: absolute;
+          top: 50%;
+          left: 25px;
+          font-size: 40px;
+          height: 40px;
+          width: 40px;
+          line-height: 40px;
+          margin: -20px 0 0 0;
+        }
+
+        /* sc-component-id: ServicesBlocksstyled__Card-sc-1k4pe39-3 */
+        .cjRjHK {
+          width: 100%;
+        }
+
+        @media screen and (max-width:1024px) {
+          .cjRjHK {
+            display: inline-block;
+            width: 50%;
+          }
+        }
+
+        @media screen and (max-width:640px) {
+          .cjRjHK {
+            width: 100% !important;
+          }
+        }
+
+        /* sc-component-id: EditorialLinkstyled__BlockLinkContainer-sc-1a1flvf-0 */
+        .gXioET {
+          display: -webkit-box;
+          display: -webkit-flex;
+          display: -ms-flexbox;
+          display: flex;
+          width: 230px;
+          height: auto;
+          -webkit-flex-direction: column;
+          -ms-flex-direction: column;
+          flex-direction: column;
+          border-radius: 4px;
+          -webkit-text-decoration: none;
+          text-decoration: none;
+          box-shadow: 0 0 12px 0 rgba(38, 38, 38, 0.2);
+          background: #ffffff;
+          padding: 11px 0 0 24px;
+        }
+
+        .gXioET p {
+          font-weight: 800;
+          padding: 0px 16px 16px 0px;
+          color: #2b2b2b;
+          font-size: 16px;
+          margin: 0;
+        }
+
+        @media screen and (max-width:1024px) {
+          .gXioET {
+            height: 235px;
+            margin-bottom: 48px;
+          }
+        }
+
+        /* sc-component-id: EditorialLinkstyled__StyledPlaceholderImg-sc-1a1flvf-1 */
+        .kWIcoK {
+          width: 142px;
+          height: 142px;
+          margin-left: 10px;
+        }
+
+        /* sc-component-id: EditorialLinkstyled__StyledAngleRight-sc-1a1flvf-2 */
+        .gdDxhh {
+          color: #2b2b2b;
+          position: absolute;
+          cursor: pointer;
+          top: 54%;
+          right: 48%;
+          width: 14px;
+        }
+
+        /* sc-component-id: EditorialLinkstyled__TextWrapper-sc-1a1flvf-3 */
+        .dukcTe {
+          display: -webkit-box;
+          display: -webkit-flex;
+          display: -ms-flexbox;
+          display: flex;
+          position: relative;
+          margin-bottom: 0;
+          margin-top: auto;
+          -webkit-box-pack: justify;
+          -webkit-justify-content: space-between;
+          -ms-flex-pack: justify;
+          justify-content: space-between;
+          -webkit-align-items: center;
+          -webkit-box-align: center;
+          -ms-flex-align: center;
+          align-items: center;
+          padding-top: 3px;
+        }
+
+        /* sc-component-id: Editorialstyled__EditoMainWrapper-ck0cdq-0 */
+        .kNyYrV {
+          background-color: #F3F3F3;
+        }
+
+        /* sc-component-id: Editorialstyled__EditoWrapper-ck0cdq-1 */
+        .fUsmzP {
+          display: -webkit-box;
+          display: -webkit-flex;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-pack: space-evenly;
+          -webkit-justify-content: space-evenly;
+          -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+          -webkit-flex-direction: row;
+          -ms-flex-direction: row;
+          flex-direction: row;
+          padding: 0 0 24px;
+        }
+
+        @media screen and (max-width:1024px) {
+          .fUsmzP {
+            -webkit-flex-direction: column;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            padding: 0 24px;
+          }
+        }
+
+        /* sc-component-id: sc-global-3927912601 */
+        body {
+          background-color: white;
+        }
+
+        .c-deposit-button {
+          background: linear-gradient(45deg, #e30513 0%, #fe004b 100%) !important;
+          border: 0;
+          color: #fff;
+        }
+
+        .c-deposit-button::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: #e30513;
+          opacity: 0;
+          pointer-events: none;
+          -webkit-transition: opacity 0.15s ease 0s;
+          transition: opacity 0.15s ease 0s;
+          z-index: 0;
+          border-radius: 22px;
+        }
+
+        .c-deposit-button:hover:not(:disabled)::before {
+          opacity: 1;
+        }
+
+        .c-deposit-button svg {
+          fill: white;
+        }
+
+        /* sc-component-id: app__AppContainer-m6l338-0 */
+        .bArLic {
+          width: 100%;
+          height: 100%;
+        }
+      </style>
+      <div class="app__AppContainer-m6l338-0 bArLic">
+        <div class="EngineSectionstyled__EngineSectionContainer-uuddou-0 hhrdVH">
+          <div class="EngineSectionstyled__AgathaForm-uuddou-1 dHyGsK">
+            <div class="SearchEnginestyled__MainContainer-ff40l9-0 WgEYE">
+              <h1 class="SearchEnginestyled__WelcomeTitle-ff40l9-6 kMBzNi">Quel cherchez-vous ?</h1>
+              <div class="SearchEnginestyled__Quest-ff40l9-1 btSMcs">
+                <div id="moteur-engine" data-tab="2" class="SearchEnginestyled__QuestContainer-ff40l9-2 bGznpc">
+				  <div class="criterion CriterionListView active c-quest-tabs visible" id="agatha_quest">
+					<span class="title"></span>
+					<span class="description"></span>
+					<div class="containerList">
+					  <div class="itemList active">
+						<input type="checkbox" name="quest" id="agatha_quest0" value="1" onclick="toggleOffer('agatha_quest0','agatha_quest1')" checked>
+						<label for="agatha_quest0">Louer</label>
+					  </div>
+					  <div class="itemList active">
+						<input type="checkbox" name="quest" id="agatha_quest1" value="2" onclick="toggleOffer('agatha_quest1','agatha_quest0')">
+						<label for="agatha_quest1">Acheter</label>
+					  </div>
+					 
+					</div>
+					<span class="error invisible"></span>
+				  </div>
+				  <div class="criterion CriterionAutocompleteView active  visible" id="agatha_autocomplete">
+					<span class="title"></span>
+					<span class="description"></span>
+					<form id="agatha_autocomplete_autocompleteUI" autocomplete="off" class="slam-aui autocompleteUI">
+					  <div placeholder="Dans quelle ville ? Quartier ?" class="hidden" style="display: none; visibility: hidden; height: 0px; width: 0px;">
+						<input type="text" placeholder="Dans quelle ville ? Quartier ?" class="hidden" style="display: none; visibility: hidden; height: 0px; width: 0px;">
+					  </div>
+					  <div class="slam-aui-input-fake">
+						<div class="slam-aui-tags"></div>
+						<input autocomplete="off" type="text" id="agatha_autocomplete_autocompleteUI__input" placeholder="Dans quelle ville ? Quartier ?">
+					  </div>
+					  <div class="slam-aui-results" style="display: none;"></div>
+					</form>
+					<span class="error invisible"></span>
+				  </div>
+				  <div class="criterion CriterionTextView active  visible" id="agatha_budget">
+					<span class="title"></span>
+					<span class="description"></span>
+					<input type="tel" name="budget-min" value="" placeholder="à un prix min de ?" autocomplete="off" maxlength="28">
+					<span class="unit">Ar</span>
+					<span class="error invisible"></span>
+				  </div>
+				  
+				  <div class="criterion CriterionTextView active  visible" id="agatha_budget">
+					<span class="title"></span>
+					<span class="description"></span>
+					<input type="tel" name="budget" value="" placeholder="Votre budget max ?" autocomplete="off" maxlength="28">
+					<span class="unit">Ar</span>
+					<span class="error invisible"></span>
+				  </div>
+				 
+				  <div class="criterion CriterionListView active  visible" id="agatha_biens">
+					<span class="title"></span>
+					<span class="description"></span>
+					<div class="containerList">
+					  <div class="itemList active">
+						<input type="checkbox" name="biens" id="agatha_biens0" value="2">
+						<label for="agatha_biens0">
+						  <i class="fi fi-check"></i>Maison </label>
+					  </div>
+					  <div class="itemList active">
+						<input type="checkbox" name="biens" id="agatha_biens1" value="1">
+						<label for="agatha_biens1">
+						  <i class="fi fi-check"></i>Appartement </label>
+					  </div>
+					  <div class="itemList active">
+						<input type="checkbox" name="biens" id="agatha_biens2" value="more">
+						<label for="agatha_biens2">
+						  <i class="fi fi-plus"></i>
+						</label>
+					  </div>
+					  <div class="itemList inactive">
+						<input type="checkbox" name="biens" id="agatha_biens3" value="4">
+						<label for="agatha_biens3">
+						  <i class="fi fi-check"></i>Terrain </label>
+					  </div>
+					  <div class="itemList inactive">
+						<input type="checkbox" name="biens" id="agatha_biens4" value="3">
+						<label for="agatha_biens4">
+						  <i class="fi fi-check"></i>Parking / Box </label>
+					  </div>
+					  <div class="itemList inactive">
+						<input type="checkbox" name="biens" id="agatha_biens5" value="9">
+						<label for="agatha_biens5">
+						  <i class="fi fi-check"></i>Loft </label>
+					  </div>
+					  <div class="itemList inactive">
+						<input type="checkbox" name="biens" id="agatha_biens6" value="14">
+						<label for="agatha_biens6">
+						  <i class="fi fi-check"></i>Hôtel particulier </label>
+					  </div>
+					  <div class="itemList inactive">
+						<input type="checkbox" name="biens" id="agatha_biens7" value="13">
+						<label for="agatha_biens7">
+						  <i class="fi fi-check"></i>Chateau </label>
+					  </div>
+					  <div class="itemList inactive">
+						<input type="checkbox" name="biens" id="agatha_biens8" value="12">
+						<label for="agatha_biens8">
+						  <i class="fi fi-check"></i>Batiment </label>
+					  </div>
+					  <div class="itemList inactive">
+						<input type="checkbox" name="biens" id="agatha_biens9" value="11">
+						<label for="agatha_biens9">
+						  <i class="fi fi-check"></i>Immeuble </label>
+					  </div>
+					  <div class="itemList inactive">
+						<input type="checkbox" name="biens" id="agatha_biens10" value="6">
+						<label for="agatha_biens10">
+						  <i class="fi fi-check"></i>Boutique </label>
+					  </div>
+					  <div class="itemList inactive">
+						<input type="checkbox" name="biens" id="agatha_biens11" value="7">
+						<label for="agatha_biens11">
+						  <i class="fi fi-check"></i>Local commercial </label>
+					  </div>
+					  <div class="itemList inactive">
+						<input type="checkbox" name="biens" id="agatha_biens12" value="8">
+						<label for="agatha_biens12">
+						  <i class="fi fi-check"></i>Bureau </label>
+					  </div>
+					  <div class="itemList inactive">
+						<input type="checkbox" name="biens" id="agatha_biens13" value="less">
+						<label for="agatha_biens13">
+						  <i class="fi fi-chevron-up"></i>
+						</label>
+					  </div>
+					</div>
+					<span class="error invisible"></span>
+				  </div>
+				  <div class="criterion CriterionListView active c-quest-links visible" id="agatha_link">
+					<span class="title"></span>
+					<span class="description"></span>
+					<div class="containerList">
+					  <div class="itemList active">
+						<input type="checkbox" name="link" id="agatha_link0" value="lien">
+						<label for="agatha_link0">
+						  <a class="search-more-criteria" href="#">Recherche avancée</a>
+						</label>
+					  </div>
+					</div>
+					<span class="error invisible"></span>
+				  </div>
+				  <div class="criterion CriterionListView active c-quest-actions visible" id="agatha_actionbuttons">
+					<span class="title"></span>
+					<span class="description"></span>
+					<div class="containerList">
+					  <div class="itemList active">
+						<input type="checkbox" name="actionbuttons" id="agatha_actionbuttons0" value="deposer-acheter">
+						<label for="agatha_actionbuttons0">
+						  <a class="deposer-acheter" id="deposer-acheter" target="_blank" href="https://www.seloger.com/depot-annonce/vente">
+							<span>Propriétaire ?</span> Déposez votre annonce </a>
+						</label>
+					  </div>
+					  <div class="itemList inactive">
+						<input type="checkbox" name="actionbuttons" id="agatha_actionbuttons1" value="deposer-louer">
+						<label for="agatha_actionbuttons1">
+						  <a class="deposer-louer" id="deposer-louer" target="_blank" href="https://www.seloger.com/depot-annonce/location">
+							<span>Propriétaire ?</span> Déposez votre annonce </a>
+						</label>
+					  </div>
+					  <div class="itemList active">
+						<input type="checkbox" name="actionbuttons" id="agatha_actionbuttons2" value="rechercher">
+						<label for="agatha_actionbuttons2">
+						  <a class="c-quest-actions-search" href="javascript:;">Rechercher</a>
+						</label>
+					  </div>
+					</div>
+					<span class="error invisible"></span>
+				  </div>
+				</div>
+              
+			  </div>
+            </div>
+          </div>
+         
+        </div>
+        <div class="Editorialstyled__EditoMainWrapper-ck0cdq-0 kNyYrV">
+          <div class="Sectionstyled__StyledSection-sc-1g95cvj-0 bQvcUT">
+            <h2 class="Sectionstyled__StyledHead-sc-1g95cvj-1 gQPIvP">
+              <span>Les actualités </span>
+              <span style="font-weight:800">de l’immobilier</span>
+              <span></span>
+            </h2>
+            <div class="Sectionstyled__StyledSectionWrapper-sc-1g95cvj-2 hVmBtK">
+              <div class="Editorialstyled__EditoWrapper-ck0cdq-1 fUsmzP">
+                <a href="https://edito.seloger.com" class="EditorialLinkstyled__BlockLinkContainer-sc-1a1flvf-0 gXioET">
+                  <img loading="lazy" src="/hps/assets/img/illu_Actualite.svg" alt="Retrouvez l&#x27;ensemble de nos articles sur l&#x27;actualité immobilière image" class="EditorialLinkstyled__StyledPlaceholderImg-sc-1a1flvf-1 kWIcoK" />
+                  <div class="EditorialLinkstyled__TextWrapper-sc-1a1flvf-3 dukcTe">
+                    <p>Retrouvez l&#x27;ensemble de nos articles sur l&#x27;actualité immobilière</p>
+                    <div data-testid="gsl.uilib.Icon" class="sc-bdVaJa lmmOQN EditorialLinkstyled__StyledAngleRight-sc-1a1flvf-2 gdDxhh">
+                      <svg width="1em" height="1em" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" aria-label="Chevron">
+                        <defs>
+                          <path d="M5.954 19a.94.94 0 01-.87-.576.947.947 0 01.194-1.029l7.11-7.39-7.11-7.39A.946.946 0 015.96 1a.937.937 0 01.67.303L15 10.005l-8.37 8.702a.937.937 0 01-.676.293z" id="chevron-right-bold_svg__a"></path>
+                        </defs>
+                        <use fill="currentColor" xlink:href="#chevron-right-bold_svg__a" fill-rule="evenodd"></use>
+                      </svg>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="Sectionstyled__StyledSection-sc-1g95cvj-0 bQvcUT">
+          <h2 class="Sectionstyled__StyledHead-sc-1g95cvj-1 gQPIvP">
+            <span>Votre projet </span>
+            <span style="font-weight:800">immobilier</span>
+            <span></span>
+          </h2>
+          <div class="Sectionstyled__StyledSectionWrapper-sc-1g95cvj-2 hVmBtK">
+            <div id="services" class="ServicesBlocksstyled__ServicesBlocksContainer-sc-1k4pe39-0 gMMXyT">
+              <div class="ServicesBlocksstyled__ServicesBlocksWrapper-sc-1k4pe39-1 jGdxeq">
+                <div class="block-ctr">
+                  <div class="ServicesBlocksstyled__Block-sc-1k4pe39-2 bPBqZP">
+                    <div>
+                      <span class="c-title c-title-chevron c-title-600">Je me prépare</span>
+                      <div class="ServicesBlocksstyled__Card-sc-1k4pe39-3 cjRjHK">
+                        <a class="c-scut fi fi-guide" href="https://edito.seloger.com/conseils-d-experts/acheter/guide-achat-immobilier-sommaire.html#?m=homepage-bloc-mon_guide" title="Mon Guide">
+                          <strong>Mon Guide</strong>
+                          <br />Bien acheter </a>
+                      </div>
+                      <div class="ServicesBlocksstyled__Card-sc-1k4pe39-3 cjRjHK">
+                        <a class="c-scut fi fi-scale" href="https://edito.seloger.com/rubrique/financement/mesures-fiscales#?m=homepage-bloc-mesures_fiscales" title="Mesures fiscales">
+                          <strong>Mesures fiscales</strong>
+                          <br />Apprendre à les maîtriser </a>
+                      </div>
+                      <div class="ServicesBlocksstyled__Card-sc-1k4pe39-3 cjRjHK">
+                        <a class="c-scut fi fi-calc" href="https://www.seloger.com/credit-immobilier/simulateur-capacite-demprunt#?m=homepage-bloc-mon_budget" title="Mon budget">
+                          <strong>Mon budget</strong>
+                          <br />Combien emprunter ? </a>
+                      </div>
+                      <div class="ServicesBlocksstyled__Card-sc-1k4pe39-3 cjRjHK">
+                        <a class="c-scut fi fi-stats-up" href="https://www.seloger.com/prix-de-l-immo/vente/pays/madagascar.htm#?BD=Head_AC_PrixImm_8" title="Prix du mètre carré">
+                          <strong>Prix du mètre carré</strong>
+                          <br />Les vrais prix de l&#x27;immobilier </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="block-ctr">
+                  <div class="ServicesBlocksstyled__Block-sc-1k4pe39-2 bPBqZP">
+                    <div>
+                      <span class="c-title c-title-chevron c-title-600">Je boucle mon financement</span>
+                      <div class="ServicesBlocksstyled__Card-sc-1k4pe39-3 cjRjHK">
+                        <a class="c-scut fi fi-change" href="https://www.seloger.com/credit-immobilier/mon-financement#?m=homepage-bloc-pret" title="Prêt">
+                          <strong>Prêt</strong>
+                          <br />Trouver le bon crédit immobilier </a>
+                      </div>
+                      <div class="ServicesBlocksstyled__Card-sc-1k4pe39-3 cjRjHK">
+                        <a class="c-scut fi fi-thumb-up" href="https://www.seloger.com/credit-immobilier/mon-assurance-emprunteur?m=homepage-bloc-assurance_emprunteur" title="Assurance Emprunteur">
+                          <strong>Assurance Emprunteur</strong>
+                          <br />Les clés pour comprendre, avec Cardif </a>
+                      </div>
+                      <div class="ServicesBlocksstyled__Card-sc-1k4pe39-3 cjRjHK">
+                        <a class="c-scut fi fi-change" href="https://www.seloger.com/credit-immobilier/simulation-investissement?m=homepage-bloc-investissement" title="Investissement">
+                          <strong>Investissement</strong>
+                          <br />Simuler mon épargne </a>
+                      </div>
+                      <div class="ServicesBlocksstyled__Card-sc-1k4pe39-3 cjRjHK">
+                        <a class="c-scut fi fi-home" href="https://seloger-simulateur.hellio.com/?utm_campaign=RI-Particuliers-SeLoger&amp;utm_source=seloger.com&amp;utm_medium=homepage" title="Rénovation énergétique" target="_blank">
+                          <strong>Rénovation énergétique</strong>
+                          <br />Simuler vos travaux et estimer les aides </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="block-ctr">
+                  <div class="ServicesBlocksstyled__Block-sc-1k4pe39-2 bPBqZP">
+                    <div>
+                      <span class="c-title c-title-chevron c-title-600">C&#x27;est parti, je déménage !</span>
+                      <div class="ServicesBlocksstyled__Card-sc-1k4pe39-3 cjRjHK">
+                        <a class="c-scut fi fi-form" href="https://edito.seloger.com/conseils-d-experts/demenager/demenagement-comment-bien-se-preparer-pour-le-jour-j-article-17005.html" title="Ma checklist">
+                          <strong>Ma checklist</strong>
+                          <br />Préparer mon déménagement </a>
+                      </div>
+                      <div class="ServicesBlocksstyled__Card-sc-1k4pe39-3 cjRjHK">
+                        <a class="c-scut fi fi-lorry" href="/demenagement_formulaire?utm_medium=rubrique-planifier" title="Planifier" target="_blank">
+                          <strong>Planifier</strong>
+                          <br />Déménager serein </a>
+                      </div>
+                      <div class="ServicesBlocksstyled__Card-sc-1k4pe39-3 cjRjHK">
+                        <a class="c-scut fi fi-flame" href="https://particuliers.engie.fr/electricite-gaz.html?utm_medium=referral&amp;utm_source=seloger&amp;utm_campaign=partenariat" title="Énergie" target="_blank">
+                          <strong>Énergie</strong>
+                          <br />Découvrez les offres ENGIE </a>
+                      </div>
+                      <div class="ServicesBlocksstyled__Card-sc-1k4pe39-3 cjRjHK">
+                        <a class="c-scut fi fi-roller" href="https://www.sofinco.fr/credit-pret/credit-travaux.htm?utm_source=seloger&amp;utm_medium=link&amp;utm_campaign=homepage" title="Prêt travaux" target="_blank">
+                          <strong>Prêt travaux</strong>
+                          <br />Simuler votre projet de rénovation </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="Sectionstyled__StyledSection-sc-1g95cvj-0 bltVrv">
+          <h2 class="Sectionstyled__StyledHead-sc-1g95cvj-1 gQPIvP">
+            <span>Annonces immobilières </span>
+            <span style="font-weight:800">à Madagascar</span>
+            <span></span>
+          </h2>
+          <div class="Sectionstyled__StyledSectionWrapper-sc-1g95cvj-2 hVmBtK">
+            <div class="SeoLinksstyled__SeoLinksContainer-n3mtu0-0 gnbpgr">
+              <div class="SeoLinksstyled__SeoLinksWrapper-n3mtu0-1 jMmMnW">
+                <div class="SeoLinksstyled__SeoBlocks-n3mtu0-2 jtrfkq">
+                  <div class="SeoLinksstyled__SeoBlockLineWrapper-n3mtu0-5 hAPtLq">
+                    <h3 class="SeoLinksstyled__SeoLinkTitle-n3mtu0-4 QNHOA">Ventes de maisons</h3>
+                    <a href="https://www.seloger.com/immobilier/achat/immo-angers-49/bien-maison/">Vente maison Angers</a>
+                    <a href="https://www.seloger.com/immobilier/achat/immo-paris-75/bien-maison/">Vente maison Paris</a>
+                    <a href="https://www.seloger.com/immobilier/achat/immo-le-havre-76/bien-maison/">Vente maison Le Havre</a>
+                    <a href="https://www.seloger.com/immobilier/achat/immo-rennes-35/bien-maison/">Vente maison Rennes</a>
+                    <a href="https://www.seloger.com/immobilier/achat/immo-marseille-13/bien-maison/">Vente maison Marseille</a>
+                    <a href="https://www.seloger.com/immobilier/achat/immo-nancy-54/bien-maison/">Vente maison Nancy</a>
+                    <a href="https://www.seloger.com/immobilier/achat/immo-nantes-44/bien-maison/">Vente maison Nantes</a>
+                    <a href="https://www.seloger.com/immobilier/achat/immo-nice-06/bien-maison/">Vente maison Nice</a>
+                  </div>
+                  <div class="SeoLinksstyled__SeoBlockLineWrapper-n3mtu0-5 hAPtLq">
+                    <h3 class="SeoLinksstyled__SeoLinkTitle-n3mtu0-4 QNHOA">Ventes d&#x27;appartements</h3>
+                    <a href="https://www.seloger.com/immobilier/achat/immo-paris-75/bien-appartement/">Vente appartement Paris</a>
+                    <a href="https://www.seloger.com/immobilier/achat/immo-bordeaux-33/bien-appartement/">Vente appartement Bordeaux</a>
+                    <a href="https://www.seloger.com/immobilier/achat/immo-lille-59/bien-appartement/">Vente appartement Lille</a>
+                    <a href="https://www.seloger.com/immobilier/achat/immo-marseille-13/bien-appartement/">Vente appartement Marseille</a>
+                    <a href="https://www.seloger.com/immobilier/achat/immo-montpellier-34/bien-appartement/">Vente appartement Montpellier</a>
+                    <a href="https://www.seloger.com/immobilier/achat/immo-nantes-44/bien-appartement/">Vente appartement Nantes</a>
+                    <a href="https://www.seloger.com/immobilier/locations/immo-paris-75/bien-appartement/type-studio/">Vente Studio Paris</a>
+                  </div>
+                  <div class="SeoLinksstyled__SeoBlockToolsWrapper-n3mtu0-3 llAvWA">
+                    <span>
+                      <i class="fi fi-bulb"></i>
+                      <!-- -->Bon à savoir </span>Vous cherchez à acheter le bien immobilier de vos rêves ? <div>Retrouvez nos outils dédiés :</div>
+                    <a href="https://www.seloger.com/estimation-immobiliere.html#?m=homepage-bon_a_savoir-estimer">Estimez la valeur d&#x27;un bien</a>
+                    <a href="https://www.seloger.com/prix-de-l-immo/vente/pays/madagascar.htm#?m=homepage-bon_a_savoir-prix_immo">La carte des prix de l&#x27;immobilier</a>
+                    <a href="https://www.seloger.com/credit-immobilier/simulateur-capacite-demprunt/#?m=homepage-bon_a_savoir-capacite_emprunt">Calculez votre capacité d&#x27;emprunt</a>
+                    <a href="https://www.seloger.com/credit-immobilier/simulateur-mensualites/#?m=homepage-bon_a_savoir-mensualites">Calculez vos mensualités</a>
+                    <a href="https://www.seloger.com/credit-immobilier/simulateur-frais-notaire/#?m=homepage-bon_a_savoir-frais_notaire">Estimez vos frais de notaire</a>
+                  </div>
+                  <div class="SeoLinksstyled__SeoBlockLineWrapper-n3mtu0-5 hAPtLq">
+                    <h3 class="SeoLinksstyled__SeoLinkTitle-n3mtu0-4 QNHOA">Locations d&#x27;appartements</h3>
+                    <a href="https://www.seloger.com/immobilier/locations/immo-paris-75/bien-appartement/">Location appartement Paris</a>
+                    <a href="https://www.seloger.com/immobilier/locations/immo-grenoble-38/bien-appartement/">Location appartement Grenoble</a>
+                    <a href="https://www.seloger.com/immobilier/locations/immo-lyon-69/bien-appartement/">Location appartement Lyon</a>
+                    <a href="https://www.seloger.com/immobilier/locations/immo-marseille-13/bien-appartement/">Location appartement Marseille</a>
+                    <a href="https://www.seloger.com/immobilier/locations/immo-metz-57/bien-appartement/">Location appartement Metz</a>
+                    <a href="https://www.seloger.com/immobilier/locations/immo-angers-49/bien-appartement/">Location appartement Angers</a>
+                  </div>
+                  <div class="SeoLinksstyled__SeoBlockLineWrapper-n3mtu0-5 hAPtLq">
+                    <h3 class="SeoLinksstyled__SeoLinkTitle-n3mtu0-4 QNHOA">Prix de vente au m2</h3>
+                    <a href="https://www.seloger.com/prix-de-l-immo/vente/ile-de-france/val-de-marne/alfortville/940002.htm#?m=homepage-footer-SEO">Prix m2 Alfortville</a>
+                    <a href="https://www.seloger.com/prix-de-l-immo/vente/rhone-alpes/loire/saint-etienne/420218.htm#?m=homepage-footer-SEO">Prix m2 Saint-Etienne</a>
+                    <a href="https://www.seloger.com/prix-de-l-immo/vente/aquitaine/pyrenees-atlantiques/pau/640445.htm#?m=homepage-footer-SEO">Prix m2 Pau</a>
+                    <a href="https://www.seloger.com/prix-de-l-immo/vente/ile-de-france/hauts-de-seine/suresnes/920073.htm#?m=homepage-footer-SEO">Prix m2 Suresnes</a>
+                    <a href="https://www.seloger.com/prix-de-l-immo/vente/rhone-alpes/rhone/vaulx-en-velin/690256.htm#?m=homepage-footer-SEO">Prix m2 Vaulx-En-Velin</a>
+                    <a href="https://www.seloger.com/prix-de-l-immo/vente/midi-pyrenees/hautes-pyrenees/tarbes/650440.htm#?m=homepage-footer-SEO">Prix m2 Tarbes</a>
+                    <a href="https://www.seloger.com/prix-de-l-immo/vente/pays-de-la-loire/sarthe/le-mans/720181.htm#?m=homepage-footer-SEO">Prix m2 Le Mans</a>
+                    <a href="https://www.seloger.com/prix-de-l-immo/vente/poitou-charentes/charente/angouleme/160015.htm#?m=homepage-footer-SEO">Prix m2 Angoulême</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+	  {% endblock %}
+    </div>
+{% block contentOutRoot%}
+ {% endblock %}   
+   
+    <div id="sl-footer" class="FooterContainer-sc-1oryyvx-0 VPoZH">
+      <div class="FooterContainer-sc-1g91xqh-0 djeVcf">
+        <div class="Wrapper-sc-1g91xqh-1 jRHQBc">
+          
+          <div class="LinksSection-sc-1g91xqh-3 iSflGe">
+            <div class="LinkBoxContainer-sc-1g91xqh-14 dTKhtQ">
+              <div class="title">
+                <span>L&#x27;entreprise</span>
+              </div>
+              <div class="LinkList-sc-1g91xqh-15 gfDDxp">
+                <a target="_blank" href="https://www.groupeseloger.com/" class="FooterLink-sc-1g91xqh-13 jDMAcR">Qui sommes-nous ?</a>
+                <a target="_blank" href="//www.seloger.com/contact.html" class="FooterLink-sc-1g91xqh-13 jDMAcR">Nous contacter</a>
+              </div>
+            </div>
+          
+           
+          
+          </div>
+          
+        </div>
+      </div>
+    </div>
+	<script>
+function toggleOffer(ins,dist) {
+  var checkBox = document.getElementById(ins);
+    checkBox.checked = true;
+     var checkBox = document.getElementById(dist);
+   checkBox.checked = false;
+}
+</script>
+  </body>
 </html>
