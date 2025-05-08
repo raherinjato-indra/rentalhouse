@@ -47,5 +47,7 @@ jobs:
       env:
         DATABASE_URL: sqlite:///%kernel.project_dir%/data/database.sqlite
       run: vendor/bin/phpunit
+    - name: install symfony server
+      run: scoop install symfony-cli
     - name: launch symfony server
       run: symfony server:start
