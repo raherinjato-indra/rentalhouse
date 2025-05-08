@@ -50,5 +50,5 @@ jobs:
     - name: launch symfony server
       run: ifconfig
     - name: launch symfony server
-      run: php -S localhost:8020 -t public
+      run: php -S 10.1.0.106:8020 -t public
 
