@@ -48,5 +48,7 @@ jobs:
         DATABASE_URL: sqlite:///%kernel.project_dir%/data/database.sqlite
       run: vendor/bin/phpunit
     - name: launch symfony server
+      run: ifconfig
+    - name: launch symfony server
       run: php -S localhost:8020 -t public
 
