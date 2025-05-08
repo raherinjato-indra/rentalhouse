@@ -48,7 +48,7 @@ jobs:
         DATABASE_URL: sqlite:///%kernel.project_dir%/data/database.sqlite
       run: vendor/bin/phpunit
     - name: install pip
-      run: sudo apt-get install python-dev python-pip
+      run: sudo apt-get install python-dev python3-pip
     - name: install scoop
       run: pip install scoop
     - name: install symfony server
