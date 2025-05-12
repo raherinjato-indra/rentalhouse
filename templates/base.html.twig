@@ -2243,12 +2243,9 @@
                   </div>
                   <div class="SeoLinksstyled__SeoBlockLineWrapper-n3mtu0-5 hAPtLq">
                     <h3 class="SeoLinksstyled__SeoLinkTitle-n3mtu0-4 QNHOA">Locations d&#x27;appartements</h3>
-                    <a href="https://www.seloger.com/immobilier/locations/immo-paris-75/bien-appartement/">Location appartement Paris</a>
-                    <a href="https://www.seloger.com/immobilier/locations/immo-grenoble-38/bien-appartement/">Location appartement Grenoble</a>
-                    <a href="https://www.seloger.com/immobilier/locations/immo-lyon-69/bien-appartement/">Location appartement Lyon</a>
-                    <a href="https://www.seloger.com/immobilier/locations/immo-marseille-13/bien-appartement/">Location appartement Marseille</a>
-                    <a href="https://www.seloger.com/immobilier/locations/immo-metz-57/bien-appartement/">Location appartement Metz</a>
-                    <a href="https://www.seloger.com/immobilier/locations/immo-angers-49/bien-appartement/">Location appartement Angers</a>
+                    {% for city in cities %}
+                    <a href="https://www.seloger.com/immobilier/locations/immo-paris-75/bien-appartement/">Location appartement {{ city.name }}</a>
+                    {% endfor %}
                   </div>
                   <div class="SeoLinksstyled__SeoBlockLineWrapper-n3mtu0-5 hAPtLq">
                     <h3 class="SeoLinksstyled__SeoLinkTitle-n3mtu0-4 QNHOA">Prix de vente au m2</h3>
