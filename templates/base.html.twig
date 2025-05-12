@@ -2217,15 +2217,10 @@
                 <div class="SeoLinksstyled__SeoBlocks-n3mtu0-2 jtrfkq">
                   <div class="SeoLinksstyled__SeoBlockLineWrapper-n3mtu0-5 hAPtLq">
                     <h3 class="SeoLinksstyled__SeoLinkTitle-n3mtu0-4 QNHOA">Ventes de maisons</h3>
-                    <a href="https://www.seloger.com/immobilier/achat/immo-angers-49/bien-maison/">Vente maison Angers</a>
-                    <a href="https://www.seloger.com/immobilier/achat/immo-paris-75/bien-maison/">Vente maison Paris</a>
-                    <a href="https://www.seloger.com/immobilier/achat/immo-le-havre-76/bien-maison/">Vente maison Le Havre</a>
-                    <a href="https://www.seloger.com/immobilier/achat/immo-rennes-35/bien-maison/">Vente maison Rennes</a>
-                    <a href="https://www.seloger.com/immobilier/achat/immo-marseille-13/bien-maison/">Vente maison Marseille</a>
-                    <a href="https://www.seloger.com/immobilier/achat/immo-nancy-54/bien-maison/">Vente maison Nancy</a>
-                    <a href="https://www.seloger.com/immobilier/achat/immo-nantes-44/bien-maison/">Vente maison Nantes</a>
-                    <a href="https://www.seloger.com/immobilier/achat/immo-nice-06/bien-maison/">Vente maison Nice</a>
-                  </div>
+                     {% for city in cities %}
+                    <a href="https://www.seloger.com/immobilier/achat/immo-nice-06/bien-maison/">Vente maison {{ city.name }}</a>
+                     {% endfor %}
+                    </div>
                   <div class="SeoLinksstyled__SeoBlockLineWrapper-n3mtu0-5 hAPtLq">
                     <h3 class="SeoLinksstyled__SeoLinkTitle-n3mtu0-4 QNHOA">Ventes d&#x27;appartements</h3>
                     <a href="https://www.seloger.com/immobilier/achat/immo-paris-75/bien-appartement/">Vente appartement Paris</a>
