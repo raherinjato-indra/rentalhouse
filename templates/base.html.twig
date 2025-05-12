@@ -2223,13 +2223,9 @@
                     </div>
                   <div class="SeoLinksstyled__SeoBlockLineWrapper-n3mtu0-5 hAPtLq">
                     <h3 class="SeoLinksstyled__SeoLinkTitle-n3mtu0-4 QNHOA">Ventes d&#x27;appartements</h3>
-                    <a href="https://www.seloger.com/immobilier/achat/immo-paris-75/bien-appartement/">Vente appartement Paris</a>
-                    <a href="https://www.seloger.com/immobilier/achat/immo-bordeaux-33/bien-appartement/">Vente appartement Bordeaux</a>
-                    <a href="https://www.seloger.com/immobilier/achat/immo-lille-59/bien-appartement/">Vente appartement Lille</a>
-                    <a href="https://www.seloger.com/immobilier/achat/immo-marseille-13/bien-appartement/">Vente appartement Marseille</a>
-                    <a href="https://www.seloger.com/immobilier/achat/immo-montpellier-34/bien-appartement/">Vente appartement Montpellier</a>
-                    <a href="https://www.seloger.com/immobilier/achat/immo-nantes-44/bien-appartement/">Vente appartement Nantes</a>
-                    <a href="https://www.seloger.com/immobilier/locations/immo-paris-75/bien-appartement/type-studio/">Vente Studio Paris</a>
+                    {% for city in cities %}
+                    <a href="https://www.seloger.com/immobilier/achat/immo-paris-75/bien-appartement/">Vente appartement {{ city.name }}</a>
+                       {% endfor %}
                   </div>
                   <div class="SeoLinksstyled__SeoBlockToolsWrapper-n3mtu0-3 llAvWA">
                     <span>
