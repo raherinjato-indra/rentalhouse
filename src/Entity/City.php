@@ -18,7 +18,6 @@ class City
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-
     /**
      * @var Collection<int, Quartier>
      */
@@ -27,7 +26,6 @@ class City
 
     public function __construct()
     {
-        
         $this->quartiers = new ArrayCollection();
     }
 
@@ -47,7 +45,6 @@ class City
 
         return $this;
     }
-
 
     /**
      * @return Collection<int, Quartier>
@@ -77,5 +74,11 @@ class City
         }
 
         return $this;
+    }
+
+    // Ajout de la méthode __toString()
+    public function __toString(): string
+    {
+        return $this->name ?? '';  // Renvoie le nom de la ville comme chaîne
     }
 }
