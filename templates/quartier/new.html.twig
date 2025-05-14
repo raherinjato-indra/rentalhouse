@@ -1,0 +1,23 @@
+{# templates/quartier/new.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau Quartier{% endblock %}
+
+{% block souscarouselle %}
+    <div class="container mt-5">
+        <h1>Ajouter un nouveau quartier</h1>
+
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button class="btn btn-primary mt-3">Ajouter</button>
+        {{ form_end(form) }}
+         <h2>Données saisies :</h2>
+     {% for quartier in quartiers %}
+            <hr>
+           
+            <p><strong>Nom du quartier :</strong> {{ quartier.nom }}</p>
+            <p><strong>Ville :</strong> {{ quartier.city.name }}</p>
+           {% endfor %}
+    </div>
+{% endblock %}
+

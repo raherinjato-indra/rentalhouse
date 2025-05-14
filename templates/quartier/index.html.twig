@@ -1,0 +1,16 @@
+{# templates/quartier/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des quartiers{% endblock %}
+
+{% block body %}
+    <h1>Liste des quartiers</h1>
+    <ul>
+        {% for quartier in quartiers %}
+            <li>{{ quartier.nom }} - {{ quartier.city.name }}</li>
+        {% else %}
+            <li>Aucun quartier trouvé</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
