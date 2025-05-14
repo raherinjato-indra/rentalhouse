@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\QuartierRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: QuartierRepository::class)]
@@ -12,41 +10,29 @@ class Quartier
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $Name = null;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $nom = null;
 
     #[ORM\ManyToOne(inversedBy: 'quartiers')]
     #[ORM\JoinColumn(nullable: false)]
     private ?City $city = null;
-
-    /**
-     * @var Collection<int, Coordonnees>
-     */
-    #[ORM\OneToMany(targetEntity: Coordonnees::class, mappedBy: 'coordonnees')]
-    private Collection $coordonnees;
-
-    public function __construct()
-    {
-        $this->coordonnees = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getNom(): ?string
     {
-        return $this->Name;
+        return $this->nom;
     }
 
-    public function setName(string $Name): static
+    public function setNom(string $nom): self
     {
-        $this->Name = $Name;
-
+        $this->nom = $nom;
         return $this;
     }
 
@@ -55,40 +41,9 @@ class Quartier
         return $this->city;
     }
 
-    public function setCity(?City $city): static
+    public function setCity(?City $city): self
     {
         $this->city = $city;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Coordonnees>
-     */
-    public function getCoordonnees(): Collection
-    {
-        return $this->coordonnees;
-    }
-
-    public function addCoordonnee(Coordonnees $coordonnee): static
-    {
-        if (!$this->coordonnees->contains($coordonnee)) {
-            $this->coordonnees->add($coordonnee);
-            $coordonnee->setCoordonnees($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCoordonnee(Coordonnees $coordonnee): static
-    {
-        if ($this->coordonnees->removeElement($coordonnee)) {
-            // set the owning side to null (unless already changed)
-            if ($coordonnee->getCoordonnees() === $this) {
-                $coordonnee->setCoordonnees(null);
-            }
-        }
-
         return $this;
     }
 }

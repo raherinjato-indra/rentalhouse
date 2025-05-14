@@ -28,8 +28,9 @@ class Coordonnees
     private ?string $CodePostal = null;
 
 
-    #[ORM\ManyToOne(inversedBy: 'coordonnees')]
-    private ?Quartier $coordonnees = null;
+   #[ORM\ManyToOne(inversedBy: 'coordonnees')]
+   #[ORM\JoinColumn(nullable: false)]
+   private ?Quartier $quartier = null;
 
     /**
      * @var Collection<int, ObjectToRent>
