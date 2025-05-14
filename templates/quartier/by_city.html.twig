@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Quartiers de {{ city.name }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>Quartiers de {{ city.name }}</h1>
+
+        <a href="{{ path('app_quartier_index') }}" class="btn btn-secondary mb-3">
+            ← Retour à la liste des villes
+        </a>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nom du quartier</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for quartier in quartiers %}
+                    <tr>
+                        <td>{{ quartier.nom }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="1" class="text-muted">Aucun quartier trouvé pour cette ville.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
