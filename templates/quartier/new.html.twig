@@ -1,4 +1,3 @@
-{# templates/quartier/new.html.twig #}
 {% extends 'base.html.twig' %}
 
 {% block title %}Nouveau Quartier{% endblock %}
@@ -11,13 +10,23 @@
             {{ form_widget(form) }}
             <button class="btn btn-primary mt-3">Ajouter</button>
         {{ form_end(form) }}
-         <h2>Données saisies :</h2>
-     {% for quartier in quartiers %}
+
+        <h2 class="mt-5">Liste des quartiers enregistrés :</h2>
+        {% for quartier in quartiers %}
             <hr>
-           
             <p><strong>Nom du quartier :</strong> {{ quartier.nom }}</p>
             <p><strong>Ville :</strong> {{ quartier.city.name }}</p>
-           {% endfor %}
+
+            <a href="{{ path('app_quartier_edit', {'id': quartier.id}) }}" class="btn btn-warning btn-sm">Modifier</a>
+
+            <form method="post" action="{{ path('app_quartier_delete', {'id': quartier.id}) }}" 
+                  onsubmit="return confirm('Voulez-vous vraiment supprimer ce quartier ?');"
+                  style="display:inline;">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ quartier.id) }}">
+                <button class="btn btn-danger btn-sm">Supprimer</button>
+            </form>
+        {% else %}
+            <p class="text-muted">Aucun quartier enregistré.</p>
+        {% endfor %}
     </div>
 {% endblock %}
-
