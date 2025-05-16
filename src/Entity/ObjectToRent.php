@@ -86,8 +86,36 @@ class ObjectToRent
     #[ORM\ManyToOne(inversedBy: 'ObjectsToRent')]
     private ?EtatObjectToRent $etatObjectToRent = null;
 
+    #[ORM\Column(type: "string", length: 255, nullable: true)]
+    private ?string $photo = null;
+
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto(?string $photo): self
+    {
+        $this->photo = $photo;
+        return $this;
+    }
+
     #[ORM\Column]
     private ?bool $activated = null;
+    #[ORM\Column(type: "string", length: 255, nullable: true)]
+    private ?string $imageFilename = null;
+
+    public function getImageFilename(): ?string
+    {
+        return $this->imageFilename;
+    }
+
+    public function setImageFilename(?string $imageFilename): self
+    {
+        $this->imageFilename = $imageFilename;
+
+        return $this;
+    }
 
     public function getId(): ?int
     {

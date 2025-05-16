@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier l'Object{% endblock %}
+
+{% block souscarouselle %}
+    <style>
+        h1 {
+            color: #004080;
+            text-align: center;
+            margin-bottom: 25px;
+            font-weight: 700;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 0 auto 30px auto;
+            background: #f5f8fa;
+            padding: 25px 30px;
+            border-radius: 10px;
+            box-shadow: 1px 2px 8px rgba(0,0,0,0.1);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        button[type="submit"] {
+            display: block;
+            background-color: #004080;
+            color: white;
+            font-weight: 600;
+            padding: 12px 22px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            margin: 20px auto 0 auto;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #002f5c;
+        }
+
+        a.back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            font-weight: 600;
+            color: #6c757d;
+            text-decoration: none;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        a.back-link:hover {
+            text-decoration: underline;
+            color: #004080;
+        }
+    </style>
+
+    <h1>Modifier l'Object {{ object_to_rent.name }}</h1>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button type="submit">Mettre à jour</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('app_object_to_rent_index') }}" class="back-link">← Retour à la liste</a>
+{% endblock %}

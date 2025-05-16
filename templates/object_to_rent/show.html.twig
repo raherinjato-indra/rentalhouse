@@ -1,0 +1,111 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détail de l'objet à louer{% endblock %}
+
+{% block souscarouselle %}
+    <style>
+        /* Styles simples pour la page détail */
+        h1 {
+            color: #004080;
+            text-align: center;
+            margin-bottom: 25px;
+            font-weight: 700;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        ul.details-list {
+            max-width: 600px;
+            margin: 0 auto 40px auto;
+            padding: 0;
+            list-style: none;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        ul.details-list li {
+            background-color: #f5f8fa;
+            margin-bottom: 10px;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 1px 2px 6px rgba(0,0,0,0.05);
+            font-size: 16px;
+            color: #333;
+        }
+
+        ul.details-list li strong {
+            color: #004080;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 18px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            color: white;
+        }
+
+        .btn-primary {
+            background-color: #004080;
+        }
+        .btn-primary:hover {
+            background-color: #002f5c;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+        .btn-secondary:hover {
+            background-color: #565e64;
+        }
+
+        /* Style pour le formulaire de suppression */
+        .delete-form {
+            text-align: center;
+        }
+
+        .btn-delete {
+            background-color: #dc3545;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-delete:hover {
+            background-color: #b52b38;
+        }
+    </style>
+
+    <h1>Détail de l'objet : {{ object_to_rent.name }}</h1>
+
+    <ul class="details-list">
+        <li><strong>ID :</strong> {{ object_to_rent.id }}</li>
+        <li><strong>Nom :</strong> {{ object_to_rent.name }}</li>
+        <li><strong>Description :</strong> {{ object_to_rent.descriptionText }}</li>
+        <li><strong>Prix :</strong> {{ object_to_rent.price }} Ar</li>
+        <li><strong>Surface :</strong> {{ object_to_rent.surface }} m²</li>
+        <li><strong>Nombre de pièces :</strong> {{ object_to_rent.nbrPieces }}</li>
+    </ul>
+
+    <div class="actions">
+        <a href="{{ path('app_object_to_rent_edit', {'id': object_to_rent.id}) }}" class="btn btn-primary">Modifier</a>
+        <a href="{{ path('app_object_to_rent_index') }}" class="btn btn-secondary">Retour à la liste</a>
+    </div>
+
+    <div class="delete-form">
+        {{ include('object_to_rent/_delete_form.html.twig', { object_to_rent: object_to_rent, btn_class: 'btn-delete' }) }}
+    </div>
+{% endblock %}

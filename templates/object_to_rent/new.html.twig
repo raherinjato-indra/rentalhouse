@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un Object{% endblock %}
+
+{% block souscarouselle %}
+ <style>
+        .form-box {
+            background-color: #f9f9f9;
+            padding: 25px;
+            max-width: 700px;
+            margin: 40px auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-box h1 {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .form-box .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-box label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .form-box input,
+        .form-box textarea,
+        .form-box select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .form-box .form-error {
+            color: red;
+            font-size: 13px;
+        }
+
+        .form-box .actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .form-box button,
+        .form-box a {
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: bold;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .form-box button {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .form-box a {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .form-box button:hover,
+        .form-box a:hover {
+            opacity: 0.9;
+        }
+    </style>
+
+    <div class="form-box">
+        <h1>Créer un Objet</h1>
+
+        {{ form_start(form) }}
+            {% for field in form %}
+                {% if field.vars.name != '_token' %}
+                    <div class="form-group">
+                        {{ form_label(field) }}
+                        {{ form_widget(field) }}
+                        {{ form_errors(field) }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+            <div class="actions">
+                <button type="submit">💾 Enregistrer</button>
+                <a href="{{ path('app_object_to_rent_index') }}">Retour à la liste</a>
+            </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
