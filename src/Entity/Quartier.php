@@ -3,7 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\QuartierRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Coordonnees;
 
 #[ORM\Entity(repositoryClass: QuartierRepository::class)]
 class Quartier
@@ -20,7 +23,41 @@ class Quartier
     #[ORM\JoinColumn(nullable: false)]
     private ?City $city = null;
 
-    // Getters et setters
+    #[ORM\OneToMany(mappedBy: 'quartier', targetEntity: Coordonnees::class)]
+        private Collection $coordonnees;
+
+        public function __construct()
+        {
+            $this->coordonnees = new ArrayCollection();
+        }
+
+        public function getCoordonnees(): Collection
+        {
+            return $this->coordonnees;
+        }
+
+        public function addCoordonnee(Coordonnees $coordonnee): self
+        {
+            if (!$this->coordonnees->contains($coordonnee)) {
+                $this->coordonnees[] = $coordonnee;
+                $coordonnee->setQuartier($this);
+            }
+
+            return $this;
+        }
+
+        public function removeCoordonnee(Coordonnees $coordonnee): self
+        {
+            if ($this->coordonnees->removeElement($coordonnee)) {
+                // set the owning side to null (unless already changed)
+                if ($coordonnee->getQuartier() === $this) {
+                    $coordonnee->setQuartier(null);
+                }
+            }
+
+            return $this;
+        }
+
 
     public function getId(): ?int
     {

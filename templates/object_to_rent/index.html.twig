@@ -1,0 +1,201 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Biens Immobiliers{% endblock %}
+
+{% block souscarouselle %}
+<style>
+    .cards-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 20px;
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 0 20px;
+    }
+
+    .card {
+        background-color: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-15px);
+    }
+
+    .card img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+    }
+
+    .card-content {
+        padding: 15px 20px;
+    }
+
+    .card-content h2 {
+        font-size: 20px;
+        margin-bottom: 10px;
+        color: #004080;
+    }
+
+    .info-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px 20px;
+        margin-top: 0px;
+    }
+
+    .info {
+        font-size: 12.5px;
+        color: #333;
+    }
+
+    .info i {
+        margin-right: 2px;
+        color: #007bff;
+    }
+
+    .card-actions {
+        margin-top: 15px;
+        display: flex;
+        gap: 10px;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .card-actions a,
+    .card-actions form button {
+        display: inline-block;
+        padding: 8px 12px;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: bold;
+        cursor: pointer;
+        text-decoration: none;
+        text-align: center;
+        line-height: 1.2;
+        border: none;
+    }
+
+    .card-actions a {
+        color: white;
+    }
+
+    .card-actions a:not(.edit) {
+        background-color: #28a745;
+    }
+
+    .card-actions a.edit {
+        background-color: #ffc107;
+        color: #000;
+    }
+
+    .card-actions form button.btn-delete {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .card-actions form button.btn-delete:hover {
+        background-color: #c82333;
+    }
+
+    .btn-add {
+        display: block;
+        margin: 30px auto;
+        text-align: center;
+        padding: 10px 20px;
+        background-color: #004080;
+        color: white;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .btn-add:hover {
+        background-color: #003366;
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #004080;
+    }
+</style>
+
+<h1>🏠 Nos Biens Immobiliers</h1>
+
+<a href="{{ path('app_object_to_rent_new') }}" class="btn-add">➕ Ajouter un bien</a>
+
+<div class="cards-container">
+    {% for object in object_to_rents %}
+        <div class="card">
+            <img src="{{ asset('uploads/photos/' ~ object.photo) }}" alt="Photo de {{ object.name }}" style="width:100%; height:400px; object-fit:cover;">
+            <div class="card-content">
+                <h1>{{ object.name }}</h1>
+
+                <div class="info-grid">
+                    <div class="info"><i>💰</i> Prix : {{ object.price }} Ar</div>
+                    <div class="info"><i>📐</i> Surface : {{ object.Surface }} m²</div>
+                    <div class="info"><i>🛏️</i> Chambres : {{ object.NbrChambres }}</div>
+                    <div class="info"><i>🛋️</i> Pièces : {{ object.NbrPieces }}</div>
+                    <div class="info"><i>🚿</i> Salle de bain : {{ object.NbrSalleDeBain }}</div>
+                    <div class="info"><i>🚿</i> Salle d’eau : {{ object.NbrSalleDeau }}</div>
+                    <div class="info"><i>🍽️</i> Cuisine équipée : {{ object.CuisineEquipe ? 'Oui' : 'Non' }}</div>
+                    <div class="info"><i>🌇</i> Terrasse : {{ object.Terasse ? 'Oui' : 'Non' }}</div>
+                    <div class="info"><i>🌄</i> Balcon : {{ object.Balcon ? 'Oui' : 'Non' }}</div>
+                    <div class="info"><i>🌳</i> Jardin : {{ object.Jardin ? 'Oui' : 'Non' }}</div>
+                    <div class="info"><i>🏊</i> Piscine : {{ object.Piscine ? 'Oui' : 'Non' }}</div>
+                    <div class="info"><i>♿</i> Accessible fauteuils roulants : {{ object.AccessibleFauteuilsRoulants ? 'Oui' : 'Non' }}</div>
+                    <div class="info"><i>🚗</i> Garage : {{ object.Garage ? 'Oui' : 'Non' }}</div>
+                    <div class="info"><i>⬇️</i> Sous-sol : {{ object.SousSol ? 'Oui' : 'Non' }}</div>
+                    <div class="info"><i>🔢</i> Nbr Terrasse : {{ object.NbrTerasse }}</div>
+                    <div class="info"><i>📏</i> Surface balcon : {{ object.SurfaceBalcon }} m²</div>
+                    <div class="info"><i>🏗️</i> Année construction : {{ object.AnneeConstruction }}</div>
+                    <div class="info"><i>🌍</i> Surface terrain : {{ object.SurfaceTerrain }} m²</div>
+                    <div class="info"><i>🟢</i> Activé : {{ object.activated ? 'Oui' : 'Non' }}</div>
+                    <div class="info">
+                        <i>🧭</i> Coordonnées :
+                        {% if object.Coordonnee is not null %}
+                            {{ object.Coordonnee.latitude }}, {{ object.Coordonnee.longitude }}
+                        {% else %}
+                            Non renseigné
+                        {% endif %}
+                    </div>
+                    <div class="info"><i>👤</i> Propriétaire ID :
+                        {% if object.User is not null %}
+                            {{ object.User.id }}
+                        {% else %}
+                            Non défini
+                        {% endif %}
+                    </div>
+                    <div class="info"><i>🏷️</i> Type :
+                        {% if object.typeObjectToRent is not null %}
+                            {{ object.typeObjectToRent.name }}
+                        {% else %}
+                            Non défini
+                        {% endif %}
+                    </div>
+                    <div class="info"><i>📌</i> État :
+                        {% if object.typeObjectToRent is not null %}
+                            {{ object.typeObjectToRent.name }}
+                        {% else %}
+                            Non défini
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="card-actions">
+                    <a href="{{ path('app_object_to_rent_show', {'id': object.id}) }}">👁️ Voir</a>
+                    <a href="{{ path('app_object_to_rent_edit', {'id': object.id}) }}" class="edit">✏️ Modifier</a>
+                    {{ include('object_to_rent/_delete_form.html.twig', { object_to_rent: object }) }}
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <p>Aucun bien trouvé.</p>
+    {% endfor %}
+</div>
+{% endblock %}
