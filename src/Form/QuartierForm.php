@@ -1,15 +1,15 @@
 <?php
 
-// src/Form/QuartierForm.php
-
 namespace App\Form;
 
 use App\Entity\City;
 use App\Entity\Quartier;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class QuartierForm extends AbstractType
@@ -22,9 +22,11 @@ class QuartierForm extends AbstractType
             ])
             ->add('city', EntityType::class, [
                 'class' => City::class,
-                'choice_label' => 'name', // Utilisation de 'name' pour la ville
+                'choice_label' => 'name',
                 'label' => 'Ville',
-            ]);
+            ])
+          
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

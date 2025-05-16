@@ -1,13 +1,23 @@
+{# templates/quartier/edit.html.twig #}
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Quartier{% endblock %}
+{% block title %}Modifier le quartier{% endblock %}
 
-{% block body %}
-    <h1>Edit Quartier</h1>
+{# Le contenu principal du bloc "souscarouselle" si tu l’utilises dans base.html.twig #}
+{% block souscarouselle %}
+    <div class="container mt-5">
+        <h1>Modifier le quartier : {{ quartier.nom }}</h1>
 
-    {{ include('quartier/_form.html.twig', {'button_label': 'Update'}) }}
+        {# Démarre le formulaire avec les données du quartier déjà remplies #}
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button class="btn btn-success mt-3">Mettre à jour</button>
+        {{ form_end(form) }}
 
-    <a href="{{ path('app_quartier_index') }}">back to list</a>
+        {# Lien pour revenir à la liste des quartiers #}
+        <a href="{{ path('app_quartier_new') }}" class="btn btn-secondary mt-3">Retour à l'ajout</a>
 
-    {{ include('quartier/_delete_form.html.twig') }}
+        {# Formulaire de suppression (supprime ce quartier) #}
+        {# {{ include('quartier/_delete_form.html.twig', { quartier: quartier }) }} #}
+    </div>
 {% endblock %}

@@ -1,23 +1,63 @@
-{# templates/quartier/new.html.twig #}
 {% extends 'base.html.twig' %}
 
 {% block title %}Nouveau Quartier{% endblock %}
 
-{% block souscarouselle %}
-    <div class="container mt-5">
-        <h1>Ajouter un nouveau quartier</h1>
-
-        {{ form_start(form) }}
-            {{ form_widget(form) }}
-            <button class="btn btn-primary mt-3">Ajouter</button>
-        {{ form_end(form) }}
-         <h2>Données saisies :</h2>
-     {% for quartier in quartiers %}
-            <hr>
-           
-            <p><strong>Nom du quartier :</strong> {{ quartier.nom }}</p>
-            <p><strong>Ville :</strong> {{ quartier.city.name }}</p>
-           {% endfor %}
-    </div>
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 {% endblock %}
 
+{% block souscarouselle %}
+    <div class="flex justify-center items-start min-h-screen bg-gray-100 py-10">
+        <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-xl">
+            <h1 class="text-2xl font-bold text-center mb-6">Ajouter un nouveau quartier</h1>
+
+            {{ form_start(form) }}
+                <div class="mb-4">
+                    {{ form_label(form.nom, null, {'label_attr': {'class': 'block mb-1 text-gray-700 font-semibold'}}) }}
+                    {{ form_widget(form.nom, {'attr': {'class': 'w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-black'}}) }}
+                    {{ form_errors(form.nom) }}
+                </div>
+
+                <div class="mb-4">
+                    {{ form_label(form.city, null, {'label_attr': {'class': 'block mb-1 text-gray-700 font-semibold'}}) }}
+                    {{ form_widget(form.city, {'attr': {'class': 'w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-black'}}) }}
+                    {{ form_errors(form.city) }}
+                </div>
+
+                <button type="submit"
+                        class="w-full bg-white text-black border border-black hover:bg-black hover:text-white font-bold py-2 px-4 rounded transition duration-300">
+                    Ajouter
+                </button>
+            {{ form_end(form) }}
+
+            <hr class="my-8">
+
+            <h2 class="text-xl font-semibold mb-4 text-center">Liste des quartiers enregistrés</h2>
+
+            {% for quartier in quartiers %}
+                <div class="border border-gray-200 p-4 rounded mb-4">
+                    <p><strong>Nom du quartier :</strong> {{ quartier.nom }}</p>
+                    <p><strong>Ville :</strong> {{ quartier.city.name }}</p>
+
+                    <div class="flex gap-2 mt-2">
+                        <a href="{{ path('app_quartier_edit', {'id': quartier.id}) }}"
+                           class="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-1 px-3 rounded text-sm">Modifier</a>
+
+                        <form method="post" action="{{ path('app_quartier_delete', {'id': quartier.id}) }}"
+                              onsubmit="return confirm('Voulez-vous vraiment supprimer ce quartier ?');"
+                              class="inline">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ quartier.id) }}">
+                            <button type="submit"
+                                    class="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 rounded text-sm">
+                                Supprimer
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            {% else %}
+                <p class="text-gray-500 text-center">Aucun quartier enregistré.</p>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
