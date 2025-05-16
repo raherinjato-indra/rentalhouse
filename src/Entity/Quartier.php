@@ -16,9 +16,11 @@ class Quartier
     #[ORM\Column(type: 'string', length: 255)]
     private ?string $nom = null;
 
-    #[ORM\ManyToOne(inversedBy: 'quartiers')]
+    #[ORM\ManyToOne(targetEntity: City::class, inversedBy: 'quartiers')]
     #[ORM\JoinColumn(nullable: false)]
     private ?City $city = null;
+
+    // Getters et setters
 
     public function getId(): ?int
     {

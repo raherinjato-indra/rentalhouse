@@ -2,99 +2,88 @@
 
 namespace App\Controller;
 
-use App\Entity\Quartier; // On importe l'entité Quartier
-use App\Form\QuartierForm; // On importe le formulaire QuartierForm
-use Doctrine\ORM\EntityManagerInterface; // Pour gérer les opérations en base de données
-use Symfony\Component\HttpFoundation\Request; // Pour récupérer les données HTTP
-use Symfony\Component\HttpFoundation\Response; // Pour retourner une réponse HTTP
-use Symfony\Component\Routing\Annotation\Route; // Pour définir les routes
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController; // Contrôleur de base Symfony
+use App\Entity\Quartier;
+use App\Form\QuartierForm;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-#[Route('/quartier')] // Préfixe de route pour toutes les méthodes de ce contrôleur
-class QuartierController extends BaseController
+class QuartierController extends AbstractController
 {
-    #[Route('/', name: 'app_quartier_index', methods: ['GET'])]
+    #[Route('/quartier', name: 'app_quartier_index')]
     public function index(EntityManagerInterface $em): Response
     {
-        // Récupère tous les quartiers depuis la base de données
         $quartiers = $em->getRepository(Quartier::class)->findAll();
 
-        // Rend la vue index avec les quartiers récupérés
         return $this->render('quartier/index.html.twig', [
             'quartiers' => $quartiers,
         ]);
     }
 
-    #[Route('/new', name: 'app_quartier_new', methods: ['GET', 'POST'])]
+    #[Route('/quartier/new', name: 'app_quartier_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $em): Response
     {
-        // Crée une nouvelle instance de Quartier
         $quartier = new Quartier();
-
-        // Crée le formulaire basé sur l'entité Quartier
         $form = $this->createForm(QuartierForm::class, $quartier);
-        $form->handleRequest($request); // Traite la requête
+        $form->handleRequest($request);
 
-        // Si le formulaire est soumis et valide, on sauvegarde en BDD
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($quartier); // Prépare l'enregistrement
-            $em->flush(); // Enregistre dans la base
-
-            // Message flash de succès
-            $this->addFlash('success', 'Quartier ajouté avec succès.');
-
-            // Redirection vers la même page pour permettre l’ajout d’un autre quartier
-            return $this->redirectToRoute('app_quartier_new');
-        }
-
-        // Affiche le formulaire et la liste des quartiers existants
         return $this->render('quartier/new.html.twig', [
             'form' => $form->createView(),
             'quartiers' => $em->getRepository(Quartier::class)->findAll(),
         ]);
     }
 
-    #[Route('/{id}', name: 'app_quartier_show', methods: ['GET'])]
-    public function show(Quartier $quartier): Response
+    #[Route('/quartier/{id}/edit', name: 'app_quartier_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Quartier $quartier, EntityManagerInterface $entityManager): Response
     {
-        // Affiche un quartier spécifique
-        return $this->render('quartier/show.html.twig', [
-            'quartier' => $quartier,
-        ]);
-    }
-
-    #[Route('/{id}/edit', name: 'app_quartier_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Quartier $quartier, EntityManagerInterface $em): Response
-    {
-        // Crée le formulaire d'édition avec les données existantes du quartier
         $form = $this->createForm(QuartierForm::class, $quartier);
         $form->handleRequest($request);
 
-        // Si le formulaire est soumis et valide, on met à jour
         if ($form->isSubmitted() && $form->isValid()) {
-            $em->flush(); // Pas besoin de persist, car l'entité est déjà gérée
+            $entityManager->flush();
+
             $this->addFlash('success', 'Quartier modifié avec succès.');
-            return $this->redirectToRoute('app_quartier_new');
+
+            return $this->redirectToRoute('app_quartier_index');
         }
 
-        // Affiche le formulaire pré-rempli
         return $this->render('quartier/edit.html.twig', [
             'quartier' => $quartier,
             'form' => $form->createView(),
         ]);
     }
 
-    #[Route('/{id}', name: 'app_quartier_delete', methods: ['POST'])]
-    public function delete(Request $request, Quartier $quartier, EntityManagerInterface $em): Response
+    #[Route('/quartier/{id}', name: 'app_quartier_delete', methods: ['POST'])]
+    public function delete(Request $request, EntityManagerInterface $em, int $id): Response
     {
-        // Vérifie que le token CSRF est valide avant suppression
-        if ($this->isCsrfTokenValid('delete'.$quartier->getId(), $request->request->get('_token'))) {
-            $em->remove($quartier); // Supprime
-            $em->flush(); // Applique la suppression
-            $this->addFlash('success', 'Quartier supprimé avec succès.');
+        $quartier = $em->getRepository(Quartier::class)->find($id);
+
+        if (!$quartier) {
+            throw new NotFoundHttpException('Quartier non trouvé.');
         }
 
-        // Redirection après suppression
+        if ($this->isCsrfTokenValid('delete' . $quartier->getId(), $request->request->get('_token'))) {
+            // Suppression image si elle existe
+            $imageFilename = $quartier->getImage();
+            if ($imageFilename) {
+                $imagePath = $this->getParameter('quartier_images_directory') . '/' . $imageFilename;
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+            }
+
+            $em->remove($quartier);
+            $em->flush();
+
+            $this->addFlash('success', 'Quartier supprimé avec succès.');
+        } else {
+            $this->addFlash('error', 'Token CSRF invalide.');
+        }
+
         return $this->redirectToRoute('app_quartier_new');
     }
 }
