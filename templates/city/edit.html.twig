@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier ville{% endblock %}
+
+{% block souscarouselle %}
+    <h1>Modifier la ville</h1>
+
+    {{ include('city/_form.html.twig', { form: form, button_label: 'Mettre à jour' }) }}
+
+    <a href="{{ path('app_city_index') }}">Retour à la liste</a>
+
+    {{ include('city/_delete_form.html.twig', { city: city }) }}
+{% endblock %}
