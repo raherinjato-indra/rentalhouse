@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle ville{% endblock %}
+
+{% block souscarouselle %}
+    <h1>Créer une nouvelle ville</h1>
+
+    {{ include('city/_form.html.twig', { form: form }) }}
+
+    <a href="{{ path('app_city_index') }}">Retour à la liste</a>
+{% endblock %}

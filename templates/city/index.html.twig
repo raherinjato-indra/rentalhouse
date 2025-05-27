@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des villes{% endblock %}
+
+{% block souscarouselle %}
+    <h1>Liste des villes</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for city in cities %}
+            <tr>
+                <td>{{ city.id }}</td>
+                <td>{{ city.name }}</td>
+                <td>
+                    <a href="{{ path('app_city_show', {'id': city.id}) }}">Voir</a> |
+                    <a href="{{ path('app_city_edit', {'id': city.id}) }}">Modifier</a>
+                    {{ include('city/_delete_form.html.twig', { city: city }) }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">Aucune ville trouvée.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_city_new') }}">Créer une nouvelle ville</a>
+{% endblock %}
