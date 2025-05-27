@@ -96,17 +96,18 @@ class Coordonnees
         return $this;
     }
 
-    public function getCoordonnees(): ?Quartier
-    {
-        return $this->coordonnees;
-    }
+    public function getQuartier(): ?Quartier
+{
+    return $this->quartier;
+}
 
-    public function setCoordonnees(?Quartier $coordonnees): static
-    {
-        $this->coordonnees = $coordonnees;
+public function setQuartier(?Quartier $quartier): static
+{
+    $this->quartier = $quartier;
+    return $this;
+}
 
-        return $this;
-    }
+
 
     /**
      * @return Collection<int, ObjectToRent>

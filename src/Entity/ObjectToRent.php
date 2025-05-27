@@ -24,401 +24,153 @@ class ObjectToRent
     private ?float $price = null;
 
     #[ORM\ManyToOne(inversedBy: 'objectToRents')]
-    private ?Coordonnees $Coordonnee = null;
+    private ?Coordonnees $coordonnee = null;
 
     #[ORM\ManyToOne(inversedBy: 'objectToRents')]
-    private ?User $User = null;
+    private ?User $user = null;
 
-    #[ORM\ManyToOne(inversedBy: 'ObjectsToRent')]
+    #[ORM\ManyToOne(inversedBy: 'objectsToRent')]
     private ?TypeObjectToRent $typeObjectToRent = null;
 
     #[ORM\Column(nullable: true)]
-    private ?float $Surface = null;
+    private ?float $surface = null;
 
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
-    private ?int $NbrPieces = null;
+    private ?int $nbrPieces = null;
 
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
-    private ?int $NbrSalleDeBain = null;
+    private ?int $nbrSalleDeBain = null;
 
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
-    private ?int $NbrSalleDeau = null;
+    private ?int $nbrSalleDeau = null;
 
     #[ORM\Column(nullable: true)]
-    private ?bool $CuisineEquipe = null;
+    private ?bool $cuisineEquipee = null;
 
     #[ORM\Column(nullable: true)]
-    private ?bool $Terasse = null;
+    private ?bool $terasse = null;
 
     #[ORM\Column(nullable: true)]
-    private ?bool $Balcon = null;
+    private ?bool $balcon = null;
 
     #[ORM\Column(nullable: true)]
-    private ?bool $Jardin = null;
+    private ?bool $jardin = null;
 
     #[ORM\Column(nullable: true)]
-    private ?bool $Piscine = null;
+    private ?bool $piscine = null;
 
     #[ORM\Column(nullable: true)]
-    private ?bool $AccessibleFauteuilsRoulants = null;
+    private ?bool $accessibleFauteuilsRoulants = null;
 
     #[ORM\Column(nullable: true)]
-    private ?bool $Garage = null;
+    private ?bool $garage = null;
 
     #[ORM\Column(nullable: true)]
-    private ?bool $SousSol = null;
+    private ?bool $sousSol = null;
 
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
-    private ?int $NbrTerasse = null;
+    private ?int $nbrTerasse = null;
 
     #[ORM\Column(nullable: true)]
-    private ?float $SurfaceBalcon = null;
+    private ?float $surfaceBalcon = null;
 
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
-    private ?int $NbrChambres = null;
+    private ?int $nbrChambres = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $AnneeConstruction = null;
+    private ?int $anneeConstruction = null;
 
     #[ORM\Column(nullable: true)]
-    private ?float $SurfaceTerrain = null;
+    private ?float $surfaceTerrain = null;
 
-    #[ORM\ManyToOne(inversedBy: 'ObjectsToRent')]
+    #[ORM\ManyToOne(inversedBy: 'objectsToRent')]
     private ?EtatObjectToRent $etatObjectToRent = null;
 
     #[ORM\Column(type: "string", length: 255, nullable: true)]
-    private ?string $photo = null;
-
-    public function getPhoto(): ?string
-    {
-        return $this->photo;
-    }
-
-    public function setPhoto(?string $photo): self
-    {
-        $this->photo = $photo;
-        return $this;
-    }
+    private ?string $imageFilename = null;
 
     #[ORM\Column]
     private ?bool $activated = null;
-    #[ORM\Column(type: "string", length: 255, nullable: true)]
-    private ?string $imageFilename = null;
-
-    public function getImageFilename(): ?string
-    {
-        return $this->imageFilename;
-    }
-
-    public function setImageFilename(?string $imageFilename): self
-    {
-        $this->imageFilename = $imageFilename;
-
-        return $this;
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): static
-    {
-        $this->name = $name;
 
-        return $this;
-    }
-
-    public function getDescriptionText(): ?string
-    {
-        return $this->descriptionText;
-    }
-
-    public function setDescriptionText(?string $descriptionText): static
-    {
-        $this->descriptionText = $descriptionText;
+    // --- Getters & Setters ---
 
-        return $this;
-    }
-
-    public function getPrice(): ?float
-    {
-        return $this->price;
-    }
-
-    public function setPrice(float $price): static
-    {
-        $this->price = $price;
+    public function getId(): ?int { return $this->id; }
 
-        return $this;
-    }
-
-    public function getCoordonnee(): ?Coordonnees
-    {
-        return $this->Coordonnee;
-    }
-
-    public function setCoordonnee(?Coordonnees $Coordonnee): static
-    {
-        $this->Coordonnee = $Coordonnee;
+    public function getName(): ?string { return $this->name; }
+    public function setName(string $name): self { $this->name = $name; return $this; }
 
-        return $this;
-    }
-
-    public function getUser(): ?User
-    {
-        return $this->User;
-    }
-
-    public function setUser(?User $User): static
-    {
-        $this->User = $User;
+    public function getDescriptionText(): ?string { return $this->descriptionText; }
+    public function setDescriptionText(?string $descriptionText): self { $this->descriptionText = $descriptionText; return $this; }
 
-        return $this;
-    }
-
-    public function getTypeObjectToRent(): ?TypeObjectToRent
-    {
-        return $this->typeObjectToRent;
-    }
-
-    public function setTypeObjectToRent(?TypeObjectToRent $typeObjectToRent): static
-    {
-        $this->typeObjectToRent = $typeObjectToRent;
+    public function getPrice(): ?float { return $this->price; }
+    public function setPrice(float $price): self { $this->price = $price; return $this; }
 
-        return $this;
-    }
-
-    public function getSurface(): ?float
-    {
-        return $this->Surface;
-    }
-
-    public function setSurface(?float $Surface): static
-    {
-        $this->Surface = $Surface;
+    public function getCoordonnee(): ?Coordonnees { return $this->coordonnee; }
+    public function setCoordonnee(?Coordonnees $coordonnee): self { $this->coordonnee = $coordonnee; return $this; }
 
-        return $this;
-    }
+    public function getUser(): ?User { return $this->user; }
+    public function setUser(?User $user): self { $this->user = $user; return $this; }
 
-    public function getNbrPieces(): ?int
-    {
-        return $this->NbrPieces;
-    }
+    public function getTypeObjectToRent(): ?TypeObjectToRent { return $this->typeObjectToRent; }
+    public function setTypeObjectToRent(?TypeObjectToRent $typeObjectToRent): self { $this->typeObjectToRent = $typeObjectToRent; return $this; }
 
-    public function setNbrPieces(?int $NbrPieces): static
-    {
-        $this->NbrPieces = $NbrPieces;
+    public function getSurface(): ?float { return $this->surface; }
+    public function setSurface(?float $surface): self { $this->surface = $surface; return $this; }
 
-        return $this;
-    }
+    public function getNbrPieces(): ?int { return $this->nbrPieces; }
+    public function setNbrPieces(?int $nbrPieces): self { $this->nbrPieces = $nbrPieces; return $this; }
 
-    public function getNbrSalleDeBain(): ?int
-    {
-        return $this->NbrSalleDeBain;
-    }
+    public function getNbrSalleDeBain(): ?int { return $this->nbrSalleDeBain; }
+    public function setNbrSalleDeBain(?int $nbrSalleDeBain): self { $this->nbrSalleDeBain = $nbrSalleDeBain; return $this; }
 
-    public function setNbrSalleDeBain(?int $NbrSalleDeBain): static
-    {
-        $this->NbrSalleDeBain = $NbrSalleDeBain;
+    public function getNbrSalleDeau(): ?int { return $this->nbrSalleDeau; }
+    public function setNbrSalleDeau(?int $nbrSalleDeau): self { $this->nbrSalleDeau = $nbrSalleDeau; return $this; }
 
-        return $this;
-    }
+    public function isCuisineEquipee(): ?bool { return $this->cuisineEquipee; }
+    public function setCuisineEquipee(?bool $cuisineEquipee): self { $this->cuisineEquipee = $cuisineEquipee; return $this; }
 
-    public function getNbrSalleDeau(): ?int
-    {
-        return $this->NbrSalleDeau;
-    }
+    public function isTerasse(): ?bool { return $this->terasse; }
+    public function setTerasse(?bool $terasse): self { $this->terasse = $terasse; return $this; }
 
-    public function setNbrSalleDeau(?int $NbrSalleDeau): static
-    {
-        $this->NbrSalleDeau = $NbrSalleDeau;
+    public function isBalcon(): ?bool { return $this->balcon; }
+    public function setBalcon(?bool $balcon): self { $this->balcon = $balcon; return $this; }
 
-        return $this;
-    }
+    public function isJardin(): ?bool { return $this->jardin; }
+    public function setJardin(?bool $jardin): self { $this->jardin = $jardin; return $this; }
 
-    public function isCuisineEquipe(): ?bool
-    {
-        return $this->CuisineEquipe;
-    }
+    public function isPiscine(): ?bool { return $this->piscine; }
+    public function setPiscine(?bool $piscine): self { $this->piscine = $piscine; return $this; }
 
-    public function setCuisineEquipe(?bool $CuisineEquipe): static
-    {
-        $this->CuisineEquipe = $CuisineEquipe;
+    public function isAccessibleFauteuilsRoulants(): ?bool { return $this->accessibleFauteuilsRoulants; }
+    public function setAccessibleFauteuilsRoulants(?bool $accessible): self { $this->accessibleFauteuilsRoulants = $accessible; return $this; }
 
-        return $this;
-    }
+    public function isGarage(): ?bool { return $this->garage; }
+    public function setGarage(?bool $garage): self { $this->garage = $garage; return $this; }
 
-    public function isTerasse(): ?bool
-    {
-        return $this->Terasse;
-    }
+    public function isSousSol(): ?bool { return $this->sousSol; }
+    public function setSousSol(?bool $sousSol): self { $this->sousSol = $sousSol; return $this; }
 
-    public function setTerasse(?bool $Terasse): static
-    {
-        $this->Terasse = $Terasse;
+    public function getNbrTerasse(): ?int { return $this->nbrTerasse; }
+    public function setNbrTerasse(?int $nbrTerasse): self { $this->nbrTerasse = $nbrTerasse; return $this; }
 
-        return $this;
-    }
+    public function getSurfaceBalcon(): ?float { return $this->surfaceBalcon; }
+    public function setSurfaceBalcon(?float $surfaceBalcon): self { $this->surfaceBalcon = $surfaceBalcon; return $this; }
 
-    public function isBalcon(): ?bool
-    {
-        return $this->Balcon;
-    }
+    public function getNbrChambres(): ?int { return $this->nbrChambres; }
+    public function setNbrChambres(?int $nbrChambres): self { $this->nbrChambres = $nbrChambres; return $this; }
 
-    public function setBalcon(?bool $Balcon): static
-    {
-        $this->Balcon = $Balcon;
+    public function getAnneeConstruction(): ?int { return $this->anneeConstruction; }
+    public function setAnneeConstruction(?int $anneeConstruction): self { $this->anneeConstruction = $anneeConstruction; return $this; }
 
-        return $this;
-    }
+    public function getSurfaceTerrain(): ?float { return $this->surfaceTerrain; }
+    public function setSurfaceTerrain(?float $surfaceTerrain): self { $this->surfaceTerrain = $surfaceTerrain; return $this; }
 
-    public function isJardin(): ?bool
-    {
-        return $this->Jardin;
-    }
+    public function getEtatObjectToRent(): ?EtatObjectToRent { return $this->etatObjectToRent; }
+    public function setEtatObjectToRent(?EtatObjectToRent $etat): self { $this->etatObjectToRent = $etat; return $this; }
 
-    public function setJardin(?bool $Jardin): static
-    {
-        $this->Jardin = $Jardin;
+    public function getImageFilename(): ?string { return $this->imageFilename; }
+    public function setImageFilename(?string $imageFilename): self { $this->imageFilename = $imageFilename; return $this; }
 
-        return $this;
-    }
-
-    public function isPiscine(): ?bool
-    {
-        return $this->Piscine;
-    }
-
-    public function setPiscine(?bool $Piscine): static
-    {
-        $this->Piscine = $Piscine;
-
-        return $this;
-    }
-
-    public function isAccessibleFauteuilsRoulants(): ?bool
-    {
-        return $this->AccessibleFauteuilsRoulants;
-    }
-
-    public function setAccessibleFauteuilsRoulants(?bool $AccessibleFauteuilsRoulants): static
-    {
-        $this->AccessibleFauteuilsRoulants = $AccessibleFauteuilsRoulants;
-
-        return $this;
-    }
-
-    public function isGarage(): ?bool
-    {
-        return $this->Garage;
-    }
-
-    public function setGarage(?bool $Garage): static
-    {
-        $this->Garage = $Garage;
-
-        return $this;
-    }
-
-    public function isSousSol(): ?bool
-    {
-        return $this->SousSol;
-    }
-
-    public function setSousSol(?bool $SousSol): static
-    {
-        $this->SousSol = $SousSol;
-
-        return $this;
-    }
-
-    public function getNbrTerasse(): ?int
-    {
-        return $this->NbrTerasse;
-    }
-
-    public function setNbrTerasse(?int $NbrTerasse): static
-    {
-        $this->NbrTerasse = $NbrTerasse;
-
-        return $this;
-    }
-
-    public function getSurfaceBalcon(): ?float
-    {
-        return $this->SurfaceBalcon;
-    }
-
-    public function setSurfaceBalcon(?float $SurfaceBalcon): static
-    {
-        $this->SurfaceBalcon = $SurfaceBalcon;
-
-        return $this;
-    }
-
-    public function getNbrChambres(): ?int
-    {
-        return $this->NbrChambres;
-    }
-
-    public function setNbrChambres(?int $NbrChambres): static
-    {
-        $this->NbrChambres = $NbrChambres;
-
-        return $this;
-    }
-
-    public function getAnneeConstruction(): ?int
-    {
-        return $this->AnneeConstruction;
-    }
-
-    public function setAnneeConstruction(?int $AnneeConstruction): static
-    {
-        $this->AnneeConstruction = $AnneeConstruction;
-
-        return $this;
-    }
-
-    public function getSurfaceTerrain(): ?float
-    {
-        return $this->SurfaceTerrain;
-    }
-
-    public function setSurfaceTerrain(?float $SurfaceTerrain): static
-    {
-        $this->SurfaceTerrain = $SurfaceTerrain;
-
-        return $this;
-    }
-
-    public function getEtatObjectToRent(): ?EtatObjectToRent
-    {
-        return $this->etatObjectToRent;
-    }
-
-    public function setEtatObjectToRent(?EtatObjectToRent $etatObjectToRent): static
-    {
-        $this->etatObjectToRent = $etatObjectToRent;
-
-        return $this;
-    }
-
-    public function isActivated(): ?bool
-    {
-        return $this->activated;
-    }
-
-    public function setActivated(bool $activated): static
-    {
-        $this->activated = $activated;
-
-        return $this;
-    }
+    public function isActivated(): ?bool { return $this->activated; }
+    public function setActivated(bool $activated): self { $this->activated = $activated; return $this; }
 }
