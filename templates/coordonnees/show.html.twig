@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails de la Coordonnée{% endblock %}
+
+{% block souscarouselle %}
+<style>
+    .detail-container {
+        max-width: 600px;
+        margin: 40px auto;
+        padding: 20px;
+        background: #f9f9f9;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .detail-container h1 {
+        text-align: center;
+        color: #004080;
+    }
+    .detail-item {
+        margin: 15px 0;
+        font-size: 16px;
+    }
+    .detail-label {
+        font-weight: bold;
+        color: #333;
+    }
+    .back-link {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+        text-decoration: none;
+        color: white;
+        background-color: #004080;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: bold;
+    }
+</style>
+
+<div class="detail-container">
+    <h1>📍 Détail de la Coordonnée</h1>
+    <div class="detail-item"><span class="detail-label">Adresse:</span> {{ coordonnee.adresse }}</div>
+    <div class="detail-item"><span class="detail-label">Latitude:</span> {{ coordonnee.latitude }}</div>
+    <div class="detail-item"><span class="detail-label">Longitude:</span> {{ coordonnee.longitude }}</div>
+    <div class="detail-item"><span class="detail-label">Code Postal:</span> {{ coordonnee.CodePostal }}</div>
+    <div class="detail-item"><span class="detail-label">Quartier:</span> {{ coordonnee.quartier.nom }}</div>
+
+    <a href="{{ path('app_coordonnees_index') }}" class="back-link">🔙 Retour à la liste</a>
+</div>
+{% endblock %}

@@ -1,0 +1,208 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Coordonnées{% endblock %}
+
+{% block souscarouselle %}
+<style>
+    .page-container {
+        max-width: 90%;
+        margin: 40px auto;
+        padding: 20px;
+        background: #fdfdfd;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+        text-align: center;
+        color: #004080;
+        margin-bottom: 30px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #fff;
+    }
+
+    th, td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #004080;
+        color: #fff;
+    }
+
+    tr:hover {
+        background-color: #f2f2f2;
+    }
+
+    .actions {
+        display: flex;
+        gap: 10px;
+    }
+
+    .btn {
+        padding: 6px 12px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    .btn-show {
+        background-color: #17a2b8;
+        color: white;
+    }
+
+    .btn-edit {
+        background-color: #ffc107;
+        color: white;
+    }
+
+    .btn-delete {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+    }
+
+    .btn-new {
+        display: inline-block;
+        background-color: #28a745;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 6px;
+        margin-bottom: 20px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .center {
+        text-align: center;
+    }
+
+    #toast-container {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        z-index: 9999;
+    }
+
+    .toast {
+        background-color: #333;
+        color: white;
+        padding: 12px 20px;
+        margin-top: 10px;
+        border-radius: 6px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        animation: slideIn 0.4s ease, fadeOut 0.5s ease 4s forwards;
+        opacity: 1;
+        min-width: 250px;
+        font-size: 14px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .toast-success {
+        background-color: #28a745;
+    }
+
+    .toast-error,
+    .toast-danger {
+        background-color: #dc3545;
+    }
+
+    .toast-info {
+        background-color: #17a2b8;
+    }
+
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeOut {
+        to {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+    }
+</style>
+
+<div class="page-container">
+    <h1>📍 Liste des Coordonnées</h1>
+
+    <div class="center">
+        <a href="{{ path('app_coordonnees_new') }}" class="btn-new">➕ Ajouter une nouvelle coordonnée</a>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Adresse</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>Code Postal</th>
+                <th>Quartier</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for coordonnee in coordonnees %}
+            <tr>
+                <td>{{ coordonnee.id }}</td>
+                <td>{{ coordonnee.adresse }}</td>
+                <td>{{ coordonnee.latitude }}</td>
+                <td>{{ coordonnee.longitude }}</td>
+                <td>{{ coordonnee.CodePostal }}</td>
+                <td>{{ coordonnee.quartier.nom }}</td>
+                <td class="actions">
+                    <a href="{{ path('app_coordonnees_show', {'id': coordonnee.id}) }}" class="btn btn-show">👁 Voir</a>
+                    <a href="{{ path('app_coordonnees_edit', {'id': coordonnee.id}) }}" class="btn btn-edit">✏️ Modifier</a>
+                    {{ include('coordonnees/_delete_form.html.twig', {'coordonnee': coordonnee}) }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7" class="center">Aucune coordonnée trouvée.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div id="toast-container">
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="toast toast-{{ label }}">
+                {% if label == 'success' %}✅{% elseif label in ['error', 'danger'] %}❌{% else %}ℹ️{% endif %}
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+</div>
+
+<script>
+    document.querySelectorAll('.toast').forEach(toast => {
+        toast.addEventListener('click', () => {
+            toast.remove();
+        });
+
+        setTimeout(() => {
+            toast.remove();
+        }, 4500);
+    });
+</script>
+{% endblock %}

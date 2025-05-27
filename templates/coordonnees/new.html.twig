@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter une Coordonnée{% endblock %}
+
+{% block souscarouselle %}
+<style>
+    .form-container {
+        max-width: 600px;
+        margin: 40px auto;
+        padding: 20px;
+        background: #f1f1f1;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .form-container h1 {
+        text-align: center;
+        color: #004080;
+    }
+
+    .form-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+
+    .form-buttons a,
+    .form-buttons button {
+        padding: 10px 20px;
+        border-radius: 6px;
+        border: none;
+        font-weight: bold;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .btn-back {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    .btn-submit {
+        background-color: #007bff;
+        color: white;
+    }
+</style>
+
+<div class="form-container">
+    <h1>➕ Nouvelle Coordonnée</h1>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <div class="form-buttons">
+            <a href="{{ path('app_coordonnees_index') }}" class="btn-back">🔙 Retour</a>
+            <button class="btn-submit">💾 Enregistrer</button>
+        </div>
+    {{ form_end(form) }}
+</div>
+{% endblock %}

@@ -99,6 +99,14 @@
         <li><strong>Surface :</strong> {{ object_to_rent.surface }} m²</li>
         <li><strong>Nombre de pièces :</strong> {{ object_to_rent.nbrPieces }}</li>
     </ul>
+    <h2>📍 Coordonnées du bien</h2>
+    <ul>
+        <li><strong>Adresse :</strong> {{ object_to_rent.coordonnee.adresse }}</li>
+        <li><strong>Code postal :</strong> {{ object_to_rent.coordonnee.codePostal }}</li>
+        <li><strong>Latitude :</strong> {{ object_to_rent.coordonnee.latitude }}</li>
+        <li><strong>Longitude :</strong> {{ object_to_rent.coordonnee.longitude }}</li>
+        <li><strong>Quartier :</strong> {{ object_to_rent.coordonnee.quartier.nom }}</li>
+    </ul>
 
     <div class="actions">
         <a href="{{ path('app_object_to_rent_edit', {'id': object_to_rent.id}) }}" class="btn btn-primary">Modifier</a>
