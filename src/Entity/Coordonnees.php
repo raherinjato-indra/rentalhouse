@@ -18,24 +18,20 @@ class Coordonnees
     #[ORM\Column(length: 255)]
     private ?string $adresse = null;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column(type: 'float', nullable: true)]
     private ?float $longitude = null;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column(type: 'float', nullable: true)]
     private ?float $latitude = null;
 
     #[ORM\Column(length: 8)]
-    private ?string $CodePostal = null;
+    private ?string $codePostal = null;
 
+    #[ORM\ManyToOne(inversedBy: 'coordonnees')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Quartier $quartier = null;
 
-   #[ORM\ManyToOne(inversedBy: 'coordonnees')]
-   #[ORM\JoinColumn(nullable: false)]
-   private ?Quartier $quartier = null;
-
-    /**
-     * @var Collection<int, ObjectToRent>
-     */
-    #[ORM\OneToMany(targetEntity: ObjectToRent::class, mappedBy: 'Coordonnee')]
+    #[ORM\OneToMany(mappedBy: 'coordonnee', targetEntity: ObjectToRent::class)]
     private Collection $objectToRents;
 
     public function __construct()
@@ -56,7 +52,6 @@ class Coordonnees
     public function setAdresse(string $adresse): static
     {
         $this->adresse = $adresse;
-
         return $this;
     }
 
@@ -68,7 +63,6 @@ class Coordonnees
     public function setLongitude(?float $longitude): static
     {
         $this->longitude = $longitude;
-
         return $this;
     }
 
@@ -80,34 +74,30 @@ class Coordonnees
     public function setLatitude(?float $latitude): static
     {
         $this->latitude = $latitude;
-
         return $this;
     }
 
     public function getCodePostal(): ?string
     {
-        return $this->CodePostal;
+        return $this->codePostal;
     }
 
-    public function setCodePostal(string $CodePostal): static
+    public function setCodePostal(string $codePostal): static
     {
-        $this->CodePostal = $CodePostal;
-
+        $this->codePostal = $codePostal;
         return $this;
     }
 
     public function getQuartier(): ?Quartier
-{
-    return $this->quartier;
-}
+    {
+        return $this->quartier;
+    }
 
-public function setQuartier(?Quartier $quartier): static
-{
-    $this->quartier = $quartier;
-    return $this;
-}
-
-
+    public function setQuartier(?Quartier $quartier): static
+    {
+        $this->quartier = $quartier;
+        return $this;
+    }
 
     /**
      * @return Collection<int, ObjectToRent>
@@ -130,7 +120,6 @@ public function setQuartier(?Quartier $quartier): static
     public function removeObjectToRent(ObjectToRent $objectToRent): static
     {
         if ($this->objectToRents->removeElement($objectToRent)) {
-            // set the owning side to null (unless already changed)
             if ($objectToRent->getCoordonnee() === $this) {
                 $objectToRent->setCoordonnee(null);
             }

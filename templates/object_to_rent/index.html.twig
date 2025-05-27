@@ -188,9 +188,20 @@
                 </div>
 
                 <div class="card-actions">
+                 {% if object.Coordonnee is not null %}
+                        <div>Adresse : {{ object.Coordonnee.adresse }}</div>
+                        <div>Code Postal : {{ object.Coordonnee.CodePostal }}</div>
+                        <div>Quartier : {{ object.Coordonnee.quartier.nom }}</div>
+                        <a href="https://www.google.com/maps?q={{ object.Coordonnee.latitude }},{{ object.Coordonnee.longitude }}" target="_blank">
+                            📍 Voir sur la carte
+                        </a>
+                    {% else %}
+                        <div>Coordonnée non renseignée</div>
+                    {% endif %}
                     <a href="{{ path('app_object_to_rent_show', {'id': object.id}) }}">👁️ Voir</a>
                     <a href="{{ path('app_object_to_rent_edit', {'id': object.id}) }}" class="edit">✏️ Modifier</a>
                     {{ include('object_to_rent/_delete_form.html.twig', { object_to_rent: object }) }}
+                   
                 </div>
             </div>
         </div>
