@@ -49,7 +49,7 @@ final class ObjectToRentController extends AbstractController
                     $this->addFlash('error', 'Erreur lors du téléchargement de l\'image.');
                 }
 
-                $objectToRent->setPhoto($newFilename);
+                $objectToRent->setImageFilename($newFilename);
             }
 
             $entityManager->persist($objectToRent);
