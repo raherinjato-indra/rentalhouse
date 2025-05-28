@@ -8,6 +8,7 @@ use App\Repository\ObjectToRentRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\City;
 
 class SearchController extends BaseController
 {
@@ -21,5 +22,15 @@ class SearchController extends BaseController
             'objects' => $objects,
         ]);
     }
+    #[Route('/search/city/{id}', name: 'app_search_city')]
+    public function getCityById(City $city): Response
+      
+    {
+
+        return $this->render('search/searchCity.html.twig', [
+            'city' => $city
+        ]);
+    }
+   
 }
 

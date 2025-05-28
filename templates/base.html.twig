@@ -2051,7 +2051,7 @@
                   <div class="SeoLinksstyled__SeoBlockLineWrapper-n3mtu0-5 hAPtLq">
                     <h3 class="SeoLinksstyled__SeoLinkTitle-n3mtu0-4 QNHOA">Ventes de maisons</h3>
                      {% for city in cities %}
-                    <a href="https://www.seloger.com/immobilier/achat/immo-nice-06/bien-maison/">Vente maison {{ city.name }}</a>
+                    <a href="{{ path('app_search_city', {'id':city.id}) }}">Vente maison {{ city.name }}</a>
                      {% endfor %}
                     </div>
                   <div class="SeoLinksstyled__SeoBlockLineWrapper-n3mtu0-5 hAPtLq">
