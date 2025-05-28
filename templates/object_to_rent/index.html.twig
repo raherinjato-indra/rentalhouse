@@ -132,7 +132,7 @@
 <div class="cards-container">
     {% for object in object_to_rents %}
         <div class="card">
-            <img src="{{ asset('uploads/photos/' ~ object.photo) }}" alt="Photo de {{ object.name }}" style="width:100%; height:400px; object-fit:cover;">
+            <img src="{{ asset('uploads/photos/' ~ object.imageFilename) }}" alt="Photo de {{ object.name }}" style="width:100%; height:400px; object-fit:cover;">
             <div class="card-content">
                 <h1>{{ object.name }}</h1>
 
@@ -143,7 +143,7 @@
                     <div class="info"><i>🛋️</i> Pièces : {{ object.NbrPieces }}</div>
                     <div class="info"><i>🚿</i> Salle de bain : {{ object.NbrSalleDeBain }}</div>
                     <div class="info"><i>🚿</i> Salle d’eau : {{ object.NbrSalleDeau }}</div>
-                    <div class="info"><i>🍽️</i> Cuisine équipée : {{ object.CuisineEquipe ? 'Oui' : 'Non' }}</div>
+                    <div class="info"><i>🍽️</i> Cuisine équipée : {{ object.CuisineEquipee ? 'Oui' : 'Non' }}</div>
                     <div class="info"><i>🌇</i> Terrasse : {{ object.Terasse ? 'Oui' : 'Non' }}</div>
                     <div class="info"><i>🌄</i> Balcon : {{ object.Balcon ? 'Oui' : 'Non' }}</div>
                     <div class="info"><i>🌳</i> Jardin : {{ object.Jardin ? 'Oui' : 'Non' }}</div>

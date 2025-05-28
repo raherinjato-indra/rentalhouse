@@ -1,0 +1,228 @@
+{% extends 'search/base.html.twig' %}
+{% block content %}
+<style>
+.sc-hizQCF.fFzTMY {
+  padding: 4px 6px;
+  font-size: 12px; /* réduire la taille globale */
+  line-height: 1.2;
+  max-width: 300px; /* limiter largeur */
+}
+
+.sc-hwcHae.eQaWcq {
+  margin-bottom: 4px;
+}
+
+.sc-lnmtFM.eBYGTG {
+  display: flex;
+  gap: 4px;
+  font-size: 11px;
+}
+
+.sc-erNlkL.hRJauR i,
+.sc-bqjOQT.fBZSTC li i {
+  font-style: normal;
+  margin-right: 4px;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.sc-erNlkL.hRJauR,
+.sc-iuDHTM.iWcFWo {
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+}
+
+.sc-gGCbJM.dJcULM h1 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 2px 0 6px 0;
+}
+
+.sc-lcpuFF.bYFler ul.sc-bqjOQT.fBZSTC {
+  padding-left: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 11px;
+}
+
+.sc-lcpuFF.bYFler ul.sc-bqjOQT.fBZSTC {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px 12px; /* espace entre les lignes et colonnes */
+  padding-left: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.sc-lcpuFF.bYFler ul.sc-bqjOQT.fBZSTC li {
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+}
+
+
+.sc-ciodno.gUdbiq {
+  height: 0;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+
+  ul[data-test="sl.tagsLine"] {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Deux colonnes */
+    gap: 10px 20px;
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    padding: 12px;
+  }
+
+  ul[data-test="sl.tagsLine"] li {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 15px;
+    color: #333;
+  }
+
+  ul[data-test="sl.tagsLine"] li i {
+    font-style: normal;
+    font-size: 18px;
+    margin-right: 8px;
+  }
+</style>
+
+
+{% for quartier in city.quartiers %}
+  
+  {% for coordonnee in quartier.coordonnees %}
+  
+    {% for object in coordonnee.objectToRents %}
+       <div data-testid="sl.explore.card-container" class="sc-hARARD cardMode_3 ListContent-sc-1viyr2k-0 bEZLZU sc-ccLTTT gXYseb">
+        <div class="sc-dBaXSw kAViLA">
+          <div data-testid="sl.expèlore.contact" class="sc-jMMfwr gHABLk">
+            <div data-testid="sl.explore.agencyLogo" class="sc-ecaExY bczTQF">
+              <div class="sc-gbzWSY cvfPhX">
+                </div>
+                </div>
+                <div class="sc-jGxEUC iDypyC">
+                  <div class="sc-jqIZGH sofyP">Book A Flat
+                    </div>
+                    </div>
+                    </div>
+                    </div>
+                    <div class="sc-hlILIN jbwjjh">
+                      <div class="sc-jQMNup iaGruF">
+                        <div class="sc-cgHJcJ koRvIs">
+                          <div class="sc-bIqbHp kXPmAg">
+                            <div data-testid="sl.explore.PhotosContainer" class="sc-jxGEyO cCBGXb">
+                             {% if object.imageFilename %}
+                                <img src="{{ asset('uploads/photos/cuisine.jpg') }}" alt="Photo de {{ object.name }}" style="width:100%; height:100%; object-fit:cover;">
+                            {% else %}
+                                <img src="{{ asset('uploads/photos/default.jpg') }}" alt="Image par défaut" style="width:100%; height:400px; object-fit:cover;">
+                            {% endif %}
+
+
+                              <div class="sc-drlKqa dglyPI">
+                                <div kind="default" data-testid="gsl.uilib.Badge" class="sc-cJSrbW lnMfi">Nouveauté
+                                  </div>
+                                  </div>
+                                  </div>
+                                  </div>
+                                  </div>
+                                  <div class="sc-hizQCF fFzTMY">
+                                    <div data-testid="sl.explore-card-price" data-test="sl.price-container" class="sc-hwcHae eQaWcq">
+                                      <div class="sc-lnmtFM eBYGTG">
+                                        <div data-test="sl.price-label" class="sc-erNlkL hRJauR"><i>💰</i> Prix : {{ object.price }} €
+                                          </div>
+                                          <div class="sc-iuDHTM iWcFWo">/mois
+                                            </div>
+                                            </div>
+                                            </div>
+                                            <div data-test="sl.title" font-size="5" font-weight="600" class="sc-gGCbJM dJcULM"><h1>{{ object.name }}</h1>
+                                              </div>
+                                              <div class="sc-lcpuFF bYFler">
+                                                <ul data-test="sl.tagsLine" class="sc-bqjOQT fBZSTC">
+                                                  <li><i>🏘️</i> Pièces : {{ object.NbrPieces }}</li>
+                                                  <li><i>🔲</i> Surface : {{ object.Surface }} m²</li>
+                                                  <li><i>🚗</i> Garage : {{ object.Garage ? 'Oui' : 'Non' }}</li>
+                                                  <li><i>🚿</i> Salle de bain : {{ object.NbrSalleDeBain }}</li>
+                                              
+                                  
+                                                  </ul>
+                                                  </div>
+                                                  <div data-test="sl.address" class="sc-ciodno gUdbiq">
+                                                    </div>
+                                                    </div>
+                                                    </div>
+                                                    <div class="sc-cmIlrE cJPmqB">
+                                                      <div class="sc-gleUXh crWZdN">
+                                                        <a color="#000000" data-testid="sl.explore.externalLink" class="sc-fjhmcy ibsVrH">A voir sur Belles Demeures 
+                                                          <div data-testid="gsl.uilib.Icon" style="margin-left:4px" class="sc-bdVaJa ffCAGj">
+                                                            <svg width="1em" height="1em" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img">
+                                                            <defs>
+                                                              <path d="M6.55 5.234c.413.343.455.939.092 1.33L4.18 9.102l13.845.088c.538 0 .974.412.974.921 0 .472-.376.862-.86.915l-.114.006-13.861-.088 2.33 2.52a.886.886 0 01-.087 1.298 1.005 1.005 0 01-.643.239.998.998 0 01-.73-.322l-3.788-4.061a.884.884 0 010-1.225l3.895-4.07c.363-.392.993-.431 1.407-.088z" id="arrow-right-bold_svg__a">
+                                                                </path>
+                                                                </defs>
+                                                                <use fill="currentColor" transform="rotate(-180 10 10)" xlink:href="#arrow-right-bold_svg__a" fill-rule="evenodd">
+                                                                  </use>
+                                                                  </svg>
+                                                                  </div>
+                                                                  </a>
+                                                                  </div>
+                                                                  <div class="sc-doWzTn kzWpxo">
+                                                                    <span class="sc-cCbXAZ OcCUH">
+                                                                     {% if object.imageFilename %}
+                                <img src="{{ asset('uploads/photos/chambre.jpg') }}" alt="Photo de {{ object.name }}" width="166" height="93" class="sc-ivVeuv liOTfz">
+                            {% else %}
+                                <img src="{{ asset('uploads/photos/default.jpg') }}" alt="Image par défaut" width="166" height="93" class="sc-ivVeuv liOTfz">
+                            {% endif %}
+
+{% if object.imageFilename %}
+                                <img src="{{ asset('uploads/photos/grandesalle.jpg') }}" alt="Photo de {{ object.name }}" width="166" height="93" class="sc-ivVeuv liOTfz">
+                            {% else %}
+                                <img src="{{ asset('uploads/photos/default.jpg') }}" alt="Image par défaut" width="166" height="93" class="sc-ivVeuv liOTfz">
+                            {% endif %}
+                                                                      </span>
+                                                                      </div>
+                                                                      <p data-testid="sl.explore.card-description" class="sc-fHSTwm hPlaAW">
+                                                                        <span class="sc-hdPSEv ctnFZd">
+                                                                          </span>
+                                                                         {{ object.descriptionText }}
+                                                                          </p>
+                                                                          </div>
+                                                                          </div>
+                                                                          <div data-testid="sl.explore.card-bellow" class="sc-iBmynh eRNvaP">
+                                                                            <div data-testid="sl.explore.card-opener" class="sc-jvEmr huTbqq sc-bdVaJa cbkskm">
+                                                                              <svg width="1em" height="1em" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img">
+                                                                              <defs>
+                                                                                <path d="M10.06 16a.749.749 0 01-.538-.234L1.34 7.402a.77.77 0 01-.323-.8.742.742 0 011.379-.217l7.663 7.775 7.664-7.835a.739.739 0 011.06.005c.291.3.29.785-.005 1.082l-8.251 8.364a.73.73 0 01-.468.224z" id="chevron-down-regular_svg__a">
+                                                                                  </path>
+                                                                                  </defs>
+                                                                                  <use fill="currentColor" xlink:href="#chevron-down-regular_svg__a" fill-rule="evenodd">
+                                                                                    </use>
+                                                                                    </svg>
+                                                                                    </div>
+                                                                                    </div>
+                                                                                    <a data-testid="sl.explore.coveringLink" title="Belles Demeures" href="https://www.bellesdemeures.com/annonces/location/tt-1-tb-1-pl-48506/220851519/#?cmp=INTSL_ListToDetail" target="_blank" class="sc-dTLGrV jfOmWT">
+                                                                                    </a>
+       </div>
+       {% endfor %}
+       {% endfor %}
+       {% endfor %}
+
+      {% endblock %}
+             
+             

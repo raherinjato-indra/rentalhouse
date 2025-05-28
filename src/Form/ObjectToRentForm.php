@@ -26,7 +26,7 @@ class ObjectToRentForm extends AbstractType
             ->add('NbrPieces')
             ->add('NbrSalleDeBain')
             ->add('NbrSalleDeau')
-            ->add('CuisineEquipe')
+            ->add('CuisineEquipee')
             ->add('Terasse')
             ->add('Balcon')
             ->add('Jardin')
