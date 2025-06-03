@@ -1,16 +1,137 @@
-{# templates/quartier/index.html.twig #}
-
-{% extends 'base.html.twig' %}
+{% extends 'baseadmin.html.twig' %}
 
 {% block title %}Liste des quartiers{% endblock %}
 
-{% block body %}
+
+{% block souscarouselle %}
+  <style>
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-15px);
+        }
+
+        .card-content {
+            padding: 15px 20px;
+        }
+
+        .card-content h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #004080;
+        }
+
+        .info {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .card-actions {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .card-actions a,
+        .card-actions form button {
+            display: inline-block;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            line-height: 1.2;
+            border: none;
+        }
+
+        .card-actions a {
+            color: white;
+        }
+
+        .card-actions a:not(.edit) {
+            background-color: #28a745;
+        }
+
+        .card-actions a.edit {
+            background-color: #ffc107;
+            color: #000;
+        }
+
+        .card-actions form button.btn-delete {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .card-actions form button.btn-delete:hover {
+            background-color: #c82333;
+        }
+
+        .btn-add {
+            display: block;
+            margin: 30px auto;
+            text-align: center;
+            padding: 10px 20px;
+            background-color: #004080;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .btn-add:hover {
+            background-color: #003366;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #004080;
+        }
+    </style>
     <h1>Liste des quartiers</h1>
-    <ul>
+   <a href="{{ path('app_quartier_new') }}" class="btn-add"> ➕ Créer un nouveau quartier</a>
+    <div class="cards-container">
         {% for quartier in quartiers %}
-            <li>{{ quartier.nom }} - {{ quartier.city.name }}</li>
+            <div class="card">
+                <div class="card-content">
+                    <h2>{{ quartier.nom }}</h2>
+                    <div class="info">
+                        Ville : {{ quartier.city.name }}
+                    </div>
+                    <div class="card-actions">
+                        
+                        <a href="{{ path('app_quartier_edit', {id: quartier.id}) }}" class="edit">Modifier</a>
+                        <form method="post" action="{{ path('app_quartier_delete', {'id': quartier.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce quartier ?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ quartier.id) }}">
+                            <button class="btn-delete">Supprimer</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         {% else %}
-            <li>Aucun quartier trouvé</li>
+            <p style="text-align: center; width: 100%;">Aucun quartier trouvé</p>
         {% endfor %}
-    </ul>
+    </div>
+
+ 
 {% endblock %}

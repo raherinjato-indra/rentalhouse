@@ -1661,139 +1661,37 @@ body[unresolved] {opacity: 0; display: block; overflow: hidden; position: relati
                                 </li>
 
                                 <li>
-                                    <a href="#">
+                                    <a href="{{ path('app_city_index') }}">
                                         <i class="metismenu-icon pe-7s-browser"></i>
                                         Ville
-                                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                        
                                     </a>
-                                    <ul class="mm-collapse">
-                                        <li>
-                                            <a href="pages-login.html">
-                                                <i class="metismenu-icon"></i>
-                                                Ajouter une ville 
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="pages-login-boxed.html">
-                                                <i class="metismenu-icon">
-                                                </i>Modifier une ville 
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="pages-register.html">
-                                                <i class="metismenu-icon">
-                                                </i>Supprimer une ville 
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="pages-register-boxed.html">
-                                                <i class="metismenu-icon">
-                                                </i>Ajouter une ville
-                                            </a>
-                                        </li>
-                                        </ul>
-                                    </li>
+                                </li>
 
                                     <li>
-                                    <a href="#">
+                                    <a href="{{ path('app_quartier_index') }}">
                                         <i class="metismenu-icon pe-7s-browser"></i>
                                         Quartier
-                                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                        
                                     </a>
-                                    <ul class="mm-collapse">
-                                        <li>
-                                            <a href="pages-login.html">
-                                                <i class="metismenu-icon"></i>
-                                                Ajouter un quartier 
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="pages-login-boxed.html">
-                                                <i class="metismenu-icon">
-                                                </i>Modifier un quartier 
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="pages-register.html">
-                                                <i class="metismenu-icon">
-                                                </i>Supprimer un quartier
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="pages-register-boxed.html">
-                                                <i class="metismenu-icon">
-                                                </i>Ajouter un quartier
-                                            </a>
-                                        </li>
-                                        </ul>
-                                   </li>
+                                    </li>
                                     
                                     <li>
-                                    <a href="#">
+                                   <a href="{{ path('app_coordonnees_index') }}">
                                         <i class="metismenu-icon pe-7s-browser"></i>
                                         Coordonnées
-                                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                        
                                     </a>
-                                    <ul class="mm-collapse">
-                                        <li>
-                                            <a href="pages-login.html">
-                                                <i class="metismenu-icon"></i>
-                                                Ajouter une coordonnée 
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="pages-login-boxed.html">
-                                                <i class="metismenu-icon">
-                                                </i>Modifier une coordonnée 
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="pages-register.html">
-                                                <i class="metismenu-icon">
-                                                </i>Supprimer une coordonnée
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="pages-register-boxed.html">
-                                                <i class="metismenu-icon">
-                                                </i>Ajouter une coordonnée 
-                                            </a>
-                                        </li>
-                                    </ul>
+                                    
                                 </li>
 
                                 <li>
-                                    <a href="#">
+                                    <a href="{{ path('app_object_to_rent_index') }}">
                                         <i class="metismenu-icon pe-7s-browser"></i>
                                         Objet à louer 
-                                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                        
                                     </a>
-                                    <ul class="mm-collapse">
-                                        <li>
-                                            <a href="pages-login.html">
-                                                <i class="metismenu-icon"></i>
-                                                Ajouter un objet 
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="pages-login-boxed.html">
-                                                <i class="metismenu-icon">
-                                                </i>Modifier un objet  
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="pages-register.html">
-                                                <i class="metismenu-icon">
-                                                </i>Supprimer un objet 
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="pages-register-boxed.html">
-                                                <i class="metismenu-icon">
-                                                </i>Ajouter un objet  
-                                            </a>
-                                        </li>
-                                    </ul>
+                                    
                                 </li>
 
                                 <li>
@@ -2709,6 +2607,7 @@ body[unresolved] {opacity: 0; display: block; overflow: hidden; position: relati
                             <div class="app-inner-layout__content">
                                 <div class="tab-content">
                                     <div class="container-fluid">
+                                    {% block souscarouselle %}
                                         <div class="mb-3 card">
                                             <div class="card-header-tab card-header">
                                                 <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
@@ -2788,6 +2687,7 @@ body[unresolved] {opacity: 0; display: block; overflow: hidden; position: relati
                                                 </button>
                                             </div>
                                         </div>
+                                        {% endblock %}
                                         <div class="row">
                                             <div class="col-sm-12 col-lg-6">
                                                 <div class="mb-3 card">

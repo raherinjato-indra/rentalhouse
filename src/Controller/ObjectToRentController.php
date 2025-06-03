@@ -19,8 +19,10 @@ final class ObjectToRentController extends AbstractController
     #[Route(name: 'app_object_to_rent_index', methods: ['GET'])]
     public function index(ObjectToRentRepository $objectToRentRepository): Response
     {
+        $objects = $objectToRentRepository->findAll();
+
         return $this->render('object_to_rent/index.html.twig', [
-            'object_to_rents' => $objectToRentRepository->findAll(),
+            'object_to_rents' => $objects,
         ]);
     }
 
@@ -45,7 +47,6 @@ final class ObjectToRentController extends AbstractController
                         $newFilename
                     );
                 } catch (FileException $e) {
-                    // Gérer l'exception si nécessaire
                     $this->addFlash('error', 'Erreur lors du téléchargement de l\'image.');
                 }
 
@@ -95,7 +96,7 @@ final class ObjectToRentController extends AbstractController
                     $this->addFlash('error', 'Erreur lors du téléchargement de l\'image.');
                 }
 
-                $objectToRent->setPhoto($newFilename);
+                $objectToRent->setImageFilename($newFilename);
             }
 
             $entityManager->flush();
@@ -112,7 +113,7 @@ final class ObjectToRentController extends AbstractController
     #[Route('/{id}', name: 'app_object_to_rent_delete', methods: ['POST'])]
     public function delete(Request $request, ObjectToRent $objectToRent, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $objectToRent->getId(), $request->getPayload()->getString('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $objectToRent->getId(), $request->request->get('_token'))) {
             $entityManager->remove($objectToRent);
             $entityManager->flush();
         }
