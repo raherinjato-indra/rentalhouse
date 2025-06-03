@@ -1,6 +1,6 @@
 
 <form method="post" action="{{ path('app_object_to_rent_delete', {'id': object_to_rent.id}) }}" onsubmit="return confirm('Voulez-vous vraiment supprimer ce bien ?');">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ object_to_rent.id) }}">
-    <button class="btn-delete" style="background-color: #dc3545; color: white; padding: 8px 12px; border: none; border-radius: 6px; cursor: pointer;">🗑️ Supprimer</button>
+    <button class="btn-delete" style="background-color: #dc3545; color: white; padding: 8px 12px; border: none; border-radius: 6px; cursor: pointer;">Supprimer</button>
 </form>
 
