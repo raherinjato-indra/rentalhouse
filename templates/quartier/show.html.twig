@@ -2,7 +2,7 @@
 
 {% block title %}Quartier{% endblock %}
 
-{% block body %}
+{% block souscarouselle %}
     <h1>Détails du Quartier</h1>
 
     <table class="table">
@@ -19,16 +19,7 @@
                 <th>Ville</th>
                 <td>{{ quartier.city.name }}</td>
             </tr>
-            <tr>
-                <th>Image</th>
-                <td>
-                    {% if quartier.image %}
-                        <img src="{{ asset('uploads/quartiers/' ~ quartier.image) }}" alt="Image du quartier" width="300">
-                    {% else %}
-                        <p>Aucune image disponible</p>
-                    {% endif %}
-                </td>
-            </tr>
+            
         </tbody>
     </table>
 
