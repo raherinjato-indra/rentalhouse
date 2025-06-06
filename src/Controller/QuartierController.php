@@ -57,6 +57,16 @@ class QuartierController extends AbstractController
         ]);
     }
 
+   #[Route('/quartier/{id}', name: 'app_quartier_show', methods: ['GET'])]
+public function show(Quartier $quartier): Response
+{
+    return $this->render('quartier/show.html.twig', [
+        'quartier' => $quartier,
+    ]);
+}
+
+
+
     #[Route('/quartier/{id}', name: 'app_quartier_delete', methods: ['POST'])]
     public function delete(Request $request, EntityManagerInterface $em, int $id): Response
     {

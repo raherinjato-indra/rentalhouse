@@ -4,8 +4,17 @@
 
 {% block body %}
 <style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+  .example-wrapper {
+    margin: 1em auto;
+    max-width: 800px;
+    width: 95%;
+    font: 18px/1.5 sans-serif;
+  }
+
+  .example-wrapper code {
+    background: #F5F5F5;
+    padding: 2px 6px;
+  }
 </style>
 
 <div class="example-wrapper">
@@ -20,10 +29,29 @@
 {% endblock %}
 
 {% block carouselle %}
+<style>
+  /* Conteneur flex */
+  .search-bar-container {
+    display: flex !important;
+    align-items: center;
+    gap: 10px;
+  }
+
+  /* Champ de texte */
+  #search-input {
+    flex: 1;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  
+  </style>
 <div class="EngineSectionstyled__EngineSectionContainer-uuddou-0 hhrdVH">
           <div class="EngineSectionstyled__AgathaForm-uuddou-1 dHyGsK">
             <div class="SearchEnginestyled__MainContainer-ff40l9-0 WgEYE">
-              <h1 class="SearchEnginestyled__WelcomeTitle-ff40l9-6 kMBzNi">Quel cherchez-vous ?</h1>
+              <h1 class="SearchEnginestyled__WelcomeTitle-ff40l9-6 kMBzNi">Que cherchez-vous ?</h1>
               <div class="SearchEnginestyled__Quest-ff40l9-1 btSMcs">
                 <div id="moteur-engine" data-tab="2" class="SearchEnginestyled__QuestContainer-ff40l9-2 bGznpc">
 				  <div class="criterion CriterionListView active c-quest-tabs visible" id="agatha_quest">
@@ -42,37 +70,32 @@
 					</div>
 					<span class="error invisible"></span>
 				  </div>
-				  <div class="criterion CriterionAutocompleteView active  visible" id="agatha_autocomplete">
-					<span class="title"></span>
-					<span class="description"></span>
-					<form id="agatha_autocomplete_autocompleteUI" autocomplete="off" class="slam-aui autocompleteUI">
-					  <div placeholder="Dans quelle ville ? Quartier ?" class="hidden" style="display: none; visibility: hidden; height: 0px; width: 0px;">
-						<input type="text" placeholder="Dans quelle ville ? Quartier ?" class="hidden" style="display: none; visibility: hidden; height: 0px; width: 0px;">
-					  </div>
-					  <div class="slam-aui-input-fake">
-						<div class="slam-aui-tags"></div>
-						<input autocomplete="off" type="text" id="agatha_autocomplete_autocompleteUI__input" placeholder="Dans quelle ville ? Quartier ?">
-					  </div>
-					  <div class="slam-aui-results" style="display: none;"></div>
-					</form>
-					<span class="error invisible"></span>
-				  </div>
-				  <div class="criterion CriterionTextView active  visible" id="agatha_budget">
-					<span class="title"></span>
-					<span class="description"></span>
-					<input type="tel" name="budget-min" value="" placeholder="à un prix min de ?" autocomplete="off" maxlength="28">
-					<span class="unit">Ar</span>
-					<span class="error invisible"></span>
-				  </div>
-				  
-				  <div class="criterion CriterionTextView active  visible" id="agatha_budget">
-					<span class="title"></span>
-					<span class="description"></span>
-					<input type="tel" name="budget" value="" placeholder="Votre budget max ?" autocomplete="off" maxlength="28">
-					<span class="unit">Ar</span>
-					<span class="error invisible"></span>
-				  </div>
-				 
+
+
+<div class="criterion CriterionAutocompleteView active visible" id="agatha_autocomplete">
+  <form id="search-form" autocomplete="off" class="slam-aui autocompleteUI">
+    <div class="slam-aui-input-fake search-bar-container">
+      <div class="slam-aui-tags"></div>
+      <input autocomplete="off" type="text" id="search-input" name="query" placeholder="Dans quelle ville ? Quartier ?">
+      <button type="button" id="search-button">Rechercher</button>
+ </div>
+    <div class="slam-aui-results" id="search-results" style="display: none;"></div>
+  </form>
+  <span class="error invisible" id="search-error"></span>
+</div>
+
+
+
+
+
+
+<form method="GET" action="{{ path('app_search') }}">
+  <input type="number" name="budget_min" value="{{ app.request.get('budget_min') }}" placeholder="Prix minimum">
+  <input type="number" name="budget_max" value="{{ app.request.get('budget_max') }}" placeholder="Prix maximum">
+  <button type="submit">Rechercher</button>
+  
+</form>
+
 				  <div class="criterion CriterionListView active  visible" id="agatha_biens">
 					<span class="title"></span>
 					<span class="description"></span>
@@ -193,4 +216,108 @@
 					<span class="error invisible"></span>
 				  </div>
 				</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const input = document.getElementById('search-input');
+    const resultsBox = document.getElementById('search-results');
+    const form = document.getElementById('search-form');
+    const searchButton = document.getElementById('search-button'); // Nouveau bouton
+
+    // Fonction commune pour lancer la redirection
+    function handleSearch() {
+        const firstResult = resultsBox.querySelector('.result-item');
+        if (firstResult) {
+            const id = firstResult.dataset.id;
+            const type = firstResult.dataset.type;
+
+            if (type === 'City') {
+                window.location.href = `/city/${id}`;
+            } else if (type === 'Quartier') {
+                window.location.href = `/quartier/${id}`;
+            } else {
+                alert('Redirection non définie pour ce type');
+            }
+        } else {
+            alert('Veuillez choisir une ville dans la liste');
+        }
+    }
+
+    // Empêche le comportement par défaut du formulaire
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+    });
+
+    // Recherche automatique à chaque saisie
+    input.addEventListener('input', function () {
+        const query = this.value.trim();
+
+        if (query.length < 2) {
+            resultsBox.style.display = 'none';
+            resultsBox.innerHTML = '';
+            return;
+        }
+
+        fetch(`/autocomplete?query=${encodeURIComponent(query)}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.length > 0) {
+                    resultsBox.style.display = 'block';
+                    resultsBox.innerHTML = data.map(item => `
+                        <div class="result-item" data-id="${item.id}" data-type="${item.type}">
+                            ${item.name} <small style="color: #888;">(${item.type})</small>
+                        </div>
+                    `).join('');
+                } else {
+                    resultsBox.innerHTML = '<div class="result-item">Aucun résultat</div>';
+                    resultsBox.style.display = 'block';
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                resultsBox.innerHTML = '<div class="result-item">Erreur de recherche</div>';
+                resultsBox.style.display = 'block';
+            });
+    });
+
+    // Clic sur un résultat
+    document.addEventListener('click', function (e) {
+        if (e.target.classList.contains('result-item')) {
+            const name = e.target.textContent.trim();
+            const id = e.target.dataset.id;
+            const type = e.target.dataset.type;
+
+            input.value = name;
+            resultsBox.innerHTML = '';
+            resultsBox.style.display = 'none';
+
+            if (type === 'City') {
+                window.location.href = `/city/${id}`;
+            } else if (type === 'Quartier') {
+                window.location.href = `/quartier/${id}`;
+            } else {
+                alert('Redirection non définie pour les quartiers');
+            }
+        } else {
+            // Clic en dehors = ferme les résultats
+            resultsBox.innerHTML = '';
+            resultsBox.style.display = 'none';
+        }
+    });
+
+    // Touche Entrée dans le champ de recherche
+    input.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            handleSearch();
+        }
+    });
+
+    // Clic sur le bouton "Rechercher"
+    searchButton.addEventListener('click', function () {
+        handleSearch();
+    });
+});
+</script>
+
 {% endblock %}
