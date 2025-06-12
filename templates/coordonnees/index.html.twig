@@ -4,142 +4,242 @@
 
 {% block souscarouselle %}
 <style>
-    .page-container {
-        max-width: 100%;
-        margin: 40px auto;
-        padding: 20px;
-        background: #fdfdfd;
-        border-radius: 10px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-    h1 {
-        text-align: center;
-        color: #004080;
-        margin-bottom: 30px;
-    }
+* {
+    box-sizing: border-box;
+}
 
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        background-color: #fff;
-    }
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+}
 
-    th, td {
-        padding: 12px 15px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-    }
+.page-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.8s ease-out;
+}
 
-    th {
-        background-color: #004080;
-        color: #fff;
-    }
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 
-    tr:hover {
-        background-color: #f2f2f2;
-    }
+h1 {
+    text-align: center;
+    color: white;
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    position: relative;
+    animation: slideDown 0.6s ease-out;
+}
 
-    .actions {
-        display: flex;
-        gap: 10px;
-    }
+h1::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+    border-radius: 2px;
+    animation: expandWidth 1s ease-out 0.5s both;
+}
 
-    .btn {
-        padding: 6px 12px;
-        border-radius: 6px;
-        text-decoration: none;
-        font-weight: bold;
-        font-size: 14px;
-    }
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-50px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 
-    .btn-show {
-        background-color: #17a2b8;
-        color: white;
-    }
+@keyframes expandWidth {
+    from { width: 0; }
+    to { width: 100px; }
+}
 
-    .btn-edit {
-        background-color: #ffc107;
-        color: white;
-    }
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 12px;
+    background-color: transparent;
+}
 
-    .btn-delete {
-        background-color: #dc3545;
-        color: white;
-        border: none;
-    }
+th, td {
+    padding: 14px 18px;
+    text-align: left;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    border-bottom: none;
+    vertical-align: middle;
+}
 
-    .btn-new {
-        display: inline-block;
-        background-color: #004080;
-        color: white;
-        padding: 10px 20px;
-        border-radius: 6px;
-        margin-bottom: 20px;
-        text-decoration: none;
-        font-weight: bold;
-    }
+th {
+    background: linear-gradient(135deg, #004080, #0059b3);
+    color: white;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+}
 
-    .center {
-        text-align: center;
-    }
+tr:hover td {
+    background-color: #f4f7ff;
+    transition: background-color 0.3s ease;
+}
 
-    #toast-container {
-        position: fixed;
-        bottom: 30px;
-        right: 30px;
-        z-index: 9999;
-    }
+.actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
 
-    .toast {
-        background-color: #333;
-        color: white;
-        padding: 12px 20px;
-        margin-top: 10px;
-        border-radius: 6px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-        animation: slideIn 0.4s ease, fadeOut 0.5s ease 4s forwards;
+.btn {
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: white;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    cursor: pointer;
+    border: none;
+}
+
+.btn-show {
+    background: linear-gradient(135deg, #17a2b8, #138496);
+}
+
+.btn-edit {
+    background: linear-gradient(135deg, #ffc107, #e0a800);
+    color: #212529;
+}
+
+.btn-delete {
+    background: linear-gradient(135deg, #dc3545, #bd2130);
+}
+
+.btn-show:hover,
+.btn-edit:hover,
+.btn-delete:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.btn-new {
+    display: block;
+    margin: 0 auto 3rem;
+    padding: 15px 35px;
+    background: linear-gradient(135deg, #004080, #0059b3);
+    color: white;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    text-align: center;
+    max-width: 280px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    animation: bounceIn 0.8s ease-out 0.3s both;
+}
+
+@keyframes bounceIn {
+    0% { opacity: 0; transform: scale(0.3) translateY(50px); }
+    50% { opacity: 1; transform: scale(1.05) translateY(-10px); }
+    70% { transform: scale(0.9) translateY(0); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.btn-new::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    transition: left 0.6s;
+}
+
+.btn-new:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+}
+
+.btn-new:hover::before {
+    left: 100%;
+}
+
+.center {
+    text-align: center;
+}
+
+#toast-container {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 9999;
+}
+
+.toast {
+    background-color: #333;
+    color: white;
+    padding: 14px 22px;
+    margin-top: 12px;
+    border-radius: 12px;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.25);
+    animation: slideIn 0.4s ease, fadeOut 0.5s ease 4s forwards;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+}
+
+.toast-success {
+    background: linear-gradient(135deg, #28a745, #218838);
+}
+
+.toast-error,
+.toast-danger {
+    background: linear-gradient(135deg, #dc3545, #bd2130);
+}
+
+.toast-info {
+    background: linear-gradient(135deg, #17a2b8, #117a8b);
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
         opacity: 1;
-        min-width: 250px;
-        font-size: 14px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 10px;
+        transform: translateY(0);
     }
+}
 
-    .toast-success {
-        background-color: #28a745;
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        transform: translateY(20px);
     }
+}
 
-    .toast-error,
-    .toast-danger {
-        background-color: #dc3545;
-    }
-
-    .toast-info {
-        background-color: #17a2b8;
-    }
-
-    @keyframes slideIn {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    @keyframes fadeOut {
-        to {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-    }
 </style>
-
 <div class="page-container">
     <h1>📍 Liste des Coordonnées</h1>
 
