@@ -52,10 +52,11 @@ class ObjectToRentForm extends AbstractType
                 'class' => TypeObjectToRent::class,
                 'choice_label' => 'id',
             ])
-            ->add('etatObjectToRent', EntityType::class, [
-                'class' => EtatObjectToRent::class,
-                'choice_label' => 'id',
-            ])
+           ->add('etatObjectToRent', EntityType::class, [
+    'class' => EtatObjectToRent::class,
+    'choice_label' => 'Libelle',
+])
+
             ->add('photoFile', FileType::class, [
                 'label' => 'Photo (fichier image)',
                 'mapped' => false, // important : ce champ n’est pas lié à l'entité directement

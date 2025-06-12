@@ -4,188 +4,563 @@
 
 {% block souscarouselle %}
 <style>
-    .card-wrapper {
-        background: white;
-        border-radius: 10px;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        margin: 0;
+        padding: 20px 0;
+    }
+
+    .main-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 20px;
+        animation: fadeIn 0.8s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+        text-align: center;
+        color: white;
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 2rem;
+        text-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        position: relative;
+        animation: slideDown 0.6s ease-out;
+    }
+
+    h1::after {
+        content: '';
+        position: absolute;
+        bottom: -15px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 4px;
+        background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+        border-radius: 2px;
+        animation: expandWidth 1s ease-out 0.5s both;
+    }
+
+    @keyframes slideDown {
+        from { opacity: 0; transform: translateY(-50px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes expandWidth {
+        from { width: 0; }
+        to { width: 100px; }
+    }
+
+    .btn-add {
+        display: block;
+        margin: 0 auto 3rem;
+        padding: 15px 30px;
+        background: linear-gradient(135deg, #28a745, #20c997);
+        color: white;
+        border-radius: 50px;
+        text-align: center;
+        font-weight: 600;
+        font-size: 1.1rem;
+        text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        box-shadow: 0 10px 30px rgba(40, 167, 69, 0.4);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
         overflow: hidden;
-        max-width: 350px;
-        font-family: 'Segoe UI', sans-serif;
-        font-size: 14px;
-        margin: 20px auto;
+        max-width: 300px;
+        animation: bounceIn 0.8s ease-out 0.3s both;
+    }
+
+    @keyframes bounceIn {
+        0% { opacity: 0; transform: scale(0.3) translateY(50px); }
+        50% { opacity: 1; transform: scale(1.05) translateY(-10px); }
+        70% { transform: scale(0.9) translateY(0); }
+        100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .btn-add::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+        transition: left 0.6s;
+    }
+
+    .btn-add:hover {
+        transform: translateY(-5px) scale(1.05);
+        box-shadow: 0 15px 40px rgba(40, 167, 69, 0.5);
+    }
+
+    .btn-add:hover::before {
+        left: 100%;
+    }
+
+    .card-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+        gap: 30px;
+        padding: 0 10px;
+    }
+
+    .card-wrapper {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(15px);
+        border-radius: 25px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        border: 1px solid rgba(255,255,255,0.3);
+        overflow: hidden;
+        font-family: 'Poppins', sans-serif;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        animation: slideUp 0.6s ease-out;
+        animation-fill-mode: both;
+    }
+
+    .card-wrapper:nth-child(1) { animation-delay: 0.1s; }
+    .card-wrapper:nth-child(2) { animation-delay: 0.2s; }
+    .card-wrapper:nth-child(3) { animation-delay: 0.3s; }
+    .card-wrapper:nth-child(4) { animation-delay: 0.4s; }
+    .card-wrapper:nth-child(5) { animation-delay: 0.5s; }
+    .card-wrapper:nth-child(6) { animation-delay: 0.6s; }
+
+    @keyframes slideUp {
+        from { opacity: 0; transform: translateY(50px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-wrapper:hover {
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: 0 30px 80px rgba(0,0,0,0.15);
+    }
+
+    .card-wrapper::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #667eea, #764ba2, #667eea);
+        background-size: 200% 100%;
+        animation: shimmer 3s infinite;
+    }
+
+    @keyframes shimmer {
+        0% { background-position: -200% 0; }
+        100% { background-position: 200% 0; }
+    }
+
+    .card-image {
+        position: relative;
+        overflow: hidden;
+        height: 250px;
     }
 
     .card-image img {
         width: 100%;
-        height: 200px;
+        height: 100%;
         object-fit: cover;
+        transition: transform 0.4s ease;
+    }
+
+    .card-wrapper:hover .card-image img {
+        transform: scale(1.1);
+    }
+
+    .card-image::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 50%;
+        background: linear-gradient(transparent, rgba(0,0,0,0.6));
+        pointer-events: none;
+    }
+
+    .no-image {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        color: #6c757d;
+        font-size: 1.2rem;
+        font-weight: 500;
     }
 
     .card-body {
-        padding: 12px;
-    }
-
-    .card-title {
-        font-size: 16px;
-        font-weight: 600;
-        color: #004080;
-        margin: 4px 0 10px;
+        padding: 25px;
+        position: relative;
     }
 
     .price-line {
-        font-size: 13px;
-        margin-bottom: 6px;
-        display: flex;
-        gap: 6px;
-        color: #000;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        padding: 12px 20px;
+        border-radius: 50px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        text-align: center;
+        margin: -40px 20px 20px;
+        position: relative;
+        z-index: 2;
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        animation: pulse 2s infinite;
     }
 
-    .price-line i {
-        font-style: normal;
-        margin-right: 4px;
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+    }
+
+    .card-title {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #2c3e50;
+        margin: 0 0 20px;
+        text-align: center;
+        position: relative;
+    }
+
+    .card-title::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 40px;
+        height: 3px;
+        background: linear-gradient(90deg, #667eea, #764ba2);
+        border-radius: 2px;
     }
 
     .tags-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        gap: 6px 12px;
-        background-color: #f8f9fa;
-        padding: 12px;
-        border-radius: 12px;
-        margin-top: 8px;
+        gap: 12px;
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        padding: 20px;
+        border-radius: 20px;
+        margin: 20px 0;
         list-style: none;
-        font-size: 13px;
-        color: #333;
+        border: 1px solid rgba(0,0,0,0.05);
     }
 
     .tags-grid li {
         display: flex;
         align-items: center;
-        background: #fff;
-        padding: 8px;
-        border-radius: 10px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        background: white;
+        padding: 12px 15px;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: #495057;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .tags-grid li::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+        transition: left 0.5s;
+    }
+
+    .tags-grid li:hover {
+        transform: translateX(5px);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    }
+
+    .tags-grid li:hover::before {
+        left: 100%;
     }
 
     .tags-grid li i {
-        margin-right: 6px;
+        margin-right: 10px;
         font-style: normal;
-        font-size: 16px;
+        font-size: 1.2rem;
+        width: 20px;
+        text-align: center;
+    }
+
+    .address-section {
+        background: rgba(102, 126, 234, 0.1);
+        backdrop-filter: blur(10px);
+        padding: 15px 20px;
+        border-radius: 15px;
+        margin: 15px 0;
+        border: 1px solid rgba(102, 126, 234, 0.2);
+        font-size: 0.9rem;
+        line-height: 1.6;
+    }
+
+    .address-section a {
+        display: inline-flex;
+        align-items: center;
+        color: #667eea;
+        text-decoration: none;
+        font-weight: 600;
+        padding: 8px 15px;
+        background: white;
+        border-radius: 20px;
+        margin-top: 10px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+    }
+
+    .address-section a:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
     }
 
     .card-actions {
-        margin-top: 12px;
+        margin-top: 25px;
         display: flex;
+        gap: 12px;
+        justify-content: center;
         flex-wrap: wrap;
-        gap: 10px;
     }
 
     .card-actions a,
     .card-actions form button {
-        background-color: #004080;
-        color: white;
-        padding: 6px 10px;
-        border-radius: 6px;
-        font-size: 13px;
+        padding: 12px 20px;
+        border-radius: 25px;
+        font-size: 0.9rem;
+        font-weight: 600;
         text-decoration: none;
         border: none;
         cursor: pointer;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+        min-width: 80px;
+        text-align: center;
+    }
+
+    .card-actions a::before,
+    .card-actions form button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+        transition: left 0.4s;
+    }
+
+    .card-actions a:hover::before,
+    .card-actions form button:hover::before {
+        left: 100%;
+    }
+
+    .card-actions a {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
     }
 
     .card-actions a.edit {
-        background-color: #ffc107;
-        color: #000;
+        background: linear-gradient(135deg, #ffc107, #ff8c00);
+        color: white;
+        box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);
     }
 
     .card-actions form button.btn-delete {
-        background-color: #dc3545;
-    }
-
-    .card-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-        gap: 20px;
-        padding: 20px;
-    }
-
-    .btn-add {
-        display: block;
-        margin: 20px auto;
-        padding: 10px 16px;
-        background-color: #004080;
+        background: linear-gradient(135deg, #dc3545, #c82333);
         color: white;
-        border-radius: 8px;
-        text-align: center;
-        font-weight: bold;
-        text-decoration: none;
+        box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
     }
 
-    .btn-add:hover {
-        background-color: #003366;
+    .card-actions a:hover,
+    .card-actions form button:hover {
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.2);
     }
 
-    h1 {
+    .no-properties {
         text-align: center;
-        color: #004080;
+        color: white;
+        font-size: 1.5rem;
+        font-weight: 500;
+        margin: 3rem 0;
+        padding: 3rem;
+        background: rgba(255,255,255,0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    /* Animations d'apparition progressive pour les cartes */
+    .card-wrapper {
+        opacity: 0;
+        animation: fadeInUp 0.6s ease-out forwards;
+    }
+
+    @keyframes fadeInUp {
+        from { 
+            opacity: 0; 
+            transform: translateY(50px); 
+        }
+        to { 
+            opacity: 1; 
+            transform: translateY(0); 
+        }
+    }
+
+    /* Effet de particules en arrière-plan */
+    .main-container::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: 
+            radial-gradient(circle at 20% 30%, rgba(255,255,255,0.1) 1px, transparent 1px),
+            radial-gradient(circle at 80% 70%, rgba(255,255,255,0.1) 1px, transparent 1px),
+            radial-gradient(circle at 40% 80%, rgba(255,255,255,0.1) 1px, transparent 1px);
+        background-size: 60px 60px;
+        animation: float 25s infinite linear;
+        pointer-events: none;
+        z-index: -1;
+    }
+
+    @keyframes float {
+        0% { transform: translateY(0px) translateX(0px); }
+        33% { transform: translateY(-30px) translateX(15px); }
+        66% { transform: translateY(15px) translateX(-15px); }
+        100% { transform: translateY(0px) translateX(0px); }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .main-container {
+            padding: 0 10px;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+        }
+
+        .card-container {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .tags-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .card-actions {
+            flex-direction: column;
+        }
+
+        .card-actions a,
+        .card-actions form button {
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 480px) {
+        h1 {
+            font-size: 1.8rem;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .btn-add {
+            margin: 0 auto 2rem;
+            padding: 12px 25px;
+            font-size: 1rem;
+        }
     }
 </style>
 
-<h1>🏠 Nos Biens Immobiliers</h1>
-<a href="{{ path('app_object_to_rent_new') }}" class="btn-add">➕ Ajouter un bien</a>
+<div class="main-container">
+    <h1>🏠 Nos Biens Immobiliers</h1>
+    <a href="{{ path('app_object_to_rent_new') }}" class="btn-add">➕ Ajouter un bien</a>
 
-<div class="card-container">
-    {% for object in object_to_rents %}
-        <div class="card-wrapper">
-            <div class="card-image">
-            
-            
-             {% if object.imageFilename %}
-                <img src="{{ asset('uploads/photos/' ~ object.imageFilename) }}" alt="Photo de {{ object.name }}" style="max-width:200px;">
-            {% else %}
-                <p>Pas de photo</p>
-            {% endif %}
+    <div class="card-container">
+        {% for object in object_to_rents %}
+            <div class="card-wrapper">
+                <div class="card-image">
+                    {% if object.imageFilename %}
+                        <img src="{{ asset('uploads/photos/' ~ object.imageFilename) }}" alt="Photo de {{ object.name }}">
+                    {% else %}
+                        <div class="no-image">📷 Pas de photo</div>
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    <div class="price-line">💰 {{ object.price }} €/mois</div>
+                    <h2 class="card-title">{{ object.name }}</h2>
 
+                    <ul class="tags-grid">
+                        <li><i>📐</i> Surface : {{ object.Surface }} m²</li>
+                        <li><i>🛏️</i> Chambres : {{ object.NbrChambres }}</li>
+                        <li><i>🛋️</i> Pièces : {{ object.NbrPieces }}</li>
+                        <li><i>🚿</i> SDB : {{ object.NbrSalleDeBain }}</li>
+                        <li><i>🍽️</i> Cuisine équipée : {{ object.CuisineEquipee ? 'Oui' : 'Non' }}</li>
+                        <li><i>🌳</i> Jardin : {{ object.Jardin ? 'Oui' : 'Non' }}</li>
+                        <li><i>🏗️</i> Année : {{ object.AnneeConstruction }}</li>
+                        <li><i>🚗</i> Garage : {{ object.Garage ? 'Oui' : 'Non' }}</li>
+                        <li><i>🟢</i> Activé : {{ object.activated ? 'Oui' : 'Non' }}</li>
+                        <li><i>🏷️</i> État : {{ object.etatObjectToRent ? object.etatObjectToRent.Libelle : 'Non défini' }}</li>
+                    </ul>
 
+                    {% if object.Coordonnee %}
+                        <div class="address-section">
+                            <strong>📍 Localisation :</strong><br>
+                            {{ object.Coordonnee.adresse }}<br>
+                            Code Postal : {{ object.Coordonnee.CodePostal }}<br>
+                            Quartier : {{ object.Coordonnee.quartier.nom }}<br>
+                            <a href="https://www.google.com/maps?q={{ object.Coordonnee.latitude }},{{ object.Coordonnee.longitude }}" target="_blank">
+                                🗺️ Voir sur la carte
+                            </a>
+                        </div>
+                    {% endif %}
 
-
-            </div>
-            <div class="card-body">
-                <div class="price-line"><i>💰</i> Prix : {{ object.price }} €/mois</div>
-                <h2 class="card-title">{{ object.name }}</h2>
-
-                <ul class="tags-grid">
-                    <li><i>📐</i> Surface : {{ object.Surface }} m²</li>
-                    <li><i>🛏️</i> Chambres : {{ object.NbrChambres }}</li>
-                    <li><i>🛋️</i> Pièces : {{ object.NbrPieces }}</li>
-                    <li><i>🚿</i> SDB : {{ object.NbrSalleDeBain }}</li>
-                    <li><i>🧭</i> {{ object.Coordonnee ? object.Coordonnee.latitude ~ ', ' ~ object.Coordonnee.longitude : 'Coordonnées non renseignées' }}</li>
-                    <li><i>🍽️</i> Cuisine équipée : {{ object.CuisineEquipee ? 'Oui' : 'Non' }}</li>
-                    <li><i>🌳</i> Jardin : {{ object.Jardin ? 'Oui' : 'Non' }}</li>
-                    <li><i>🏗️</i> Année : {{ object.AnneeConstruction }}</li>
-                    <li><i>🚗</i> Garage : {{ object.Garage ? 'Oui' : 'Non' }}</li>
-                    <li><i>🟢</i> Activé : {{ object.activated ? 'Oui' : 'Non' }}</li>
-                </ul>
-
-                {% if object.Coordonnee %}
-                    <div style="margin-top: 10px; font-size: 13px;">
-                        Adresse : {{ object.Coordonnee.adresse }}<br>
-                        Code Postal : {{ object.Coordonnee.CodePostal }}<br>
-                        Quartier : {{ object.Coordonnee.quartier.nom }}
-                        <br>
-                        <a href="https://www.google.com/maps?q={{ object.Coordonnee.latitude }},{{ object.Coordonnee.longitude }}" target="_blank">📍 Voir sur la carte</a>
+                    <div class="card-actions">
+                        <a href="{{ path('app_object_to_rent_show', {'id': object.id}) }}">👁️ Voir</a>
+                        <a href="{{ path('app_object_to_rent_edit', {'id': object.id}) }}" class="edit">✏️ Modifier</a>
+                        {{ include('object_to_rent/_delete_form.html.twig', { object_to_rent: object }) }}
                     </div>
-                {% endif %}
-
-                <div class="card-actions">
-                    <a href="{{ path('app_object_to_rent_show', {'id': object.id}) }}">Voir</a>
-                    <a href="{{ path('app_object_to_rent_edit', {'id': object.id}) }}" class="edit">Modifier</a>
-                    {{ include('object_to_rent/_delete_form.html.twig', { object_to_rent: object }) }}
                 </div>
             </div>
-        </div>
-    {% else %}
-        <p>Aucun bien trouvé.</p>
-    {% endfor %}
+        {% else %}
+            <div class="no-properties">
+                <h2>🏠 Aucun bien trouvé</h2>
+                <p>Commencez par ajouter votre premier bien immobilier !</p>
+            </div>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}
-
