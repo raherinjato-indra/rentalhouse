@@ -40,6 +40,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var Collection<int, ObjectToRent>
      */
     #[ORM\OneToMany(targetEntity: ObjectToRent::class, mappedBy: 'User')]
+
+     #[ORM\Column(length: 255)]
+    private ?string $username = null;
+
+    public function getUsername(): ?string
+    {
+        return $this->username;
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
+        return $this;
+    }
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: ObjectToRent::class, orphanRemoval: true)]
     private Collection $objectToRents;
 
     public function __construct()
@@ -60,27 +76,47 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEmail(string $email): static
     {
         $this->email = $email;
+
         return $this;
     }
 
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
     public function getUserIdentifier(): string
     {
         return (string) $this->email;
     }
 
+    /**
+     * @see UserInterface
+     *
+     * @return list<string>
+     */
     public function getRoles(): array
     {
         $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
+
         return array_unique($roles);
     }
 
+    /**
+     * @param list<string> $roles
+     */
     public function setRoles(array $roles): static
     {
         $this->roles = $roles;
+
         return $this;
     }
 
+    /**
+     * @see PasswordAuthenticatedUserInterface
+     */
     public function getPassword(): ?string
     {
         return $this->password;
@@ -89,15 +125,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPassword(string $password): static
     {
         $this->password = $password;
+
         return $this;
     }
 
+    /**
+     * @see UserInterface
+     */
     public function eraseCredentials(): void
     {
-        // Nettoyage si nécessaire
+        // Clear temporary sensitive data if any
     }
 
-    public function getAvatar(): ?string
+     public function getAvatar(): ?string
     {
         return $this->avatar;
     }
@@ -107,7 +147,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->avatar = $avatar;
         return $this;
     }
-
+    
     /**
      * @return Collection<int, ObjectToRent>
      */
@@ -129,6 +169,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeObjectToRent(ObjectToRent $objectToRent): static
     {
         if ($this->objectToRents->removeElement($objectToRent)) {
+            // set the owning side to null (unless already changed)
             if ($objectToRent->getUser() === $this) {
                 $objectToRent->setUser(null);
             }

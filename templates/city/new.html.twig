@@ -1,12 +1,174 @@
 {% extends 'base.html.twig' %}
-
-
 {% block title %}Nouvelle ville{% endblock %}
-
 {% block souscarouselle %}
-    <h1>Créer une nouvelle ville</h1>
+ <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .form-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+            padding: 20px;
+        }
+        .form-box {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1),
+                        0 0 0 1px rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        .form-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #f5576c);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .form-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .form-header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .form-header .subtitle {
+            font-size: 16px;
+            color: #718096;
+            margin-top: 8px;
+        }
+        .form-box > form > div {
+            margin-bottom: 28px;
+        }
+        .form-box label {
+            font-weight: 600;
+            font-size: 14px;
+            color: #4a5568;
+            display: block;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+        .form-box input,
+        .form-box select,
+        .form-box textarea {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 16px;
+            background: white;
+            transition: all 0.3s ease;
+        }
+        .form-box input:focus,
+        .form-box select:focus,
+        .form-box textarea:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1),
+                        0 4px 12px rgba(102, 126, 234, 0.15);
+            outline: none;
+        }
+        .form-actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            min-width: 160px;
+            justify-content: center;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+        .btn-secondary {
+            background: linear-gradient(135deg, #718096 0%, #4a5568 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(113, 128, 150, 0.4);
+        }
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(113, 128, 150, 0.6);
+        }
+        @media (max-width: 768px) {
+            .form-box {
+                padding: 30px 20px;
+                margin: 20px;
+                border-radius: 20px;
+            }
+            .form-header h1 {
+                font-size: 28px;
+            }
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+    <div class="form-container">
+        <div class="form-box">
+            <div class="form-header">
+                <h1>Créer une nouvelle ville</h1>
+                <p class="subtitle">Remplissez les informations pour enregistrer une ville.</p>
+            </div>
 
-    {{ include('city/_form.html.twig', { form: form }) }}
+            {{ form_start(form) }}
 
-    <a href="{{ path('app_city_index') }}">Retour à la liste</a>
+                {% for field in form %}
+                    <div>
+                        {{ form_label(field) }}
+                        {{ form_widget(field, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(field) }}
+                    </div>
+                {% endfor %}
+
+                <div class="form-actions">
+                    <button class="btn btn-primary">Créer</button>
+                    <a href="{{ path('app_city_index') }}" class="btn btn-secondary">Retour à la liste</a>
+                </div>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
 {% endblock %}

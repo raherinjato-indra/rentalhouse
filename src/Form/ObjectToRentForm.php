@@ -19,6 +19,12 @@ class ObjectToRentForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+           ->add('user', EntityType::class, [
+        'class' => User::class,
+        'choice_label' => 'email', // ou 'nom', selon ton entité
+        'label' => 'Utilisateur propriétaire du bien',
+        'placeholder' => 'Choisir un utilisateur',
+    ])
             ->add('name')
             ->add('descriptionText')
             ->add('price')
@@ -42,11 +48,9 @@ class ObjectToRentForm extends AbstractType
             ->add('activated')
             ->add('Coordonnee', EntityType::class, [
                 'class' => Coordonnees::class,
-                'choice_label' => 'id',
-            ])
-            ->add('User', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'id',
+                'choice_label' => function (Coordonnees $coordonnee) {
+    return $coordonnee->getQuartier()?->getNom() . ' - ' . $coordonnee->getAdresse();
+}
             ])
             ->add('typeObjectToRent', EntityType::class, [
                 'class' => TypeObjectToRent::class,

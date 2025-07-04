@@ -4,56 +4,364 @@
 
 {% block souscarouselle %}
 <style>
-    .form-container {
-        max-width: 600px;
-        margin: 40px auto;
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    
+    * {
+        box-sizing: border-box;
+    }
+    
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        
+        min-height: 100vh;
+        margin: 0;
         padding: 20px;
-        background: #f1f1f1;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
 
-    .form-container h1 {
-        text-align: center;
-        color: #004080;
-    }
-
-    .form-buttons {
+    .form-container {
         display: flex;
-        justify-content: space-between;
-        margin-top: 20px;
+        justify-content: center;
+        align-items: center;
+        min-height: 80vh;
+        padding: 20px;
     }
 
-    .form-buttons a,
-    .form-buttons button {
-        padding: 10px 20px;
-        border-radius: 6px;
-        border: none;
-        font-weight: bold;
-        text-decoration: none;
+    .form-box {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        padding: 40px;
+        max-width: 100%;
+        width: 100%;
+        border-radius: 24px;
+        box-shadow: 
+            0 20px 40px rgba(0, 0, 0, 0.1),
+            0 0 0 1px rgba(255, 255, 255, 0.2);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .form-box::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #f5576c);
+        background-size: 400% 400%;
+        animation: gradient 15s ease infinite;
+    }
+
+    @keyframes gradient {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    .form-header {
+        text-align: center;
+        margin-bottom: 40px;
+        position: relative;
+    }
+
+    .form-header h1 {
+        font-size: 32px;
+        font-weight: 700;
+        color: #2d3748;
+        margin: 0;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .form-header .subtitle {
+        font-size: 16px;
+        color: #718096;
+        margin-top: 8px;
+        font-weight: 400;
+    }
+
+    .form-group {
+        margin-bottom: 28px;
+        position: relative;
+    }
+
+    .form-group label {
+        font-weight: 600;
+        font-size: 14px;
+        color: #4a5568;
+        display: block;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        position: relative;
+    }
+
+    .form-group label::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 20px;
+        height: 2px;
+        background: linear-gradient(90deg, #667eea, #764ba2);
+        border-radius: 2px;
+    }
+
+    .form-control,
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="number"],
+    textarea,
+    select {
+        width: 100%;
+        padding: 16px 20px;
+        border: 2px solid #e2e8f0;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: 400;
+        color: #2d3748;
+        background: #ffffff;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        font-family: inherit;
+    }
+
+    .form-control:focus,
+    input:focus,
+    textarea:focus,
+    select:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 
+            0 0 0 3px rgba(102, 126, 234, 0.1),
+            0 4px 12px rgba(102, 126, 234, 0.15);
+        transform: translateY(-2px);
+    }
+
+    .form-control::placeholder,
+    input::placeholder,
+    textarea::placeholder {
+        color: #a0aec0;
+        font-weight: 400;
+    }
+
+    textarea {
+        resize: vertical;
+        min-height: 120px;
+    }
+
+    select {
         cursor: pointer;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+        background-position: right 12px center;
+        background-repeat: no-repeat;
+        background-size: 16px;
+        padding-right: 40px;
     }
 
-    .btn-back {
-        background-color: #6c757d;
-        color: white;
+    .form-error {
+        color: #e53e3e;
+        font-size: 14px;
+        margin-top: 6px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 6px;
     }
 
-    .btn-submit {
-        background-color: #007bff;
+    .form-error::before {
+        content: '⚠';
+        font-size: 12px;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 16px;
+        justify-content: center;
+        margin-top: 40px;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        padding: 16px 32px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 16px;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+        min-width: 160px;
+        justify-content: center;
+    }
+
+    .btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s;
+    }
+
+    .btn:hover::before {
+        left: 100%;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+    }
+
+    .btn-secondary {
+        background: linear-gradient(135deg, #718096 0%, #4a5568 100%);
+        color: white;
+        box-shadow: 0 4px 15px rgba(113, 128, 150, 0.4);
+    }
+
+    .btn-secondary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(113, 128, 150, 0.6);
+    }
+
+    .btn:active {
+        transform: translateY(0);
+    }
+
+    /* Style spécifique pour les champs générés automatiquement */
+    .form-box > form > div {
+        margin-bottom: 28px;
+        position: relative;
+    }
+
+    .form-box > form > div > label {
+        font-weight: 600;
+        font-size: 14px;
+        color: #4a5568;
+        display: block;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        position: relative;
+    }
+
+    .form-box > form > div > label::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 20px;
+        height: 2px;
+        background: linear-gradient(90deg, #667eea, #764ba2);
+        border-radius: 2px;
+    }
+
+    /* Animations d'entrée */
+    .form-box {
+        animation: slideInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @keyframes slideInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .form-box > form > div {
+        animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        opacity: 0;
+    }
+
+    .form-box > form > div:nth-child(1) { animation-delay: 0.1s; }
+    .form-box > form > div:nth-child(2) { animation-delay: 0.2s; }
+    .form-box > form > div:nth-child(3) { animation-delay: 0.3s; }
+    .form-box > form > div:nth-child(4) { animation-delay: 0.4s; }
+    .form-box > form > div:nth-child(5) { animation-delay: 0.5s; }
+
+    @keyframes fadeInUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .form-box {
+            padding: 30px 20px;
+            margin: 20px;
+            border-radius: 20px;
+        }
+        
+        .form-header h1 {
+            font-size: 28px;
+        }
+        
+        .form-actions {
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .btn {
+            width: 100%;
+            max-width: 300px;
+        }
+    }
+
+    /* Focus visible pour l'accessibilité */
+    .btn:focus-visible {
+        outline: 2px solid #667eea;
+        outline-offset: 2px;
+    }
+
+    .form-control:focus-visible,
+    input:focus-visible,
+    textarea:focus-visible,
+    select:focus-visible {
+        outline: 2px solid #667eea;
+        outline-offset: 2px;
     }
 </style>
 
 <div class="form-container">
-    <h1>➕ Nouvelle Coordonnée</h1>
-
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <div class="form-buttons">
-            <a href="{{ path('app_coordonnees_index') }}" class="btn-back">🔙 Retour</a>
-            <button class="btn-submit">💾 Enregistrer</button>
+    <div class="form-box">
+        <div class="form-header">
+            <h1>📍 Nouvelle Coordonnée</h1>
+            <p class="subtitle">Ajoutez une nouvelle coordonnée de contact</p>
         </div>
-    {{ form_end(form) }}
+
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    💾 Enregistrer
+                </button>
+                <a href="{{ path('app_coordonnees_index') }}" class="btn btn-secondary">
+                    ← Retour à la liste
+                </a>
+            </div>
+        {{ form_end(form) }}
+    </div>
 </div>
 {% endblock %}

@@ -31,6 +31,16 @@ class QuartierController extends AbstractController
         $form = $this->createForm(QuartierForm::class, $quartier);
         $form->handleRequest($request);
 
+        // ✅ Le bloc manquant a été ajouté ici
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($quartier);
+            $em->flush();
+
+            $this->addFlash('success', 'Quartier ajouté avec succès.');
+
+            return $this->redirectToRoute('app_quartier_new');
+        }
+
         return $this->render('quartier/new.html.twig', [
             'form' => $form->createView(),
             'quartiers' => $em->getRepository(Quartier::class)->findAll(),
@@ -57,15 +67,13 @@ class QuartierController extends AbstractController
         ]);
     }
 
-   #[Route('/quartier/{id}', name: 'app_quartier_show', methods: ['GET'])]
-public function show(Quartier $quartier): Response
-{
-    return $this->render('quartier/show.html.twig', [
-        'quartier' => $quartier,
-    ]);
-}
-
-
+    #[Route('/quartier/{id}', name: 'app_quartier_show', methods: ['GET'])]
+    public function show(Quartier $quartier): Response
+    {
+        return $this->render('quartier/show.html.twig', [
+            'quartier' => $quartier,
+        ]);
+    }
 
     #[Route('/quartier/{id}', name: 'app_quartier_delete', methods: ['POST'])]
     public function delete(Request $request, EntityManagerInterface $em, int $id): Response
@@ -77,14 +85,13 @@ public function show(Quartier $quartier): Response
         }
 
         if ($this->isCsrfTokenValid('delete' . $quartier->getId(), $request->request->get('_token'))) {
-            // Suppression image si elle existe
-            $imageFilename = $quartier->getImage();
+           /* $imageFilename = $quartier->getImage();
             if ($imageFilename) {
                 $imagePath = $this->getParameter('quartier_images_directory') . '/' . $imageFilename;
                 if (file_exists($imagePath)) {
                     unlink($imagePath);
                 }
-            }
+            }*/
 
             $em->remove($quartier);
             $em->flush();
