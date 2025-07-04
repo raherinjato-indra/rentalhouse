@@ -14,43 +14,84 @@ use App\Entity\City;
 
 class SearchController extends AbstractController
 {
-   #[Route('/search', name: 'app_search')]
-public function index(Request $request, ObjectToRentRepository $objectToRentRepository): Response
-{
+ #[Route('/search', name: 'app_search')]
+public function index(
+    Request $request,
+    ObjectToRentRepository $objectToRentRepository,
+    CityRepository $cityRepository
+): Response {
     $budgetMin = $request->query->get('budget_min');
     $budgetMax = $request->query->get('budget_max');
 
+    // Récupère ce que l'utilisateur tape dans le champ texte "query"
+    $cityName = $request->query->get('query');
+    $city = null;
+
+    if ($cityName) {
+        // Cherche la ville en base, insensible à la casse
+        $city = $cityRepository->createQueryBuilder('c')
+            ->where('LOWER(c.name) = :name')
+            ->setParameter('name', strtolower(trim($cityName)))
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        // Si ville trouvée, prends son vrai nom
+        if ($city) {
+            $cityName = $city->getName();
+        }
+    }
+
     $queryBuilder = $objectToRentRepository->createQueryBuilder('o');
 
-    // Ajout d'une condition seulement si budgetMin est défini et numérique
     if ($budgetMin !== null && is_numeric($budgetMin)) {
         $queryBuilder->andWhere('o.price >= :minPrice')
                      ->setParameter('minPrice', $budgetMin);
     }
 
-    // Ajout d'une condition seulement si budgetMax est défini et numérique
     if ($budgetMax !== null && is_numeric($budgetMax)) {
         $queryBuilder->andWhere('o.price <= :maxPrice')
                      ->setParameter('maxPrice', $budgetMax);
     }
 
+    if ($city) {
+        $queryBuilder->andWhere('o.city = :city')
+                     ->setParameter('city', $city);
+    }
+
     $objects = $queryBuilder->getQuery()->getResult();
 
-    return $this->render('search/index.html.twig', [
-        'objects' => $objects,
-        'budget_min' => $budgetMin,
-        'budget_max' => $budgetMax,
-    ]);
+   return $this->render('search/index.html.twig', [
+    'objects' => $objects,
+    'budget_min' => $budgetMin,
+    'budget_max' => $budgetMax,
+    'nbresultat' => count($objects),
+    'city' => $city,
+    'city_name' => $cityName ?? '',
+]);
+
 }
 
 
-    #[Route('/search/city/{id}', name: 'app_search_city')]
-    public function getCityById(City $city): Response
-    {
-        return $this->render('search/searchCity.html.twig', [
-            'city' => $city
-        ]);
+
+ #[Route('/search/city/{id}', name: 'app_search_city')]
+public function getCityById(City $city): Response
+{
+    $nbresultat = 0;
+
+    foreach ($city->getQuartiers() as $quartier) {
+        foreach ($quartier->getCoordonnees() as $coordonnee) {
+            $nbresultat += count($coordonnee->getObjectToRents());
+        }
     }
+
+    return $this->render('search/searchCity.html.twig', [
+        'city' => $city,
+        'city_name' => $city->getName(), // <-- AJOUTÉ
+        'nbresultat' => $nbresultat,
+    ]);
+}
+
 
     #[Route('/autocomplete', name: 'autocomplete', methods: ['GET'])]
     public function autocomplete(Request $request, CityRepository $cityRepository, QuartierRepository $quartierRepository): JsonResponse

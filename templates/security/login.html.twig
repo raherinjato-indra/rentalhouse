@@ -1,0 +1,225 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block main_content %}
+<style>
+  /* Conteneur centré verticalement et horizontalement */
+  .login-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f9fafb; /* gris très clair */
+    padding: 20px;
+  }
+
+  /* Formulaire en grille */
+  form.login-form {
+    background: #fff;
+    padding: 40px 45px;
+    border-radius: 14px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 420px;
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    grid-row-gap: 20px;
+    grid-column-gap: 28px;
+    align-items: end;
+  }
+
+  /* Titre sur toute la largeur, centré */
+  form.login-form h1 {
+    grid-column: 1 / -1;
+    font-weight: 700;
+    font-size: 2.4rem;
+    color: #111;
+    margin-bottom: 30px;
+    justify-self: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  /* Labels alignés à droite */
+  label {
+    font-weight: 600;
+    color: #444;
+    justify-self: end;
+    padding-right: 10px;
+    user-select: none;
+    font-size: 1rem;
+  }
+
+  /* Inputs */
+  input[type="email"],
+  input[type="password"] {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  input[type="email"]:focus,
+  input[type="password"]:focus {
+    outline: none;
+    border-color: #d33b3b; /* rouge discret */
+    box-shadow: 0 0 8px rgba(211, 59, 59, 0.4);
+  }
+
+  /* Checkbox */
+  .form-check {
+    grid-column: 2 / 3;
+    justify-self: start;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .form-check input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: #d33b3b; /* rouge sur la case cochée */
+  }
+
+  .form-check label {
+    font-weight: 500;
+    color: #444;
+    cursor: pointer;
+  }
+
+  /* Bouton */
+  button.btn-primary {
+    grid-column: 1 / -1;
+    justify-self: center;
+    padding: 14px 0;
+    width: 200px;
+    font-size: 1.15rem;
+    font-weight: 700;
+    border-radius: 12px;
+    background-color: #d33b3b; /* rouge fort */
+    border: none;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(211, 59, 59, 0.5);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  button.btn-primary:hover {
+    background-color: #a92b2b;
+    box-shadow: 0 9px 25px rgba(169, 43, 43, 0.7);
+  }
+
+  /* Message erreur */
+  .alert-danger {
+    grid-column: 1 / -1;
+    background-color: #fbeaea;
+    color: #a82727;
+    padding: 14px 20px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: center;
+    margin-bottom: 20px;
+    border: 1.5px solid #d33b3b;
+  }
+
+  /* Message utilisateur connecté */
+  .logged-in-message {
+    grid-column: 1 / -1;
+    text-align: center;
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 25px;
+  }
+
+  .logged-in-message strong {
+    color: #d33b3b;
+  }
+
+  .logout-link {
+    color: #d33b3b;
+    text-decoration: none;
+    margin-left: 8px;
+    font-weight: 600;
+  }
+
+  .logout-link:hover {
+    text-decoration: underline;
+  }
+
+  /* Responsive */
+  @media (max-width: 480px) {
+    form.login-form {
+      grid-template-columns: 1fr;
+      padding: 30px 25px;
+    }
+    label {
+      justify-self: start;
+      padding-right: 0;
+      margin-bottom: 5px;
+    }
+    .form-check {
+      grid-column: 1 / 2;
+      margin-top: 12px;
+    }
+    button.btn-primary {
+      width: 100%;
+      grid-column: 1 / 2;
+    }
+  }
+</style>
+
+<div class="login-container">
+  <form method="post" class="login-form" novalidate>
+    {% if error %}
+      <div class="alert-danger" role="alert">
+        {{ error.messageKey|trans(error.messageData, 'security') }}
+      </div>
+    {% endif %}
+
+    {% if app.user %}
+      <div class="logged-in-message">
+        Connecté en tant que <strong>{{ app.user.userIdentifier }}</strong>
+        <a href="{{ path('app_logout') }}" class="logout-link">Se déconnecter</a>
+      </div>
+    {% endif %}
+
+    <h1>Connexion</h1>
+
+    <label for="inputEmail">Adresse e-mail</label>
+    <input
+      type="email"
+      value="{{ last_username }}"
+      name="email"
+      id="inputEmail"
+      autocomplete="email"
+      required
+      autofocus
+      placeholder="exemple@domaine.com"
+    >
+
+    <label for="inputPassword">Mot de passe</label>
+    <input
+      type="password"
+      name="password"
+      id="inputPassword"
+      autocomplete="current-password"
+      required
+      placeholder="Votre mot de passe"
+    >
+
+    <div class="form-check">
+      <input type="checkbox" name="_remember_me" id="rememberMe">
+      <label for="rememberMe">Se souvenir de moi</label>
+    </div>
+
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+    <button type="submit" class="btn-primary">Se connecter</button>
+  </form>
+</div>
+{% endblock %}

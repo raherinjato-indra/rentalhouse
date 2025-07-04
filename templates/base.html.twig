@@ -382,24 +382,52 @@
         </ul>
       </div>
       <div class="c-header-container">
-        <div class="c-head">
-          <div class="c-head-logo">
-            <a href="/" aria-label="Logo">Logo</a>
-          </div>
-          <div class="c-deposit-wrapper-tablet">
-            <a href="/depot-annonce/" class="c-deposit-button">
-              <span>
-                <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="18" height="18" viewBox="0 0 18 18">
-                  <path id="a" d="M9.022.9c.483 0 .874.39.874.872v6.356h6.33a.873.873 0 1 1 0 1.744l-6.33-.001v6.357a.873.873 0 0 1-.874.872.873.873 0 0 1-.874-.872l-.001-6.357H1.774a.873.873 0 1 1 0-1.743h6.373V1.772c0-.482.392-.872.875-.872z"></path>
-                </svg>Je dépose une annonce </span>
-            </a>
-          </div>
-        </div>
-        <div class="kit-modules-wrapper">
-          <div id="huggy"></div>
-          <div id="espacePerso"></div>
-        </div>
-      </div>
+  <div class="c-head">
+    <div class="c-head-logo">
+      <a href="/" aria-label="Logo">Logo</a>
+    </div>
+    <div class="c-deposit-wrapper-tablet">
+      <a href="/depot-annonce/" class="c-deposit-button">
+        <span>
+          <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="18" height="18" viewBox="0 0 18 18">
+            <path id="a" d="M9.022.9c.483 0 .874.39.874.872v6.356h6.33a.873.873 0 1 1 0 1.744l-6.33-.001v6.357a.873.873 0 0 1-.874.872.873.873 0 0 1-.874-.872l-.001-6.357H1.774a.873.873 0 1 1 0-1.743h6.373V1.772c0-.482.392-.872.875-.872z"></path>
+          </svg>
+          Je dépose une annonce
+        </span>
+      </a>
+    </div>
+  </div>
+
+  <div class="kit-modules-wrapper" style="display: flex; align-items: center; justify-content: flex-end; gap: 15px;">
+    <div id="huggy"></div>
+    <div id="espacePerso"></div>
+
+    {% if app.user %}
+  <div style="display: flex; align-items: center; gap: 10px;">
+    <div class="user-avatar">
+      {% if app.user.avatar %}
+        <img src="{{ asset('uploads/avatars/' ~ app.user.avatar) }}"
+             alt="Avatar"
+             style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+      {% else %}
+        <img src="{{ asset('images/default-avatar.png') }}"
+             alt="Avatar par défaut"
+             style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+      {% endif %}
+    </div>
+
+    <form action="{{ path('app_logout') }}" method="post" style="margin: 0;">
+      <button type="submit"
+              style="background: none; border: none; color: #c00; cursor: pointer; font-weight: bold;">
+        Déconnexion
+      </button>
+    </form>
+  </div>
+{% endif %}
+
+  </div>
+</div>
+
       <div id="ep-modal-container"></div>
       <div id="ep-corona-container"></div>
     </header>
@@ -1914,6 +1942,7 @@
           </div>
          
         </div>
+      {% block main_content %}
         <div class="Editorialstyled__EditoMainWrapper-ck0cdq-0 kNyYrV">
           <div class="Sectionstyled__StyledSection-sc-1g95cvj-0 bQvcUT">
             <h2 class="Sectionstyled__StyledHead-sc-1g95cvj-1 gQPIvP">
@@ -2091,6 +2120,7 @@
               </div>
             </div>
           </div>
+          {% endblock %}
         </div>
       </div>
 	  {% endblock %}
