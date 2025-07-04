@@ -19,7 +19,7 @@ class CoordonneesForm extends AbstractType
             ->add('adresse', TextType::class, [
                 'label' => 'Adresse',
             ])
-            ->add('longitude', NumberType::class, [
+            /*->add('longitude', NumberType::class, [
                 'label' => 'Longitude',
                 'required' => false,
                 'scale' => 6,
@@ -28,7 +28,7 @@ class CoordonneesForm extends AbstractType
                 'label' => 'Latitude',
                 'required' => false,
                 'scale' => 6,
-            ])
+            ])*/
             ->add('CodePostal', TextType::class, [
                 'label' => 'Code postal',
             ])

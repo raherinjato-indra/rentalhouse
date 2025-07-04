@@ -1,33 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modifier l'Object{% endblock %}
+{% block title %}Créer un utilisateur{% endblock %}
 
 {% block souscarouselle %}
-    <div class="form-container">
-        <div class="form-box">
-            <div class="form-header">
-                <h1>Modifier l'objet "{{ object_to_rent.name }}"</h1>
-                <p class="subtitle">Mettez à jour les informations du bien</p>
-            </div>
-
-            {{ form_start(form) }}
-                {% for field in form %}
-                    <div class="form-group">
-                        {{ form_label(field) }}
-                        {{ form_widget(field, {'attr': {'class': 'form-control'}}) }}
-                        {{ form_errors(field) }}
-                    </div>
-                {% endfor %}
-
-                <div class="form-actions">
-                    <button type="submit" class="btn btn-primary">Mettre à jour</button>
-                    <a href="{{ path('app_object_to_rent_index') }}" class="btn btn-secondary">← Retour à la liste</a>
-                </div>
-            {{ form_end(form) }}
-        </div>
-    </div>
-
-    <style>
+<style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
     
     * {
@@ -325,4 +301,18 @@
         outline-offset: 2px;
     }
 </style>
+<div class="form-container">
+    <div class="form-box">
+        <div class="form-header">
+            <h1>Créer un nouvel utilisateur</h1>
+            <p class="subtitle">Remplis les champs pour ajouter un utilisateur</p>
+        </div>
+
+        {{ include('user/_form.html.twig') }}
+
+        <div class="form-actions">
+            <a href="{{ path('app_user_index') }}" class="btn btn-secondary">← Retour à la liste</a>
+        </div>
+    </div>
+</div>
 {% endblock %}

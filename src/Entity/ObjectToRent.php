@@ -18,6 +18,11 @@ class ObjectToRent
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[ORM\ManyToOne(inversedBy: 'objectToRents')]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?User $user = null;
+
+
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $descriptionText = null;
 
@@ -27,8 +32,7 @@ class ObjectToRent
     #[ORM\ManyToOne(inversedBy: 'objectToRents')]
     private ?Coordonnees $coordonnee = null;
 
-    #[ORM\ManyToOne(inversedBy: 'objectToRents')]
-    private ?User $user = null;
+    
 
     #[ORM\ManyToOne(inversedBy: 'objectsToRent')]
     private ?TypeObjectToRent $typeObjectToRent = null;
@@ -92,6 +96,22 @@ class ObjectToRent
 
     #[ORM\Column]
     private ?bool $activated = null;
+
+    // Ajoute cette propriété avec sa relation ManyToOne
+#[ORM\ManyToOne(inversedBy: 'objectsToRent')]
+private ?Quartier $quartier = null;
+
+public function getQuartier(): ?Quartier
+{
+    return $this->quartier;
+}
+
+public function setQuartier(?Quartier $quartier): self
+{
+    $this->quartier = $quartier;
+    return $this;
+}
+
 
     // --- Getters & Setters ---
 

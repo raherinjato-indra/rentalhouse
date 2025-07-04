@@ -96,9 +96,15 @@
         <li><strong>ID :</strong> {{ object_to_rent.id }}</li>
         <li><strong>Nom :</strong> {{ object_to_rent.name }}</li>
         <li><strong>Description :</strong> {{ object_to_rent.descriptionText }}</li>
-        <li><strong>Prix :</strong> {{ object_to_rent.price }} Ar</li>
+        <li><strong>Prix :</strong> {{ object_to_rent.price }} €/mois</li>
         <li><strong>Surface :</strong> {{ object_to_rent.surface }} m²</li>
         <li><strong>Nombre de pièces :</strong> {{ object_to_rent.nbrPieces }}</li>
+        <li><strong>Cuisine équipée :</strong> {{ object_to_rent.CuisineEquipee ? 'Oui' : 'Non' }}</li>
+        <li><strong> Jardin :</strong> {{ object_to_rent.Jardin ? 'Oui' : 'Non' }}</li>
+        <li><strong> Année :</strong> {{ object_to_rent.AnneeConstruction }}</li>
+        <li><strong> Garage : </strong>{{ object_to_rent.Garage ? 'Oui' : 'Non' }}</li>
+        <li><strong>Activé :</strong> {{ object_to_rent.activated ? 'Oui' : 'Non' }}</li>
+        <li><strong> État : </strong>{{ object_to_rent.etatObjectToRent ? object_to_rent.etatObjectToRent.Libelle : 'Non défini' }}</li>
     </ul>
     <h2>📍 Coordonnées du bien</h2>
     <ul>

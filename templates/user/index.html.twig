@@ -1,6 +1,6 @@
-{% extends 'baseadmin.html.twig' %}
+{% extends 'base.html.twig' %}
 
-{% block title %}Biens Immobiliers{% endblock %}
+{% block title %}Liste des utilisateurs{% endblock %}
 
 {% block souscarouselle %}
 <style>
@@ -12,7 +12,6 @@
 
     body {
         font-family: 'Poppins', sans-serif;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         min-height: 100vh;
         margin: 0;
         padding: 20px 0;
@@ -210,21 +209,22 @@
         padding: 25px;
         position: relative;
     }
+.price-line {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 14px 25px; /* légèrement plus grand pour plus d'impact */
+    border-radius: 40px; /* adoucir les bords */
+    font-size: 1.15rem; /* légèrement plus grand */
+    font-weight: 600;
+    text-align: center;
+    margin: -30px auto 25px; /* recentré et équilibré verticalement */
+    width: fit-content; /* empêche de prendre toute la largeur */
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+    animation: pulse 2s ease-in-out infinite;
+}
 
-    .price-line {
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        color: white;
-        padding: 12px 20px;
-        border-radius: 50px;
-        font-size: 1.1rem;
-        font-weight: 600;
-        text-align: center;
-        margin: -40px 20px 20px;
-        position: relative;
-        z-index: 2;
-        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
-        animation: pulse 2s infinite;
-    }
 
     @keyframes pulse {
         0%, 100% { transform: scale(1); }
@@ -503,117 +503,41 @@
             font-size: 1rem;
         }
     }
-      .object-info {
-        background: #f8f9fa;
-        padding: 20px;
-        border-radius: 6px;
-        border-left: 4px solid #007bff;
-        margin: 15px 0;
-    }
-
-    .info-item {
-        display: flex;
-        margin-bottom: 10px;
-        align-items: center;
-    }
-
-    .info-item:last-child {
-        margin-bottom: 0;
-    }
-
-    .info-label {
-        font-weight: 600;
-        color: #495057;
-        min-width: 120px;
-        margin-right: 10px;
-    }
-
-    .info-value {
-        color: #212529;
-        flex: 1;
-    }
 </style>
-
 <div class="main-container">
-    <h1>🏠 Nos Biens Immobiliers</h1>
-    <a href="{{ path('app_object_to_rent_new') }}" class="btn-add">➕ Ajouter un bien</a>
+    <h1>Liste des Utilisateurs</h1>
 
-    <div class="card-container">
-        {% for object in object_to_rents %}
-            <div class="card-wrapper">
-                <div class="card-image">
-                    {% if object.imageFilename %}
-                        <img src="{{ asset('uploads/photos/' ~ object.imageFilename) }}" alt="Photo de {{ object.name }}">
-                    {% else %}
-                        <div class="no-image">📷 Pas de photo</div>
-                    {% endif %}
-                </div>
-                <div class="card-body">
-                    <div class="price-line">💰 {{ object.price }} €/mois</div>
-                    <h2 class="card-title">{{ object.name }}</h2>
-                         <div class="object-info">
-                            <div class="info-item">
-                                <span class="info-label">État:</span>
-                                <span class="info-value">{{ object.etatObjectToRent ? object.etatObjectToRent.Libelle : 'Non défini' }}</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Propriétaire:</span>
-                               <span class="info-value">
-                                  <span style="font-size: 1.2rem;">
-                                    {{ object.user ? object.user.username : 'Non assigné' }}
-                                  </span><br>
-                                    <strong>{{ object.user ? object.user.email : 'Non assigné' }}</strong>
-                                </span>
-                            </div>
+    <a href="{{ path('app_user_new') }}" class="btn-add">Créer un utilisateur</a>
+
+    {% if users|length > 0 %}
+        <div class="card-container">
+            {% for user in users %}
+                <div class="card-wrapper">
+                    <div class="card-body">
+                        <div class="price-line">ID : {{ user.id }}</div>
+                        <h2 class="card-title">Nom d'utilisateur : {{ user.username }}</h2>
+                        <strong>{{ user.email }}</strong>
+
+                        <ul class="tags-grid">
+                            <li><i class="fas fa-user-shield"></i> Rôles : {{ user.roles|join(', ') }}</li>
+                        </ul>
+
+                        <div class="card-actions">
+                           
+                            <a href="{{ path('app_user_edit', {'id': user.id}) }}" class="edit">Modifier</a>
+                            <form method="post" action="{{ path('app_user_delete', {'id': user.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+                                <button class="btn-delete">Supprimer</button>
+                            </form>
                         </div>
-                    <ul class="tags-grid">
-                        <li><i>📐</i> Surface : {{ object.Surface }} m²</li>
-                        <li><i>🛏️</i> Chambres : {{ object.NbrChambres }}</li>
-                        <li><i>🛋️</i> Pièces : {{ object.NbrPieces }}</li>
-                        <li><i>🚿</i> SDB : {{ object.NbrSalleDeBain }}</li>
-
-                        
-                    </ul>
-
-                {% if object.Coordonnee %}
-    <div class="address-section">
-        <strong>📍 Localisation :</strong><br>
-
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            <span>
-                {{ object.Coordonnee.adresse }}
-                <br>
-                <strong>Code Postal :</strong> {{ object.Coordonnee.CodePostal }}
-            </span>
-
-            {% if object.Coordonnee.quartier %}
-                <a href="https://www.google.com/maps/search/{{ object.Coordonnee.quartier.nom | url_encode }}" target="_blank"
-                   style="white-space: nowrap; margin-left: 15px;">
-                    🗺️ Voir sur la carte
-                </a>
-            {% else %}
-                <span style="margin-left: 15px;">Quartier non renseigné</span>
-            {% endif %}
-        </div>
-
-        <strong>Quartier : </strong> {{ object.Coordonnee.quartier.nom ?? 'Non renseigné' }}
-    </div>
-{% endif %}
-
-
-                    <div class="card-actions">
-                        <a href="{{ path('app_object_to_rent_show', {'id': object.id}) }}"> Voir</a>
-                        <a href="{{ path('app_object_to_rent_edit', {'id': object.id}) }}" class="edit">MODIFIER</a>
-                        {{ include('object_to_rent/_delete_form.html.twig', { object_to_rent: object }) }}
                     </div>
                 </div>
-            </div>
-        {% else %}
-            <div class="no-properties">
-                <h2>🏠 Aucun bien trouvé</h2>
-                <p>Commencez par ajouter votre premier bien immobilier !</p>
-            </div>
-        {% endfor %}
-    </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="no-properties">
+            Aucun utilisateur trouvé.
+        </div>
+    {% endif %}
 </div>
 {% endblock %}
