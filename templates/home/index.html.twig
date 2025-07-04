@@ -73,184 +73,137 @@
 
 
 <div class="criterion CriterionAutocompleteView active visible" id="agatha_autocomplete">
-  <form id="search-form" autocomplete="off" class="slam-aui autocompleteUI">
+  <form id="search-form" autocomplete="off" class="slam-aui autocompleteUI" action="{{ path('app_search') }}" method="GET">
     <div class="slam-aui-input-fake search-bar-container">
       <div class="slam-aui-tags"></div>
-      <input autocomplete="off" type="text" id="search-input" name="query" placeholder="Dans quelle ville ? Quartier ?">
-      <button type="button" id="search-button">Rechercher</button>
- </div>
+
+      <input
+        type="text"
+        name="query"
+        id="search-input"
+        placeholder="Dans quelle ville ? Quartier ?"
+        value="{{ app.request.get('query')|e }}"
+        autocomplete="off"
+      >
+
+      <!-- Champ caché pour stocker l'ID de la ville sélectionnée -->
+      <input type="hidden" name="city" id="city-id" value="{{ app.request.get('city')|default('') }}">
+    </div>
+
     <div class="slam-aui-results" id="search-results" style="display: none;"></div>
+
+    <!-- CHAMPS BUDGET -->
+    <input type="number" id="budget_min" name="budget_min" value="{{ app.request.get('budget_min') }}" placeholder="Prix minimum">
+    <input type="number" id="budget_max" name="budget_max" value="{{ app.request.get('budget_max') }}" placeholder="Prix maximum">
+
+    <!-- TYPES DE BIENS -->
+    <div class="criterion CriterionListView active visible" id="agatha_biens">
+      <span class="title"></span>
+      <span class="description"></span>
+      <div class="containerList">
+        <div class="itemList active">
+          <input type="checkbox" name="biens[]" class="biens-checkbox" id="agatha_biens0" value="2"
+            {% if '2' in app.request.get('biens', []) %}checked{% endif %}>
+          <label for="agatha_biens0"><i class="fi fi-check"></i>Maison</label>
+        </div>
+        <div class="itemList active">
+          <input type="checkbox" name="biens[]" class="biens-checkbox" id="agatha_biens1" value="1"
+            {% if '1' in app.request.get('biens', []) %}checked{% endif %}>
+          <label for="agatha_biens1"><i class="fi fi-check"></i>Appartement</label>
+        </div>
+        <div class="itemList active">
+          <input type="checkbox" name="biens[]" class="biens-checkbox" id="agatha_biens2" value="more"
+            {% if 'more' in app.request.get('biens', []) %}checked{% endif %}>
+          <label for="agatha_biens2"><i class="fi fi-plus"></i></label>
+        </div>
+        <div class="itemList inactive">
+          <input type="checkbox" name="biens[]" class="biens-checkbox" id="agatha_biens3" value="4"
+            {% if '4' in app.request.get('biens', []) %}checked{% endif %}>
+          <label for="agatha_biens3"><i class="fi fi-check"></i>Terrain</label>
+        </div>
+      </div>
+      <span class="error invisible"></span>
+    </div>
+
+
+    <!-- BOUTONS D'ACTIONS -->
+    <div class="criterion CriterionListView active c-quest-actions visible" id="agatha_actionbuttons">
+      <span class="title"></span>
+      <span class="description"></span>
+      <div class="containerList">
+        <div class="itemList active">
+          <label for="agatha_actionbuttons0">
+            <a class="deposer-acheter" id="deposer-acheter" target="_blank" href="https://www.seloger.com/depot-annonce/vente">
+              <span>Propriétaire ?</span> Déposez votre annonce
+            </a>
+          </label>
+        </div>
+        <div class="itemList inactive">
+          <input type="checkbox" name="actionbuttons" id="agatha_actionbuttons1" value="deposer-louer">
+          <label for="agatha_actionbuttons1">
+            <a class="deposer-louer" id="deposer-louer" target="_blank" href="https://www.seloger.com/depot-annonce/location">
+              <span>Propriétaire ?</span> Déposez votre annonce
+            </a>
+          </label>
+        </div>
+        <div class="itemList active">
+          <label for="agatha_actionbuttons2">
+            <a class="c-quest-actions-search disabled" href="javascript:;" id="search-button" aria-disabled="true" style="pointer-events:none; opacity:0.5;">Rechercher</a>
+          </label>
+        </div>
+      </div>
+      <span class="error invisible"></span>
+    </div>
   </form>
   <span class="error invisible" id="search-error"></span>
 </div>
-
-
-
-
-
-
-<form method="GET" action="{{ path('app_search') }}">
-  <input type="number" name="budget_min" value="{{ app.request.get('budget_min') }}" placeholder="Prix minimum">
-  <input type="number" name="budget_max" value="{{ app.request.get('budget_max') }}" placeholder="Prix maximum">
-  <button type="submit">Rechercher</button>
-  
-</form>
-
-				  <div class="criterion CriterionListView active  visible" id="agatha_biens">
-					<span class="title"></span>
-					<span class="description"></span>
-					<div class="containerList">
-					  <div class="itemList active">
-						<input type="checkbox" name="biens" id="agatha_biens0" value="2">
-						<label for="agatha_biens0">
-						  <i class="fi fi-check"></i>Maison </label>
-					  </div>
-					  <div class="itemList active">
-						<input type="checkbox" name="biens" id="agatha_biens1" value="1">
-						<label for="agatha_biens1">
-						  <i class="fi fi-check"></i>Appartement </label>
-					  </div>
-					  <div class="itemList active">
-						<input type="checkbox" name="biens" id="agatha_biens2" value="more">
-						<label for="agatha_biens2">
-						  <i class="fi fi-plus"></i>
-						</label>
-					  </div>
-					  <div class="itemList inactive">
-						<input type="checkbox" name="biens" id="agatha_biens3" value="4">
-						<label for="agatha_biens3">
-						  <i class="fi fi-check"></i>Terrain </label>
-					  </div>
-					  <div class="itemList inactive">
-						<input type="checkbox" name="biens" id="agatha_biens4" value="3">
-						<label for="agatha_biens4">
-						  <i class="fi fi-check"></i>Parking / Box </label>
-					  </div>
-					  <div class="itemList inactive">
-						<input type="checkbox" name="biens" id="agatha_biens5" value="9">
-						<label for="agatha_biens5">
-						  <i class="fi fi-check"></i>Loft </label>
-					  </div>
-					  <div class="itemList inactive">
-						<input type="checkbox" name="biens" id="agatha_biens6" value="14">
-						<label for="agatha_biens6">
-						  <i class="fi fi-check"></i>Hôtel particulier </label>
-					  </div>
-					  <div class="itemList inactive">
-						<input type="checkbox" name="biens" id="agatha_biens7" value="13">
-						<label for="agatha_biens7">
-						  <i class="fi fi-check"></i>Chateau </label>
-					  </div>
-					  <div class="itemList inactive">
-						<input type="checkbox" name="biens" id="agatha_biens8" value="12">
-						<label for="agatha_biens8">
-						  <i class="fi fi-check"></i>Batiment </label>
-					  </div>
-					  <div class="itemList inactive">
-						<input type="checkbox" name="biens" id="agatha_biens9" value="11">
-						<label for="agatha_biens9">
-						  <i class="fi fi-check"></i>Immeuble </label>
-					  </div>
-					  <div class="itemList inactive">
-						<input type="checkbox" name="biens" id="agatha_biens10" value="6">
-						<label for="agatha_biens10">
-						  <i class="fi fi-check"></i>Boutique </label>
-					  </div>
-					  <div class="itemList inactive">
-						<input type="checkbox" name="biens" id="agatha_biens11" value="7">
-						<label for="agatha_biens11">
-						  <i class="fi fi-check"></i>Local commercial </label>
-					  </div>
-					  <div class="itemList inactive">
-						<input type="checkbox" name="biens" id="agatha_biens12" value="8">
-						<label for="agatha_biens12">
-						  <i class="fi fi-check"></i>Bureau </label>
-					  </div>
-					  <div class="itemList inactive">
-						<input type="checkbox" name="biens" id="agatha_biens13" value="less">
-						<label for="agatha_biens13">
-						  <i class="fi fi-chevron-up"></i>
-						</label>
-					  </div>
-					</div>
-					<span class="error invisible"></span>
-				  </div>
-				  <div class="criterion CriterionListView active c-quest-links visible" id="agatha_link">
-					<span class="title"></span>
-					<span class="description"></span>
-					<div class="containerList">
-					  <div class="itemList active">
-						<input type="checkbox" name="link" id="agatha_link0" value="lien">
-						<label for="agatha_link0">
-						  <a class="search-more-criteria" href="#">Recherche avancée</a>
-						</label>
-					  </div>
-					</div>
-					<span class="error invisible"></span>
-				  </div>
-				  <div class="criterion CriterionListView active c-quest-actions visible" id="agatha_actionbuttons">
-					<span class="title"></span>
-					<span class="description"></span>
-					<div class="containerList">
-					  <div class="itemList active">
-						<input type="checkbox" name="actionbuttons" id="agatha_actionbuttons0" value="deposer-acheter">
-						<label for="agatha_actionbuttons0">
-						  <a class="deposer-acheter" id="deposer-acheter" target="_blank" href="https://www.seloger.com/depot-annonce/vente">
-							<span>Propriétaire ?</span> Déposez votre annonce </a>
-						</label>
-					  </div>
-					  <div class="itemList inactive">
-						<input type="checkbox" name="actionbuttons" id="agatha_actionbuttons1" value="deposer-louer">
-						<label for="agatha_actionbuttons1">
-						  <a class="deposer-louer" id="deposer-louer" target="_blank" href="https://www.seloger.com/depot-annonce/location">
-							<span>Propriétaire ?</span> Déposez votre annonce </a>
-						</label>
-					  </div>
-					  <div class="itemList active">
-						<input type="checkbox" name="actionbuttons" id="agatha_actionbuttons2" value="rechercher">
-						<label for="agatha_actionbuttons2">
-						  <a class="c-quest-actions-search" href="javascript:;">Rechercher</a>
-						</label>
-					  </div>
-					</div>
-					<span class="error invisible"></span>
-				  </div>
-				</div>
+</div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const input = document.getElementById('search-input');
     const resultsBox = document.getElementById('search-results');
     const form = document.getElementById('search-form');
-    const searchButton = document.getElementById('search-button'); // Nouveau bouton
+    const searchButton = document.getElementById('search-button');
+    const cityIdInput = document.getElementById('city-id');
+    const budgetMin = document.getElementById('budget_min');
+    const budgetMax = document.getElementById('budget_max');
+    const biensCheckboxes = document.querySelectorAll('.biens-checkbox');
 
-    // Fonction commune pour lancer la redirection
-    function handleSearch() {
-        const firstResult = resultsBox.querySelector('.result-item');
-        if (firstResult) {
-            const id = firstResult.dataset.id;
-            const type = firstResult.dataset.type;
+    function isAnyBienChecked() {
+        return Array.from(biensCheckboxes).some(cb => cb.checked);
+    }
 
-            if (type === 'City') {
-                window.location.href = `/city/${id}`;
-            } else if (type === 'Quartier') {
-                window.location.href = `/quartier/${id}`;
-            } else {
-                alert('Redirection non définie pour ce type');
-            }
+    function allFieldsFilled() {
+        const queryFilled = input.value.trim().length > 0;
+        const budgetMinFilled = budgetMin.value.trim().length > 0;
+        const budgetMaxFilled = budgetMax.value.trim().length > 0;
+        const atLeastOneBienChecked = isAnyBienChecked();
+        return queryFilled && budgetMinFilled && budgetMaxFilled && atLeastOneBienChecked;
+    }
+
+    function toggleSearchButton() {
+        if (allFieldsFilled()) {
+            searchButton.classList.remove('disabled');
+            searchButton.style.pointerEvents = 'auto';
+            searchButton.style.opacity = '1';
+            searchButton.setAttribute('aria-disabled', 'false');
         } else {
-            alert('Veuillez choisir une ville dans la liste');
+            searchButton.classList.add('disabled');
+            searchButton.style.pointerEvents = 'none';
+            searchButton.style.opacity = '0.5';
+            searchButton.setAttribute('aria-disabled', 'true');
         }
     }
 
-    // Empêche le comportement par défaut du formulaire
-    form.addEventListener('submit', function(event) {
+    form.addEventListener('submit', function (event) {
         event.preventDefault();
     });
 
-    // Recherche automatique à chaque saisie
     input.addEventListener('input', function () {
         const query = this.value.trim();
+        cityIdInput.value = '';
+        toggleSearchButton();
 
         if (query.length < 2) {
             resultsBox.style.display = 'none';
@@ -263,11 +216,11 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(data => {
                 if (data.length > 0) {
                     resultsBox.style.display = 'block';
-                    resultsBox.innerHTML = data.map(item => `
-                        <div class="result-item" data-id="${item.id}" data-type="${item.type}">
+                    resultsBox.innerHTML = data.map(item =>
+                        `<div class="result-item" data-id="${item.id}" data-type="${item.type}">
                             ${item.name} <small style="color: #888;">(${item.type})</small>
-                        </div>
-                    `).join('');
+                        </div>`
+                    ).join('');
                 } else {
                     resultsBox.innerHTML = '<div class="result-item">Aucun résultat</div>';
                     resultsBox.style.display = 'block';
@@ -280,44 +233,35 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     });
 
-    // Clic sur un résultat
     document.addEventListener('click', function (e) {
         if (e.target.classList.contains('result-item')) {
             const name = e.target.textContent.trim();
-            const id = e.target.dataset.id;
-            const type = e.target.dataset.type;
-
+            const id = e.target.getAttribute('data-id');
             input.value = name;
+            cityIdInput.value = id;
             resultsBox.innerHTML = '';
             resultsBox.style.display = 'none';
-
-            if (type === 'City') {
-                window.location.href = `/city/${id}`;
-            } else if (type === 'Quartier') {
-                window.location.href = `/quartier/${id}`;
-            } else {
-                alert('Redirection non définie pour les quartiers');
-            }
-        } else {
-            // Clic en dehors = ferme les résultats
-            resultsBox.innerHTML = '';
+            toggleSearchButton();
+        } else if (!input.contains(e.target)) {
             resultsBox.style.display = 'none';
         }
     });
 
-    // Touche Entrée dans le champ de recherche
-    input.addEventListener('keydown', function(event) {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-            handleSearch();
+    budgetMin.addEventListener('input', toggleSearchButton);
+    budgetMax.addEventListener('input', toggleSearchButton);
+    biensCheckboxes.forEach(cb => cb.addEventListener('change', toggleSearchButton));
+
+    searchButton.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (!searchButton.classList.contains('disabled')) {
+            form.submit();
         }
     });
 
-    // Clic sur le bouton "Rechercher"
-    searchButton.addEventListener('click', function () {
-        handleSearch();
-    });
+    toggleSearchButton();
 });
 </script>
+
+
 
 {% endblock %}

@@ -104,32 +104,16 @@
   }
 </style>
 
-
+<!-- ✅ Affichage du nombre de résultats et de la ville -->
+<b>
+  ({{ nbresultat ?? 0 }}) résultat{{ (nbresultat ?? 0) > 1 ? 's' : '' }} trouvé{{ (nbresultat ?? 0) > 1 ? 's' : '' }} pour la recherche
+  {% if city_name is not empty %}
+      : ({{ city_name }})
+  {% endif %}
+</b>
+<br><br>
 {% for object in objects %}
 
-{#
-{% if budget_min or budget_max %}
-    <p>Filtres :
-      {% if budget_min %} prix ≥ {{ budget_min }}€ {% endif %}
-      {% if budget_max %} prix ≤ {{ budget_max }}€ {% endif %}
-    </p>
-  {% endif %}
-
-  {% if objects is not empty %}
-    <ul>
-      {% for object in objects %}
-        <li>
-          <strong>{{ object.name }}</strong><br>
-          Prix : {{ object.price }} €
-          <a href="{{ path('app_object_to_rent_show', {'id': object.id}) }}">
-</a>
-        </li>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <p>Aucun bien trouvé avec ces critères.</p>
-  {% endif %} 
-#}
   
        <div data-testid="sl.explore.card-container" class="sc-hARARD cardMode_3 ListContent-sc-1viyr2k-0 bEZLZU sc-ccLTTT gXYseb">
         <div class="sc-dBaXSw kAViLA">

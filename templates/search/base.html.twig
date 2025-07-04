@@ -3518,7 +3518,33 @@
       <div class="Page__WrapMain-st6q56-3 jJtKRX">
         <div class="PageTitle__PageTitleContainer-sc-1nhfau4-0 ekSyLK">
           <h1 class="Title__TitleContainer-f7wbzu-0 dJOysV">
-            <b>5 342 biens</b> en location à Paris (75)
+
+<b>
+  ({{ nbresultat ?? 0 }}) résultat{{ (nbresultat ?? 0) > 1 ? 's' : '' }} trouvé{{ (nbresultat ?? 0) > 1 ? 's' : '' }} pour la recherche
+  {% if city_name is not empty %}
+      : {{ city_name }}
+  {% endif %}
+</b>
+<br><br>
+
+
+
+
+
+
+{% if quartier is defined and quartier %}
+    {% if city %}, {% endif %}
+    Quartier : {{ quartier.name }}
+{% endif %}
+{% if type is defined and type %}
+    {% if city or quartier %}, {% endif %}
+    Type : {{ type.name }}
+{% endif %}
+{% if budget is defined and budget %}
+    {% if city or quartier or type %}, {% endif %}
+    Budget : {{ budget }} {{ devise|default('Ar') }}
+{% endif %}
+
           </h1>
         </div>
         <div class="sticky-outer-wrapper">
