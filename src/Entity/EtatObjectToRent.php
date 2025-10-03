@@ -6,6 +6,7 @@ use App\Repository\EtatObjectToRentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\ObjectToRent;
 
 #[ORM\Entity(repositoryClass: EtatObjectToRentRepository::class)]
 class EtatObjectToRent
@@ -21,12 +22,12 @@ class EtatObjectToRent
     /**
      * @var Collection<int, ObjectToRent>
      */
-    #[ORM\OneToMany(targetEntity: ObjectToRent::class, mappedBy: 'etatObjectToRent')]
-    private Collection $ObjectsToRent;
+    #[ORM\OneToMany(mappedBy: 'etatObjectToRent', targetEntity: ObjectToRent::class)]
+    private Collection $objectsToRent;
 
     public function __construct()
     {
-        $this->ObjectsToRent = new ArrayCollection();
+        $this->objectsToRent = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -42,7 +43,6 @@ class EtatObjectToRent
     public function setLibelle(string $Libelle): static
     {
         $this->Libelle = $Libelle;
-
         return $this;
     }
 
@@ -51,25 +51,24 @@ class EtatObjectToRent
      */
     public function getObjectsToRent(): Collection
     {
-        return $this->ObjectsToRent;
+        return $this->objectsToRent;
     }
 
-    public function addObjectsToRent(ObjectToRent $objectsToRent): static
+    public function addObjectToRent(ObjectToRent $objectToRent): static
     {
-        if (!$this->ObjectsToRent->contains($objectsToRent)) {
-            $this->ObjectsToRent->add($objectsToRent);
-            $objectsToRent->setEtatObjectToRent($this);
+        if (!$this->objectsToRent->contains($objectToRent)) {
+            $this->objectsToRent->add($objectToRent);
+            $objectToRent->setEtatObjectToRent($this);
         }
 
         return $this;
     }
 
-    public function removeObjectsToRent(ObjectToRent $objectsToRent): static
+    public function removeObjectToRent(ObjectToRent $objectToRent): static
     {
-        if ($this->ObjectsToRent->removeElement($objectsToRent)) {
-            // set the owning side to null (unless already changed)
-            if ($objectsToRent->getEtatObjectToRent() === $this) {
-                $objectsToRent->setEtatObjectToRent(null);
+        if ($this->objectsToRent->removeElement($objectToRent)) {
+            if ($objectToRent->getEtatObjectToRent() === $this) {
+                $objectToRent->setEtatObjectToRent(null);
             }
         }
 

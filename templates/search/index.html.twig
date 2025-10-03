@@ -104,14 +104,7 @@
   }
 </style>
 
-<!-- ✅ Affichage du nombre de résultats et de la ville -->
-<b>
-  ({{ nbresultat ?? 0 }}) résultat{{ (nbresultat ?? 0) > 1 ? 's' : '' }} trouvé{{ (nbresultat ?? 0) > 1 ? 's' : '' }} pour la recherche
-  {% if city_name is not empty %}
-      : ({{ city_name }})
-  {% endif %}
-</b>
-<br><br>
+
 {% for object in objects %}
 
   
