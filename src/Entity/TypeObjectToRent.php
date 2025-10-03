@@ -16,17 +16,17 @@ class TypeObjectToRent
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $Name = null;
+    private ?string $name = null;
 
     /**
      * @var Collection<int, ObjectToRent>
      */
     #[ORM\OneToMany(targetEntity: ObjectToRent::class, mappedBy: 'typeObjectToRent')]
-    private Collection $ObjectsToRent;
+    private Collection $objectsToRent;
 
     public function __construct()
     {
-        $this->ObjectsToRent = new ArrayCollection();
+        $this->objectsToRent = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -36,13 +36,12 @@ class TypeObjectToRent
 
     public function getName(): ?string
     {
-        return $this->Name;
+        return $this->name;
     }
 
-    public function setName(string $Name): static
+    public function setName(string $name): static
     {
-        $this->Name = $Name;
-
+        $this->name = $name;
         return $this;
     }
 
@@ -51,28 +50,32 @@ class TypeObjectToRent
      */
     public function getObjectsToRent(): Collection
     {
-        return $this->ObjectsToRent;
+        return $this->objectsToRent;
     }
 
-    public function addObjectsToRent(ObjectToRent $objectsToRent): static
+    public function addObjectToRent(ObjectToRent $objectToRent): static
     {
-        if (!$this->ObjectsToRent->contains($objectsToRent)) {
-            $this->ObjectsToRent->add($objectsToRent);
-            $objectsToRent->setTypeObjectToRent($this);
+        if (!$this->objectsToRent->contains($objectToRent)) {
+            $this->objectsToRent->add($objectToRent);
+            $objectToRent->setTypeObjectToRent($this);
         }
 
         return $this;
     }
 
-    public function removeObjectsToRent(ObjectToRent $objectsToRent): static
+    public function removeObjectToRent(ObjectToRent $objectToRent): static
     {
-        if ($this->ObjectsToRent->removeElement($objectsToRent)) {
-            // set the owning side to null (unless already changed)
-            if ($objectsToRent->getTypeObjectToRent() === $this) {
-                $objectsToRent->setTypeObjectToRent(null);
+        if ($this->objectsToRent->removeElement($objectToRent)) {
+            if ($objectToRent->getTypeObjectToRent() === $this) {
+                $objectToRent->setTypeObjectToRent(null);
             }
         }
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name ?? '';
     }
 }

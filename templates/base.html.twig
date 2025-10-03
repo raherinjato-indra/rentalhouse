@@ -398,34 +398,40 @@
     </div>
   </div>
 
-  <div class="kit-modules-wrapper" style="display: flex; align-items: center; justify-content: flex-end; gap: 15px;">
-    <div id="huggy"></div>
-    <div id="espacePerso"></div>
+ <div class="kit-modules-wrapper" style="display: flex; align-items: center; justify-content: flex-end; gap: 15px;">
+  <div id="huggy"></div>
+  <div id="espacePerso"></div>
 
-    {% if app.user %}
-  <div style="display: flex; align-items: center; gap: 10px;">
-    <div class="user-avatar">
-      {% if app.user.avatar %}
-        <img src="{{ asset('uploads/avatars/' ~ app.user.avatar) }}"
-             alt="Avatar"
-             style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
-      {% else %}
-        <img src="{{ asset('images/default-avatar.png') }}"
-             alt="Avatar par défaut"
-             style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
-      {% endif %}
+<div class="auth-links">
+  {% if app.user %}
+    <div class="user-info" style="display:flex; align-items:center; gap:10px;">
+      <img 
+        src="{{ app.user.avatar ?: '/images/default-avatar.png' }}" 
+        alt="Avatar" 
+        style="width:35px; height:35px; border-radius:50%; object-fit:cover;"
+      >
+      <span>{{ app.user.username }}</span>
+      <a href="{{ path('app_logout') }}" style="margin-left:10px; color:#d33b3b;">Se déconnecter</a>
     </div>
+  {% else %}
+    <a 
+      href="{{ path('app_login') }}" 
+      class="{{ app.request.attributes.get('_route') == 'app_login' ? 'active-link' : '' }}"
+    >
+      Se connecter
+    </a>
+    <a 
+      href="{{ path('app_register') }}" 
+      class="{{ app.request.attributes.get('_route') == 'app_register' ? 'active-link' : '' }}"
+    >
+      S’inscrire
+    </a>
+  {% endif %}
+</div>
 
-    <form action="{{ path('app_logout') }}" method="post" style="margin: 0;">
-      <button type="submit"
-              style="background: none; border: none; color: #c00; cursor: pointer; font-weight: bold;">
-        Déconnexion
-      </button>
-    </form>
-  </div>
-{% endif %}
 
-  </div>
+</div>
+
 </div>
 
       <div id="ep-modal-container"></div>
@@ -1932,6 +1938,30 @@
           width: 100%;
           height: 100%;
         }
+        .auth-links {
+        float: right;
+        display: flex;
+        gap: 15px;
+        align-items: center;
+      }
+
+      .auth-links a {
+      text-decoration: none;
+      color: #444;
+      margin: 0 10px;
+      font-weight: 500;
+    }
+
+    .auth-links a.active-link {
+      text-decoration: underline;
+      color: #d33b3b; /* même couleur que ton bouton connexion */
+      font-weight: 700;
+    }
+
+
+      .auth-links a:hover {
+        text-decoration: underline;
+      }
       </style>
       <div class="app__AppContainer-m6l338-0 bArLic">
         {% block carouselle %}
@@ -2151,12 +2181,21 @@
       </div>
     </div>
 	<script>
-function toggleOffer(ins,dist) {
-  var checkBox = document.getElementById(ins);
-    checkBox.checked = true;
-     var checkBox = document.getElementById(dist);
-   checkBox.checked = false;
-}
+  document.addEventListener("DOMContentLoaded", function () {
+    const avatarToggle = document.getElementById("avatarToggle");
+    const logoutMenu = document.getElementById("logoutMenu");
+
+    avatarToggle.addEventListener("click", function () {
+      logoutMenu.style.display = logoutMenu.style.display === "block" ? "none" : "block";
+    });
+
+    // Fermer le menu si on clique ailleurs
+    document.addEventListener("click", function (e) {
+      if (!avatarToggle.contains(e.target) && !logoutMenu.contains(e.target)) {
+        logoutMenu.style.display = "none";
+      }
+    });
+  });
 </script>
   </body>
 </html>
